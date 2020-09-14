@@ -21,6 +21,8 @@ HKR                   |  Mobile Platforms
   Kristianstad City provides accommodation facilities to many inhabitants including students in various universities and schools.
   Accommodating various cultures also brings law and order problems in that area, e.g theft, drugs, professional and presonal jealousies, character assasination etc. Therefore it is very important to provide good and secure services to all inhabitants. 
   In this project we are building a smart IoT based solution for detection and prevention of intruders in personal properties.
+  
+  This provides peace of mind and good health to all residents in the area.
 
 # INSTALLATION
 We will use Ubuntu as operating system for all installations below.
