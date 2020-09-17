@@ -13,7 +13,12 @@
     "serve": "serve -s dist",
     "browserslist": "browserslist 'last 1 version, >1%' "
   },
-  "keywords": ["node", "webpack", "react", "material-ui"],
+  "keywords": [
+    "node",
+    "webpack",
+    "react",
+    "material-ui"
+  ],
   "author": "Hazrat Ali <iloveyii@yahoo.com>",
   "license": "MIT",
   "dependencies": {
