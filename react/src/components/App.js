@@ -1,10 +1,12 @@
 import React from 'react';
+import Sidebar from './Sidebar';
 
 function App() {
   return (
-    <div>
-      Hi React
-    </div>
+    <>
+      <Sidebar />
+      <div>hi</div>
+    </>
   );
 }
 
