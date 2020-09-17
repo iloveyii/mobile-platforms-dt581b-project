@@ -8,7 +8,9 @@ module.exports = {
         filename: 'js/bundle.js',               // Where the bundle file should be saved
     },
     devServer: {                                // Content root path
-        contentBase: path.resolve(__dirname, 'public')
+        contentBase: path.join(__dirname, 'public'),
+        compress: true,
+        port: 9000
     },
     module: {
         rules: [
