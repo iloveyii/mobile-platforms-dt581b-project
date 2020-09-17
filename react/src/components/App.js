@@ -8,6 +8,7 @@ import {
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { teal } from "@material-ui/core/colors";
+import PageHeader from "./PageHeader";
 
 const theme = createMuiTheme({
   palette: {
@@ -28,8 +29,7 @@ const theme = createMuiTheme({
   shape: {
     borderRadius: 0
   },
-  spacing: 10,
-  
+  spacing: 10
 });
 
 const useStyles = makeStyles({
@@ -47,6 +47,7 @@ function App() {
       <Sidebar />
       <div className={classes.main}>
         <Header />
+        <PageHeader />
       </div>
       <CssBaseline />
     </ThemeProvider>
