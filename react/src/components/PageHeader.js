@@ -32,22 +32,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PageHeader() {
+export default function PageHeader(props) {
   const classes = useStyles();
+  const { title, subtitle, imageUrl } = props;
   return (
     <Paper className={classes.root} elevation={0}>
       <Card className={classes.outer} variant="outlined" raised={false}>
-        <CardMedia
-          className={classes.cover}
-          image="/images/good-health-and-well-being-sdg.jpg"
-        />
+        <CardMedia className={classes.cover} image={imageUrl} />
 
         <CardContent className={classes.details}>
           <Typography component="h5" variant="h5">
-            Live From Space
+            {title}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            Mac Miller
+            {subtitle}
           </Typography>
         </CardContent>
       </Card>

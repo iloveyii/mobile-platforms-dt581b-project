@@ -47,7 +47,11 @@ function App() {
       <Sidebar />
       <div className={classes.main}>
         <Header />
-        <PageHeader />
+        <PageHeader
+          title="SDG Goals"
+          subtitle="There are 17 SDG goals"
+          imageUrl="/images/good-health-and-well-being-sdg.jpg"
+        />
       </div>
       <CssBaseline />
     </ThemeProvider>
