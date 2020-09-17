@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: theme.spacing(1),
+    // marginTop: theme.spacing(1),
     display: "flex",
     "& .MuiCardMedia-root": {
       margin: theme.spacing(2)

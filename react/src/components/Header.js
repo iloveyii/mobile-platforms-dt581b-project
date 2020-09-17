@@ -14,6 +14,9 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    transform: "translateZ(0)"
+  },
   searchInput: {
     padding: theme.spacing(2),
     "& .MuiInputBase-inputAdornedStart": {
@@ -29,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 export default function Header() {
   const classes = useStyles();
   return (
-    <AppBar color="default" position="static">
+    <AppBar color="default" position="static" className={classes.root}>
       <Toolbar>
         <Grid container alignItems="center">
           <Grid item>
