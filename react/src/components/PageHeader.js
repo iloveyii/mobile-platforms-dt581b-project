@@ -10,13 +10,15 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
+    marginTop: theme.spacing(1),
     display: "flex",
     "& .MuiCardMedia-root": {
-        margin: theme.spacing(2)
-      }
+      margin: theme.spacing(2)
+    }
   },
   outer: {
-    display: "flex"
+    display: "flex",
+    border: "none"
   },
   details: {
     display: "flex",
@@ -26,17 +28,15 @@ const useStyles = makeStyles(theme => ({
     flex: "1 0 auto"
   },
   cover: {
-    width: 151,
-    
-  },
-  
+    width: 151
+  }
 }));
 
 export default function PageHeader() {
   const classes = useStyles();
   return (
-    <Paper className={classes.root}>
-      <Card className={classes.outer}>
+    <Paper className={classes.root} elevation={0}>
+      <Card className={classes.outer} variant="outlined" raised={false}>
         <CardMedia
           className={classes.cover}
           image="/images/good-health-and-well-being-sdg.jpg"

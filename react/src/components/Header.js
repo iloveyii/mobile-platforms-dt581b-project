@@ -16,14 +16,13 @@ import SearchIcon from "@material-ui/icons/Search";
 const useStyles = makeStyles(theme => ({
   searchInput: {
     padding: theme.spacing(2),
-    '& .MuiInputBase-inputAdornedStart' : {
-        padding: theme.spacing(1),
-        opacity: 0.6,
-        '&:hover':{
-            backgroundColor: '#f1f1f1'
-        }
-    },
-    
+    "& .MuiInputBase-inputAdornedStart": {
+      padding: theme.spacing(1),
+      opacity: 0.6,
+      "&:hover": {
+        backgroundColor: "#f1f1f1"
+      }
+    }
   }
 }));
 
@@ -34,7 +33,11 @@ export default function Header() {
       <Toolbar>
         <Grid container alignItems="center">
           <Grid item>
-            <InputBase className={classes.searchInput} placeholder="Search" startAdornment={<SearchIcon />} />
+            <InputBase
+              className={classes.searchInput}
+              placeholder="Search"
+              startAdornment={<SearchIcon />}
+            />
           </Grid>
           <Grid item sm></Grid>
           <Grid item>
