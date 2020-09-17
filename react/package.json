@@ -1,0 +1,19 @@
+{
+  "name": "react-mui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open --port 4000 --compress --hot",
+    "_build:dev": "webpack --mode development --progress",
+    "_build:prod": "webpack --mode production --progress",
+    "build": "npm run _build:prod",
+    "post_build:dev": "cp public/manifest.json dist/ & cp public/images dist/ -Rf",
+    "post_build:prod": "cp public/manifest.json dist/ & cp public/images dist/ -Rf & cp public/js/* dist/js/ & cp public/sw.js dist/ ",
+    "serve": "serve -s dist",
+    "browserslist": "browserslist 'last 1 version, >1%' "
+  },
+  "keywords": ["node", "webpack", "react", "material-ui"],
+  "author": "Hazrat Ali <iloveyii@yahoo.com>",
+  "license": "MIT"
+}
