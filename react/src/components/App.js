@@ -9,6 +9,7 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { teal } from "@material-ui/core/colors";
 import PageHeader from "./PageHeader";
+import Users from "./Users";
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +24,7 @@ const theme = createMuiTheme({
       light: "#5fa463"
     },
     background: {
-      default: teal[50]
+      default: '#FFF' // teal[50]
     }
   },
   shape: {
@@ -52,6 +53,7 @@ function App() {
           subtitle="There are 17 SDG goals"
           imageUrl="/images/good-health-and-well-being-sdg.jpg"
         />
+      <Users />
       </div>
       <CssBaseline />
     </ThemeProvider>

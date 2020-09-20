@@ -11,7 +11,7 @@ const useStyles = makeStyles({
         height: '100%',
         backgroundColor: '#115293'
     }
-})
+});
 
 export default function Sidebar() {
     const classes = useStyles();
