@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import PageHeader from "../PageHeader";
-import { UseForm, Form } from "./UseForm";
+import UseForm from "./UseForm";
 import {
   Container,
   TextField,
@@ -9,7 +8,6 @@ import {
   Button
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { display } from "@material-ui/system";
 
 const useStyle = makeStyles(theme => ({
   form: {
@@ -28,17 +26,11 @@ export default function index() {
   const classes = useStyle();
   const { values, onChange, onSubmit } = UseForm({ defaultValues });
 
-  useEffect(() => {
-    console.log("use effect");
-  }, [values]);
-
-  console.log("return", values);
-
   return (
     <>
       <Container maxWidth="xs">
         <Paper elevation={0}>
-          <Form autoComplete="off" noValidate className={classes.form}>
+          <form autoComplete="off" noValidate className={classes.form}>
             <Typography variant="h5">Users</Typography>
             <TextField
               margin="normal"
@@ -46,6 +38,7 @@ export default function index() {
               variant="outlined"
               name="name"
               onChange={onChange}
+              value={values.name}
             />
             <TextField
               margin="normal"
@@ -53,6 +46,7 @@ export default function index() {
               variant="outlined"
               name="email"
               onChange={onChange}
+              value={values.email}
             />
             <TextField
               margin="normal"
@@ -72,7 +66,7 @@ export default function index() {
             >
               Save
             </Button>
-          </Form>
+          </form>
         </Paper>
       </Container>
     </>
