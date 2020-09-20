@@ -13,22 +13,29 @@ export default function UseForm(props) {
 
   const onSubmit = e => {
     e.preventDefault();
-    const defaultValues = {
-      name: "",
-      email: "",
-      address: ""
-    };
     const form = values;
-    if (userService.create(form)) {
-      setValues({ ...defaultValues });
+    if (form.id) {
+      if (userService.update(form)) {
+        setValues({ ...defaultValues });
+      }
+    } else {
+      if (userService.create(form)) {
+        setValues({ ...defaultValues });
+      }
     }
-    console.log(userService.readAll());
+  };
+
+  const onDelete = e => {
+    e.preventDefault();
+    userService.deleted(values);
+    setValues({ ...defaultValues });
   };
 
   return {
     values,
     setValues,
     onChange,
-    onSubmit
+    onSubmit,
+    onDelete
   };
 }

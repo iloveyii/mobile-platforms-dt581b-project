@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UsersList(props) {
-  const { rows } = props;
+  const { rows, setValues, setOpenPopup } = props;
   console.log(rows, props);
   const classes = useStyles();
 
@@ -32,7 +32,14 @@ export default function UsersList(props) {
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <TableRow key={i}>
+            <TableRow
+              style={{ cursor: "pointer" }}
+              key={i}
+              onClick={() => {
+                setValues(row);
+                setOpenPopup(true);
+              }}
+            >
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>

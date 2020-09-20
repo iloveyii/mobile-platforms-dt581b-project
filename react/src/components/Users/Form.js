@@ -1,18 +1,17 @@
 import React from "react";
 import { TextField, Typography, Button, makeStyles } from "@material-ui/core";
 
-
 const useStyle = makeStyles(theme => ({
-    form: {
-      display: "flex",
-      flexDirection: "column",
-      marginBottom: theme.spacing(3),
-      marginTop: theme.spacing(3)
-    }
-  }));
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: theme.spacing(3),
+    marginTop: theme.spacing(3)
+  }
+}));
 
 export default function Form(props) {
-  const { onChange, values, onSubmit } = props;
+  const { onChange, values, onSubmit, onDelete } = props;
   const classes = useStyle();
   return (
     <form autoComplete="off" noValidate className={classes.form}>
@@ -52,6 +51,18 @@ export default function Form(props) {
       >
         Save
       </Button>
+      {values.id && (
+        <Button
+          style={{ marginTop: "1em" }}
+          margin="normal"
+          size="large"
+          variant="contained"
+          color="secondary"
+          onClick={onDelete}
+        >
+          Delete
+        </Button>
+      )}
     </form>
   );
 }

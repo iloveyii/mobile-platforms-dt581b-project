@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UseForm from "./UseForm";
-import {
-  Container,
-  Paper,
-  Button
-} from "@material-ui/core";
+import { Container, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import UsersList from "./UsersList";
 import UserService from "./UserService";
@@ -26,15 +22,16 @@ const defaultValues = {
 
 export default function index() {
   const classes = useStyle();
-  const { values, onChange, onSubmit, list } = UseForm({ defaultValues });
+  const { values, setValues, onChange, onSubmit, onDelete, list } = UseForm({
+    defaultValues
+  });
   const userService = UserService();
   const [openPopup, setOpenPopup] = useState(false);
 
   return (
     <>
       <Container maxWidth="xs">
-        <Paper elevation={0}>
-        </Paper>
+        <Paper elevation={0}></Paper>
       </Container>
 
       <Container maxWidth="md">
@@ -48,10 +45,19 @@ export default function index() {
         >
           Add New
         </Button>
-        <UsersList rows={userService.readAll()} />
+        <UsersList
+          setOpenPopup={setOpenPopup}
+          setValues={setValues}
+          rows={userService.readAll()}
+        />
       </Container>
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
-        <Form onChange={onChange} values={values} onSubmit={onSubmit} />
+        <Form
+          onChange={onChange}
+          values={values}
+          onSubmit={onSubmit}
+          onDelete={onDelete}
+        />
       </Popup>
     </>
   );
