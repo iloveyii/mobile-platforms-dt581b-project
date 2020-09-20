@@ -21,7 +21,7 @@ export default function UserService() {
 
   const readAll = () => {
     const users = JSON.parse(localStorage.getItem("users"));
-    return users;
+    return users && users.list || [];
   };
 
   return {

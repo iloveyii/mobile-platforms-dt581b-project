@@ -8,6 +8,8 @@ import {
   Button
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import UsersList from "./UsersList";
+import UserService from "./UserService";
 
 const useStyle = makeStyles(theme => ({
   form: {
@@ -24,7 +26,8 @@ const defaultValues = {
 
 export default function index() {
   const classes = useStyle();
-  const { values, onChange, onSubmit } = UseForm({ defaultValues });
+  const { values, onChange, onSubmit, list } = UseForm({ defaultValues });
+  const userService = UserService();
 
   return (
     <>
@@ -68,6 +71,10 @@ export default function index() {
             </Button>
           </form>
         </Paper>
+      </Container>
+
+      <Container maxWidth="md">
+        <UsersList rows={userService.readAll()} />
       </Container>
     </>
   );
