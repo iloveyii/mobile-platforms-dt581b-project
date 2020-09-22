@@ -33,10 +33,14 @@ const theme = createMuiTheme({
   spacing: 10
 });
 
+const drawerWidth = 240;
+
 const useStyles = makeStyles({
   main: {
-    paddingLeft: "250px",
-    width: "100%"
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth
+    }
   }
 });
 
