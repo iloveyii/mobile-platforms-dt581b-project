@@ -12,6 +12,8 @@ import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SearchIcon from "@material-ui/icons/Search";
+import MenuIcon from "@material-ui/icons/Menu";
+import Drawer from "../Layouts/Drawer";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,40 +28,70 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#f1f1f1"
       }
     }
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
   }
 }));
 
 export default function Header() {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    open: false
+  });
+
+  const toggleDrawer = open => event => {
+    console.log("toggleDrawer ", open);
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setState({ open });
+  };
   return (
-    <AppBar color="default" position="static" className={classes.root}>
-      <Toolbar>
-        <Grid container alignItems="center">
-          <Grid item>
-            <InputBase
-              className={classes.searchInput}
-              placeholder="Search"
-              startAdornment={<SearchIcon />}
-            />
+    <>
+      <AppBar color="default" position="static" className={classes.root}>
+        <Toolbar>
+          <Grid container alignItems="center">
+            <Grid item>
+              <IconButton
+                onClick={toggleDrawer(true)}
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
+              </IconButton>
+              <InputBase
+                className={classes.searchInput}
+                placeholder="Search"
+                startAdornment={<SearchIcon />}
+              />
+            </Grid>
+            <Grid item sm></Grid>
+            <Grid item>
+              <IconButton>
+                <Badge badgeContent={5} color="primary">
+                  <NotificationsNoneIcon />
+                </Badge>
+              </IconButton>
+              <IconButton>
+                <Badge badgeContent={2} color="secondary">
+                  <ChatBubbleOutlineIcon />
+                </Badge>
+              </IconButton>
+              <IconButton>
+                <ExitToAppIcon />
+              </IconButton>
+            </Grid>
           </Grid>
-          <Grid item sm></Grid>
-          <Grid item>
-            <IconButton>
-              <Badge badgeContent={5} color="primary">
-                <NotificationsNoneIcon />
-              </Badge>
-            </IconButton>
-            <IconButton>
-              <Badge badgeContent={2} color="secondary">
-                <ChatBubbleOutlineIcon />
-              </Badge>
-            </IconButton>
-            <IconButton>
-              <ExitToAppIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+      <Drawer toggleDrawer={toggleDrawer} state={state} />
+    </>
   );
 }
