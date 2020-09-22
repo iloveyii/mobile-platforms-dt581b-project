@@ -15,9 +15,22 @@ import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "../Layouts/Drawer";
 
+const drawerWidth = 250;
 const useStyles = makeStyles(theme => ({
   root: {
     transform: "translateZ(0)"
+  },
+  appBar: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth
+    }
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
   },
   searchInput: {
     padding: theme.spacing(2),

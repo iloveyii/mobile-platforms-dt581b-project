@@ -24,7 +24,7 @@ const theme = createMuiTheme({
       light: "#5fa463"
     },
     background: {
-      default: '#FFF' // teal[50]
+      default: "#FFF" // teal[50]
     }
   },
   shape: {
@@ -35,7 +35,7 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles({
   main: {
-    paddingLeft: "320px",
+    paddingLeft: "250px",
     width: "100%"
   }
 });
@@ -45,7 +45,6 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Sidebar />
       <div className={classes.main}>
         <Header />
         <PageHeader
@@ -53,7 +52,7 @@ function App() {
           subtitle="There are 17 SDG goals"
           imageUrl="/images/good-health-and-well-being-sdg.jpg"
         />
-      <Users />
+        <Users />
       </div>
       <CssBaseline />
     </ThemeProvider>
