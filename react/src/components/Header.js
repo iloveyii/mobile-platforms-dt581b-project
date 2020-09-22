@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2)
+  },
+  item: {
+    display: "flex"
   }
 }));
 
@@ -55,8 +58,13 @@ export default function Header() {
     <>
       <AppBar color="default" position="static" className={classes.root}>
         <Toolbar>
-          <Grid container alignItems="center">
-            <Grid item>
+          <Grid container alignItems="center" justify="center">
+            <Grid
+              item
+              className={classes.item}
+              alignItems="center"
+              justify="center"
+            >
               <IconButton
                 onClick={toggleDrawer(true)}
                 edge="start"
