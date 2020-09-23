@@ -10,8 +10,12 @@ import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles(theme => ({
   table: {
-    minWidth: 650,
+    minWidth: 0,
     marginTop: theme.spacing(3)
+  },
+  th: {
+    width: "1%",
+    whiteSpace: "nowrap "
   }
 }));
 

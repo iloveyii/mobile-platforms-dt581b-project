@@ -6,7 +6,8 @@ import {
   InputBase,
   IconButton,
   Badge,
-  makeStyles
+  makeStyles,
+  Hidden
 } from "@material-ui/core";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
@@ -70,7 +71,7 @@ export default function Header() {
     <>
       <AppBar color="default" position="static" className={classes.root}>
         <Toolbar>
-          <Grid container alignItems="center" justify="center">
+          <Grid container alignItems="center" justify="flex-start">
             <Grid item className={classes.item}>
               <IconButton
                 onClick={toggleDrawer(true)}
@@ -88,21 +89,23 @@ export default function Header() {
               />
             </Grid>
             <Grid item sm></Grid>
-            <Grid item>
-              <IconButton>
-                <Badge badgeContent={5} color="primary">
-                  <NotificationsNoneIcon />
-                </Badge>
-              </IconButton>
-              <IconButton>
-                <Badge badgeContent={2} color="secondary">
-                  <ChatBubbleOutlineIcon />
-                </Badge>
-              </IconButton>
-              <IconButton>
-                <ExitToAppIcon />
-              </IconButton>
-            </Grid>
+            <Hidden only="xs">
+              <Grid item>
+                <IconButton>
+                  <Badge badgeContent={5} color="primary">
+                    <NotificationsNoneIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton>
+                  <Badge badgeContent={2} color="secondary">
+                    <ChatBubbleOutlineIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton>
+                  <ExitToAppIcon />
+                </IconButton>
+              </Grid>
+            </Hidden>
           </Grid>
         </Toolbar>
       </AppBar>

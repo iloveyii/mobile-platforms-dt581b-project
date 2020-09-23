@@ -5,14 +5,23 @@ import {
   DialogContent,
   Typography,
   Button,
-  makeStyles
+  makeStyles,
+  Slide
 } from "@material-ui/core";
 
 const useStyle = makeStyles(theme => ({
   paper: {
-    padding: "40px"
+    padding: "40px",
+    [theme.breakpoints.down("sm")]: {
+      width: `100%`,
+      margin: 0
+    },
   }
 }));
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function Popup(props) {
   const { openPopup, setOpenPopup } = props;
@@ -22,6 +31,7 @@ export default function Popup(props) {
       className={classes.paper}
       fullWidth={true}
       maxWidth="xs"
+      TransitionComponent={Transition}
       open={openPopup}
     >
       <DialogTitle>
