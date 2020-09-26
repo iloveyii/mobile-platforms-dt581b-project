@@ -1,12 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {Paper, Button} from "@material-ui/core";
+import ConfirmDialog from '../ConfirmDialog';
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -17,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function UsersList(props) {
   const { rows, setValues, setOpenPopup } = props;
+  const [showDialog, setShowDialog] = useState(false);
   console.log(rows, props);
   const classes = useStyles();
 
@@ -28,6 +25,7 @@ export default function UsersList(props) {
             <TableCell>Name</TableCell>
             <TableCell align="right">Email</TableCell>
             <TableCell align="right">Address</TableCell>
+            <TableCell align="right">X</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -35,9 +33,10 @@ export default function UsersList(props) {
             <TableRow
               style={{ cursor: "pointer" }}
               key={i}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setValues(row);
-                setOpenPopup(true);
+                //setOpenPopup(true);
               }}
             >
               <TableCell component="th" scope="row">
@@ -45,10 +44,23 @@ export default function UsersList(props) {
               </TableCell>
               <TableCell align="right">{row.email}</TableCell>
               <TableCell align="right">{row.address}</TableCell>
+              <TableCell align="right">
+                <Button
+                  style={{ float: "right" }}
+                  margin="normal"
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setShowDialog(true) }
+                >
+                  XY
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <ConfirmDialog showDialog={showDialog} setShowDialog={setShowDialog} action={()=>console.log('delete')} />
     </TableContainer>
   );
 }
