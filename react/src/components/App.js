@@ -30,7 +30,7 @@ const theme = createMuiTheme({
   shape: {
     borderRadius: 3
   },
-  spacing: 10
+  spacing: 6
 });
 
 const drawerWidth = 240;

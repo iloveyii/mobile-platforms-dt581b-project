@@ -22,7 +22,7 @@ const defaultValues = {
 
 export default function index() {
   const classes = useStyle();
-  const { values, setValues, onChange, onSubmit, onDelete, list } = UseForm({
+  const { values, setValues, onChange, onSubmit, onDelete, list, status } = UseForm({
     defaultValues
   });
   const userService = UserService();
@@ -57,6 +57,7 @@ export default function index() {
           values={values}
           onSubmit={onSubmit}
           onDelete={onDelete}
+          status={status}
         />
       </Popup>
     </>

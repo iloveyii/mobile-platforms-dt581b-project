@@ -4,6 +4,7 @@ import UserService from "./UserService";
 export default function UseForm(props) {
   const { defaultValues } = props;
   const [values, setValues] = useState(defaultValues);
+  const [status, setStatus] = useState('');
   const userService = UserService();
 
   const onChange = e => {
@@ -17,10 +18,14 @@ export default function UseForm(props) {
     if (form.id) {
       if (userService.update(form)) {
         setValues({ ...defaultValues });
+        setStatus('update.success');
+        setTimeout(() => setStatus(''), 4000);
       }
     } else {
       if (userService.create(form)) {
         setValues({ ...defaultValues });
+        setStatus('create.success');
+        setTimeout(() => setStatus(''), 4000);
       }
     }
   };
@@ -29,6 +34,8 @@ export default function UseForm(props) {
     e.preventDefault();
     userService.deleted(values);
     setValues({ ...defaultValues });
+    setStatus('delete.success');
+    setTimeout(() => setStatus(''), 4000);
   };
 
   return {
@@ -36,6 +43,7 @@ export default function UseForm(props) {
     setValues,
     onChange,
     onSubmit,
-    onDelete
+    onDelete,
+    status
   };
 }
