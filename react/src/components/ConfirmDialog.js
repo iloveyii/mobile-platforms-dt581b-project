@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation';
 import Popup from './Popup';
 import { makeStyles } from "@material-ui/core/styles";
+import Snackbar from './Snackbar';
 
 const useStyles = makeStyles(theme => ({
     titleIcon: {
@@ -34,6 +35,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ConfirmDialog(props) {
     const { showDialog, setShowDialog, action, onDelete } = props;
+    const [status, setStatus] = useState('');
     const classes = useStyles();
     return (
 
@@ -55,7 +57,7 @@ export default function ConfirmDialog(props) {
                       size="large"
                       variant="contained"
                       color="secondary"
-                      onClick={()=>{onDelete(); setShowDialog(false);}}
+                      onClick={(e)=>{onDelete(e); setStatus('delete.success');  setTimeout(()=>setShowDialog(false), 4000)}}
                   >
                       Yes
                   </Button>
@@ -73,6 +75,7 @@ export default function ConfirmDialog(props) {
                 </div>
               </div>
             </div>
+            <Snackbar status={status} />
         </Popup >
     );
 }
