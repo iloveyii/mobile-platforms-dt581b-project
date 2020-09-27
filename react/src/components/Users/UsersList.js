@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UsersList(props) {
-  const { rows, setValues, setOpenPopup } = props;
+  const { rows, setValues, setOpenPopup, onDelete } = props;
   const [showDialog, setShowDialog] = useState(false);
   console.log(rows, props);
   const classes = useStyles();
@@ -36,14 +36,13 @@ export default function UsersList(props) {
               onClick={(e) => {
                 e.preventDefault();
                 setValues(row);
-                //setOpenPopup(true);
               }}
             >
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">{row.address}</TableCell>
+              <TableCell onClick={()=> setOpenPopup(true)} align="right">{row.email}</TableCell>
+              <TableCell onClick={()=> setOpenPopup(true)} align="right">{row.address}</TableCell>
               <TableCell align="right">
                 <Button
                   style={{ float: "right" }}
@@ -53,14 +52,14 @@ export default function UsersList(props) {
                   color="primary"
                   onClick={() => setShowDialog(true) }
                 >
-                  XY
+                  X
                 </Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <ConfirmDialog showDialog={showDialog} setShowDialog={setShowDialog} action={()=>console.log('delete')} />
+      <ConfirmDialog onDelete={onDelete} showDialog={showDialog} setShowDialog={setShowDialog} action={()=>console.log('delete')} />
     </TableContainer>
   );
 }

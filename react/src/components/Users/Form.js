@@ -57,7 +57,7 @@ export default function Form(props) {
           style={{ marginTop: "1em" }}
           margin="normal"
           size="large"
-          variant="contained"
+          variant="contained" 
           color="secondary"
           onClick={onDelete}
         >

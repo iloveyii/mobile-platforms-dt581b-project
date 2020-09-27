@@ -48,6 +48,7 @@ export default function index() {
         <UsersList
           setOpenPopup={setOpenPopup}
           setValues={setValues}
+          onDelete={onDelete}
           rows={userService.readAll()}
         />
       </Container>

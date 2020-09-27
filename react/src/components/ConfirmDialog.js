@@ -11,39 +11,68 @@ const useStyles = makeStyles(theme => ({
         '& .MuiSvgIcon-root': {
             fontSize: '8rem'
         }
+    },
+    container: {
+      display: 'flex'
+    },
+    left:{
+      flex: 1
+    },
+    right: {
+      flex: 2,
+      display: 'flex',
+      flexDirection: 'column'
+    },
+    top: {
+      flex: 2
+    },
+    bottom: {
+      flex: 1,
+      textAlign: 'right'
     }
 }));
 
 export default function ConfirmDialog(props) {
-    const { showDialog, setShowDialog, action } = props;
+    const { showDialog, setShowDialog, action, onDelete } = props;
     const classes = useStyles();
     return (
 
         <Popup openPopup={showDialog} setOpenPopup={setShowDialog}>
-            <IconButton className={classes.titleIcon}>
-                <NotListedLocationIcon />
-            </IconButton>
-            <Button
-                style={{ marginTop: "1em" }}
-                margin="normal"
-                size="large"
-                variant="contained"
-                color="secondary"
-                onClick={action}
-            >
-                Yes
-            </Button>
+            <div className={classes.container}>
+              <div className={classes.left}>
+                <IconButton className={classes.titleIcon}>
+                    <NotListedLocationIcon />
+                </IconButton>
+              </div>
+              <div className={classes.right}>
+                <div className={classes.top}>
+                </div>
 
-            <Button
-                style={{ marginTop: "1em" }}
-                margin="normal"
-                size="large"
-                variant="contained"
-                color="primary"
-                onClick={() => setShowDialog(false)}
-            >
-                No
-            </Button>
+                <div className={classes.bottom}>
+                  <Button
+                      style={{ marginTop: "1em" }}
+                      margin="normal"
+                      size="large"
+                      variant="contained"
+                      color="secondary"
+                      onClick={()=>{onDelete(); setShowDialog(false);}}
+                  >
+                      Yes
+                  </Button>
+
+                  <Button
+                      style={{ marginTop: "1em", marginLeft: "2em" }}
+                      margin="normal"
+                      size="large"
+                      variant="contained"
+                      color="primary"
+                      onClick={() => setShowDialog(false)}
+                  >
+                      No
+                  </Button>
+                </div>
+              </div>
+            </div>
         </Popup >
     );
 }
