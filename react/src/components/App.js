@@ -12,6 +12,7 @@ import { teal } from "@material-ui/core/colors";
 import PageHeader from "./PageHeader";
 import Users from "./Users";
 import Dashboard from '../Pages/Dashboard';
+import Ni from './Ni';
 
 const theme = createMuiTheme({
   palette: {
@@ -42,6 +43,7 @@ function App() {
       <BrowserRouter basename="/">
         <Switch>
             <Route exact path={`/`} component={Dashboard}/>
+            <Route component={Ni}/>
         </Switch>
       </BrowserRouter>
       <CssBaseline />

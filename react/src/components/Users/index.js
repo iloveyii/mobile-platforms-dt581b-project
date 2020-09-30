@@ -3,9 +3,9 @@ import UseForm from "./UseForm";
 import { Container, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
-import models from '../../store/models';
+import {withRouter, Link} from "react-router-dom";
 
+import models from '../../store/models';
 import UsersList from "./UsersList";
 import UserService from "./UserService";
 import Popup from "../Popup";
@@ -49,6 +49,14 @@ function index() {
         >
           Add New
         </Button>
+
+        <Link
+          style={{ marginTop: "1em" }}
+          to="/settings"
+        >
+          Settings
+        </Link>
+
         <UsersList
           setOpenPopup={setOpenPopup}
           setValues={setValues}
