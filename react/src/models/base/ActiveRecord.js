@@ -1,4 +1,4 @@
-  
+
 import Model from './Model';
 
 class ActiveRecord extends Model {
@@ -115,6 +115,16 @@ class ActiveRecord extends Model {
         }
 
         return found;
+    };
+
+    errors = (actions) => {
+      const errors = [];
+      Object.keys(actions).map(id => {
+        if(actions[id].res.status === 'fail') {
+          errors.push(actions[id].res);
+        }
+      });
+      return errors;
     }
 }
 

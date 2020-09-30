@@ -94,7 +94,6 @@ class Model {
         };
 
         let newState = {};
-        let newAction = {};
 
         const reducer = (state = initState, action = {}) => {
 
@@ -195,7 +194,7 @@ class Model {
                     return newState;
 
                 default:
-                    this.log('Inside show default reducer of class ' + this.name + JSON.stringify(action));
+                    this.log('Inside default reducer of class ' + this.name + JSON.stringify(action));
                     return state;
             }
         };

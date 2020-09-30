@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import UserService from "./UserService";
 
-export default function UseForm(props) {
+
+
+function UseForm(props) {
   const { defaultValues } = props;
   const [values, setValues] = useState(defaultValues);
   const [status, setStatus] = useState('');
@@ -47,3 +49,5 @@ export default function UseForm(props) {
     status
   };
 }
+
+export default UseForm;
