@@ -88,4 +88,4 @@ const mapActionsToProps = {
     deleteAction: models.users.actions.delete,
 };
 
-export default (connect(mapStateToProps, mapActionsToProps)(index));
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(index));

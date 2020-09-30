@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter} from 'react-router-dom';
+import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import {
   makeStyles,
   CssBaseline,
@@ -39,7 +39,11 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Dashboard />
+      <BrowserRouter basename="/">
+        <Switch>
+            <Route exact path={`/`} component={Dashboard}/>
+        </Switch>
+      </BrowserRouter>
       <CssBaseline />
     </ThemeProvider>
   );
