@@ -24,13 +24,17 @@ const defaultValues = {
   address: ""
 };
 
-function index() {
+function index(props) {
   const classes = useStyle();
   const { values, setValues, onChange, onSubmit, onDelete, list, status } = UseForm({
     defaultValues
   });
   const userService = UserService();
   const [openPopup, setOpenPopup] = useState(false);
+  const {users} = props;
+
+  console.log('USERS ', users);
+  console.log('USERS ERRORS', models.users.errors(users.actions)); // array of responses
 
   return (
     <>

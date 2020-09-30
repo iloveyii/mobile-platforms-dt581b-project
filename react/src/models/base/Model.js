@@ -9,7 +9,7 @@ class Model {
     constructor(name) {
         this.name = name;
         this.forceUpdate = () => null;
-        this.server = apiServer + '/api/v1/' + 'temperatures';
+        this.server = apiServer + '/api/v1/' + name;
         this.debug = true;
     }
 
