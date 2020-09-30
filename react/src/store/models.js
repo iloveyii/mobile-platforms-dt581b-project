@@ -4,7 +4,7 @@ import User from "../models/User";
 
 
 const models = {
-    logins: new Login('logins'),
+    // logins: new Login('logins'),
     users: new User('users'),
 };
 

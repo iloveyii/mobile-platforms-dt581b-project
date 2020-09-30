@@ -1,5 +1,6 @@
 import {call, put} from 'redux-saga/effects';
 import axios from "axios";
+import shortid from "shortid";
 import {apiServer} from "../../common/constants";
 
 class Model {
@@ -9,13 +10,13 @@ class Model {
         this.name = name;
         this.forceUpdate = () => null;
         this.server = apiServer + '/api/v1/' + 'temperatures';
-        this.debug = false;
+        this.debug = true;
     }
 
     forceUpdate = () => null;
 
     log(msg) {
-        if (false && this.debug) console.log(msg);
+        if (this.debug) console.log(msg);
     }
 
     // Subscribers
@@ -53,9 +54,12 @@ class Model {
             create_success: (data) => ({type: this.types.create_success, payload: {data}}),
             create_fail: (data) => ({type: this.types.create_fail, payload: {data}}),
 
-            read: (data) => ({type: this.types.read, payload: data}),
-            read_success: (data) => ({type: this.types.read_success, payload: {data}}),
-            read_fail: (data) => ({type: this.types.read_fail, payload: {data}}),
+            //{id, type, form, list, method} - REQUEST
+            read: (form) => ({type: this.types.read, payload: {id:shortid.generate(), type:this.types.read, form, list:[], method:'GET'}}),
+            // {id, type, status, form, list, errors} - RESPONSE
+            read_success: (action, response) => ({type: this.types.read_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            // {id, status, form, list, errors}
+            read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
             update: (data) => ({type: this.types.update, payload: {data}}),
             update_success: (data) => ({type: this.types.update_success, payload: {data}}),
@@ -76,36 +80,64 @@ class Model {
         const initState = {
             form: {},
             list: [],
-            actions: [
+            actions:
                 {
-                  id: {
-                    req: {type: 'user.read', form:{}, list:[], method: 'get'},
-                    res: {status: 'success', form:{}, list:[], errors:{}}
+                  id1: {
+                    req: {id: 1, type: 'user.read', form:{}, list:[], method: 'get'},
+                    res: {id: 1,status: 'success', form:{}, list:[], errors:{}}
+                  },
+                  id2: {
+                    req: {id: 2, type: 'user.read', form:{}, list:[], method: 'get'},
+                    res: {id: 2,status: 'success', form:{}, list:[], errors:{}}
                   }
                 },
-                {
-                  id: {
-                    req: {type: 'user.read', form:{}, list:[], method: 'get'},
-                    res: {status: 'success', form:{}, list:[], errors:{}}
-                  }
-                },
-            ]
         };
+
+        let newState = {};
+        let newAction = {};
 
         const reducer = (state = initState, action = {}) => {
 
             switch (action.type) {
-                case this.types.read_success:
-                    var {data, success} = action.payload.data;
-                    var newState = {
-                        actions: success ? 'read_success': 'read_fail',
-                        success,
-                        list: data,
+                case this.types.read:
+                    this.log('Inside Reducer read action is :  ');
+                    this.log(action);
+                    var {id, type, form, list, method} = action.payload;
+                    // Place action in state's actions
+                    newState = {...state};
+                    newState.actions[id] = {
+                      req: action.payload
                     };
+                    return newState;
 
-                    return {
-                        ...state, ...newState
-                    };
+                case this.types.read_success:
+                    console.log('READ SUCCESS HERE ', action)
+                    var {id, type, status, form, list, errors} = action.payload;
+                    if(status === 'success') { // Put data in list
+                      newState = {...state, list, form}; // fill both list and form from new data
+                      if(newState.actions[id]) {
+                        newState.actions[id]['res'] = action.payload;
+                      }
+                    } else { // Place res in action's res success === fail is on server side and not http error
+                      newState = {...state}; // there was an error (server side) therefore don't touch list and form
+                      if(newState.actions[id]) {
+                        newState.actions[id]['res'] = action.payload;
+                      }
+                    }
+
+                    return newState;
+
+                case this.types.read_fail: // handle http exceptions
+                    console.log('READ FAIL in redu', action);
+                    var {id, type, status, form, list, errors} = action.payload;
+                    // Place res in action's res success === fail is on server side and not http error
+                    newState = {...state};
+                    if(newState.actions[id]) {
+                      newState.actions[id]['res'] = action.payload;
+                    } else {
+                      console.log('Action with id not found', action)
+                    }
+                    return newState;
 
                 case this.types.delete_success:
                     var {data, success} = action.payload.data;
@@ -202,14 +234,16 @@ class Model {
 
         const read = function* (action) {
             try {
-                const data = yield call($this.api.read, action.payload);
-                if (true || Array.isArray(data)) {
-                    yield put($this.actions.read_success(data));
+                const response = yield call($this.api.read, action.payload);
+                if (true || Array.isArray(response)) {
+                    console.log('READ saga data received ', response)
+                    yield put($this.actions.read_success(action, response));
                 } else {
-                    yield put($this.actions.read_fail(data));
+                    yield put($this.actions.read_fail(response));
                 }
             } catch (err) {
-                yield put($this.actions.read_fail(err));
+                console.log('ERROR read : ', err.message);
+                yield put($this.actions.read_fail(action, err.message));
             }
         };
 
@@ -262,10 +296,10 @@ class Model {
     // API
     get api() {
         return {
-            read: (data) => console.log('read', data) ||
-                axios.get(data.id ? this.server + `/${data.id}` : this.server).then(res => res.data).catch(error => {
-                    throw new Error(error);
+            read: (payload) => console.log('API read', payload) ||
+                axios.get(payload.form.id ? this.server + `/${payload.form.id}` : this.server).then(res => res.data).catch(error => {
                     console.dir(error);
+                    throw new Error(error);
                 }),
             create: (data) => {
                 const config = {
