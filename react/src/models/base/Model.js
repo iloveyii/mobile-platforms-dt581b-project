@@ -8,7 +8,7 @@ class Model {
     constructor(name) {
         this.name = name;
         this.forceUpdate = () => null;
-        this.server = apiServer + '/api/v1/' + name;
+        this.server = apiServer + '/api/v1/' + 'temperatures';
         this.debug = false;
     }
 

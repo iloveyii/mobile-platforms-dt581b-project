@@ -1,4 +1,4 @@
-const apiServer = (process.env.REACT_APP_serverIp && process.env.REACT_APP_PORT) ? process.env.REACT_APP_serverIp + ':' + process.env.REACT_APP_PORT : 'http://receipt-server.softhem.se:6600';
+const apiServer = (process.env.API_URL && process.env.API_PORT) ? process.env.API_URL + ':' + process.env.API_PORT : '/api/v1';
 console.log('ENV:', apiServer);
 
 const statuses = {
@@ -13,4 +13,4 @@ export {
     statuses
 };
 
-console.log(process.env.REACT_APP_serverIp)
+console.log('Process.env : ', process.env.serverIp)
