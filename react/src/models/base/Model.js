@@ -138,7 +138,11 @@ class Model {
                     }
                     return newState;
 
-                case this.types.delete_success:
+
+                case this.types.delete:  // Place action in state's actions
+                    break;
+
+                case this.types.delete_success: // Put data in list
                     var {data, success} = action.payload.data;
                     var newState = {
                         actions: 'delete_success',
@@ -149,22 +153,13 @@ class Model {
                         ...state, ...newState
                     };
 
-                case this.types.edit:
-                    var {id} = action.payload.data;
-                    var {list} = state;
-                    console.log('list state', list, state)
-                    var form = list ? list.find(item => item.id === id) : false;
-                    var newState = {
-                        actions: 'edit',
-                        success: !!form,
-                        form,
-                    }
+                case this.types.delete_fail: // handle http exceptions
+                  break;
 
-                    return {
-                        ...state, ...newState
-                    };
+                case this.types.create : // Place action in state's actions
+                  break;
 
-                case this.types.create_success :
+                case this.types.create_success : // Put data in list
                     console.log("create_success :", action.payload);
                     var {data, success} = action.payload.data;
                     var newState;
@@ -178,8 +173,13 @@ class Model {
                     return {
                         ...state, ...newState
                     };
+                case this.types.create_fail : // handle http exceptions
+                  break;
 
-                case this.types.update_success || this.types.delete_success:
+                case this.types.update: // Place action in state's actions
+                  break;
+
+                case this.types.update_success: // Put data in list
                     var {list, form, actions} = action.payload.data;
                     var newState = {...state};
                     if (list) {
@@ -192,6 +192,9 @@ class Model {
                         newState.actions = actions;
                     }
                     return newState;
+
+                case this.types.update_fail: // handle http exceptions
+                    break;
 
                 default:
                     this.log('Inside default reducer of class ' + this.name + JSON.stringify(action));
@@ -336,10 +339,6 @@ class Model {
             }
         }
     }
-
-
-    // Validation
-
 
 }
 
