@@ -3,54 +3,29 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { useSnackbar } from 'notistack';
+
+
 
 export default function SimpleSnackbar(props) {
     const { status } = props;
-    let open, msg = false;
+    const { enqueueSnackbar } = useSnackbar();
+    let msg = false;
+    // variant could be success, error, warning, info, or default
     switch (status) {
         case 'create.success':
-            open = true;
             msg = 'Created successfully';
+            enqueueSnackbar(msg, {variant: 'success'});
             break;
         case 'delete.success':
-            open = true;
             msg = 'Deleted successfully';
+            enqueueSnackbar(msg, {variant: 'error'});
             break;
         case 'update.success':
-            open = true;
             msg = 'Updated successfully';
+            enqueueSnackbar(msg, {variant: 'warning'});
             break;
     }
-    const [snack, setSnack] = React.useState({ open: false, msg: '' });
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-    };
-
-    return (
-        <div>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                message={msg}
-                action={
-                    <React.Fragment>
-                        <Button color="secondary" size="small" onClick={handleClose}>
-                            UNDO
-            </Button>
-                        <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                            <CloseIcon fontSize="small" />
-                        </IconButton>
-                    </React.Fragment>
-                }
-            />
-        </div>
-    );
+    return null;
 }

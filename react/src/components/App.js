@@ -6,6 +6,10 @@ import {
   createMuiTheme,
   ThemeProvider
 } from "@material-ui/core";
+import { SnackbarProvider, useSnackbar } from 'notistack';
+import { withSnackbar } from 'notistack';
+
+
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { teal } from "@material-ui/core/colors";
@@ -40,13 +44,15 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename="/">
-        <Switch>
-            <Route exact path={`/`} component={Dashboard}/>
-            <Route component={Ni}/>
-        </Switch>
-      </BrowserRouter>
-      <CssBaseline />
+      <SnackbarProvider maxSnack={3}>
+        <BrowserRouter basename="/">
+          <Switch>
+              <Route exact path={`/`} component={Dashboard}/>
+              <Route component={Ni}/>
+          </Switch>
+        </BrowserRouter>
+        <CssBaseline />
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

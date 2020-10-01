@@ -15,7 +15,7 @@ const useStyle = makeStyles(theme => ({
 }));
 
 export default function Popup(props) {
-  const { openPopup, setOpenPopup } = props;
+  const { openPopup, setOpenPopup, title } = props;
   const classes = useStyle();
   return (
     <Dialog
@@ -25,7 +25,7 @@ export default function Popup(props) {
       open={openPopup}
     >
       <DialogTitle>
-        User Form
+        {title ? title : 'User Form'}
         <Button
           style={{ float: "right" }}
           margin="normal"

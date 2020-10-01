@@ -2,13 +2,17 @@ import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+
 import Popup from './Popup';
 import { makeStyles } from "@material-ui/core/styles";
-import Snackbar from './Snackbar';
+import { useSnackbar } from 'notistack';
+import red from '@material-ui/core/colors/red';
+
 
 const useStyles = makeStyles(theme => ({
     titleIcon: {
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: red[500],
         '& .MuiSvgIcon-root': {
             fontSize: '8rem'
         }
@@ -35,15 +39,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function ConfirmDialog(props) {
     const { showDialog, setShowDialog, action, onDelete } = props;
-    const [status, setStatus] = useState('');
+    const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
+
     return (
 
-        <Popup openPopup={showDialog} setOpenPopup={setShowDialog}>
+        <Popup openPopup={showDialog} setOpenPopup={setShowDialog} title='Confirm ?'>
             <div className={classes.container}>
               <div className={classes.left}>
                 <IconButton className={classes.titleIcon}>
-                    <NotListedLocationIcon />
+                    <HelpOutlineIcon />
                 </IconButton>
               </div>
               <div className={classes.right}>
@@ -57,7 +62,7 @@ export default function ConfirmDialog(props) {
                       size="large"
                       variant="contained"
                       color="secondary"
-                      onClick={(e)=>{onDelete(e); setStatus('delete.success');  setTimeout(()=>setShowDialog(false), 4000)}}
+                      onClick={(e)=>{onDelete(e); enqueueSnackbar('Deleted successfully', {variant: 'error'});  setTimeout(()=>setShowDialog(false), 4000)}}
                   >
                       Yes
                   </Button>
@@ -75,7 +80,6 @@ export default function ConfirmDialog(props) {
                 </div>
               </div>
             </div>
-            <Snackbar status={status} />
-        </Popup >
+        </Popup>
     );
 }
