@@ -26,7 +26,7 @@ const defaultValues = {
 
 function index(props) {
   const classes = useStyle();
-  const { values, setValues, onChange, onSubmit, onDelete, list, status } = UseForm({
+  const { values, setValues, onChange, onSubmit, onDelete, list } = UseForm({
     defaultValues
   });
   const userService = UserService();
@@ -74,7 +74,6 @@ function index(props) {
           values={values}
           onSubmit={onSubmit}
           onDelete={onDelete}
-          status={status}
         />
       </Popup>
     </>

@@ -72,8 +72,11 @@ class ActiveRecord extends Model {
       console.log(Object.keys(actions));
       Object.keys(actions).map(id => {
         if(actions[id].res && actions[id].res.status === 'fail') {
-          console.log('Err in RESP', actions[id].res)
-          errors.push(actions[id].res);
+          console.log('Err in RESP', actions[id].res);
+          if( (!actions[id].res.shown) || (actions[id].res.shown === false) ) {
+            errors.push(actions[id].res);
+          }
+          actions[id].res.shown = true;
         }
       });
       return errors;

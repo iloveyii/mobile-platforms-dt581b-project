@@ -62,7 +62,7 @@ export default function ConfirmDialog(props) {
                       size="large"
                       variant="contained"
                       color="secondary"
-                      onClick={(e)=>{onDelete(e); enqueueSnackbar('Deleted successfully', {variant: 'error'});  setTimeout(()=>setShowDialog(false), 4000)}}
+                      onClick={(e)=>{onDelete(e); setShowDialog(false);}}
                   >
                       Yes
                   </Button>

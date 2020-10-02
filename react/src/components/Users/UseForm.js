@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import UserService from "./UserService";
-
+import { useSnackbar } from 'notistack';
 
 
 function UseForm(props) {
   const { defaultValues } = props;
   const [values, setValues] = useState(defaultValues);
-  const [status, setStatus] = useState('');
   const userService = UserService();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -20,14 +20,12 @@ function UseForm(props) {
     if (form.id) {
       if (userService.update(form)) {
         setValues({ ...defaultValues });
-        setStatus('update.success');
-        setTimeout(() => setStatus(''), 4000);
+        enqueueSnackbar('Updated successfully', {variant: 'warning'});
       }
     } else {
       if (userService.create(form)) {
         setValues({ ...defaultValues });
-        setStatus('create.success');
-        setTimeout(() => setStatus(''), 4000);
+        enqueueSnackbar('Created successfully', {variant: 'success'});
       }
     }
   };
@@ -36,8 +34,7 @@ function UseForm(props) {
     e.preventDefault();
     userService.deleted(values);
     setValues({ ...defaultValues });
-    setStatus('delete.success');
-    setTimeout(() => setStatus(''), 4000);
+    enqueueSnackbar('Deleted successfully', {variant: 'error'});
   };
 
   return {
@@ -45,8 +42,7 @@ function UseForm(props) {
     setValues,
     onChange,
     onSubmit,
-    onDelete,
-    status
+    onDelete
   };
 }
 

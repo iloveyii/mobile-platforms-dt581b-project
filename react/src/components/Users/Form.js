@@ -1,6 +1,5 @@
 import React from "react";
 import { TextField, Typography, Button, makeStyles } from "@material-ui/core";
-import Snackbar from '../Snackbar';
 
 const useStyle = makeStyles(theme => ({
   form: {
@@ -12,7 +11,7 @@ const useStyle = makeStyles(theme => ({
 }));
 
 export default function Form(props) {
-  const { onChange, values, onSubmit, onDelete, status } = props;
+  const { onChange, values, onSubmit, onDelete } = props;
   const classes = useStyle();
   return (
     <form autoComplete="off" noValidate className={classes.form}>
@@ -57,15 +56,13 @@ export default function Form(props) {
           style={{ marginTop: "1em" }}
           margin="normal"
           size="large"
-          variant="contained" 
+          variant="contained"
           color="secondary"
           onClick={onDelete}
         >
           Delete
         </Button>
       )}
-
-      <Snackbar status={status} />
     </form>
   );
 }

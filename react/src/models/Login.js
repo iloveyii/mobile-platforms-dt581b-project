@@ -20,7 +20,6 @@ class Login extends ActiveRecord {
             password: 'root',
             authenticated: false
         };
-        this._selectList.admin = this._adminList;
     }
     // INTERFACE Select
     onSelect2 = (item) => {
