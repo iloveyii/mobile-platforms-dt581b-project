@@ -2,12 +2,16 @@ import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {Paper, Button} from "@material-ui/core";
+import OfflinePinOutlinedIcon from '@material-ui/icons/OfflinePinOutlined';
+import CancelPresentationOutlinedIcon from '@material-ui/icons/CancelPresentationOutlined';
+
 import ConfirmDialog from '../ConfirmDialog';
 
 const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 650,
-    marginTop: theme.spacing(3)
+    padding: 50
+    // marginTop: theme.spacing(3)
   }
 }));
 
@@ -22,7 +26,9 @@ export default function UsersList(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
+            <TableCell>
+              Name
+            </TableCell>
             <TableCell align="right">Email</TableCell>
             <TableCell align="right">Address</TableCell>
             <TableCell align="right">X</TableCell>
@@ -45,14 +51,14 @@ export default function UsersList(props) {
               <TableCell onClick={()=> setOpenPopup(true)} align="right">{row.address}</TableCell>
               <TableCell align="right">
                 <Button
-                  style={{ float: "right" }}
+                  style={{ float: "right", padding: 3 }}
                   margin="normal"
                   size="small"
                   variant="contained"
-                  color="primary"
+                  color="error"
                   onClick={() => setShowDialog(true) }
                 >
-                  X
+                  <CancelPresentationOutlinedIcon />
                 </Button>
               </TableCell>
             </TableRow>

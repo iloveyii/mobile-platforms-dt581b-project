@@ -9,13 +9,19 @@ import {
   ListItemText
 } from "@material-ui/core";
 import { MoveToInbox, Mail } from "@material-ui/icons";
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import SettingsApplicationsOutlinedIcon from '@material-ui/icons/SettingsApplicationsOutlined';
+import OfflinePinOutlinedIcon from '@material-ui/icons/OfflinePinOutlined';
 import Hidden from "@material-ui/core/Hidden";
+import {Link} from "react-router-dom";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    textDecoration: 'none'
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -46,6 +52,9 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     width: 250
+  },
+  primary: {
+      width: 40,
   }
 }));
 
@@ -77,7 +86,44 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+
+        <Link to='/users'>
+          <ListItem button key="key-users">
+              <ListItemIcon>
+                  <PeopleOutlineIcon />
+              </ListItemIcon>
+              <ListItemText classes={classes.primary} primary="Users" />
+          </ListItem>
+        </Link>
+
+        <Link to='/doors'>
+          <ListItem button key="key-doors">
+              <ListItemIcon>
+                  <MeetingRoomIcon />
+              </ListItemIcon>
+              <ListItemText primary="Doors" />
+          </ListItem>
+        </Link>
+
+        <Link to='/permissions'>
+          <ListItem button key="key-permissions">
+              <ListItemIcon>
+                  <OfflinePinOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Permissions" />
+          </ListItem>
+        </Link>
+
+        <Link to='/settings'>
+          <ListItem button key="key-settings">
+              <ListItemIcon>
+                  <SettingsApplicationsOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Settings" />
+          </ListItem>
+        </Link>
+
+        {["All mail", "Mail", "Settings"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <MoveToInbox /> : <Mail />}

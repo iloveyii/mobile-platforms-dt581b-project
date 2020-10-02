@@ -10,6 +10,7 @@ import UsersList from "./UsersList";
 import UserService from "./UserService";
 import Popup from "../Popup";
 import Form from "./Form";
+import PageHeader from "../PageHeader";
 
 const useStyle = makeStyles(theme => ({
   form: {
@@ -43,6 +44,11 @@ function index(props) {
       </Container>
 
       <Container maxWidth="md">
+        <PageHeader
+          title="SDG Goals"
+          subtitle="There are 17 SDG goals"
+          imageUrl="/images/good-health-and-well-being-sdg.jpg"
+        />
         <Button
           style={{ marginTop: "1em" }}
           margin="normal"
@@ -53,13 +59,6 @@ function index(props) {
         >
           Add New
         </Button>
-
-        <Link
-          style={{ marginTop: "1em" }}
-          to="/settings"
-        >
-          Settings
-        </Link>
 
         <UsersList
           setOpenPopup={setOpenPopup}

@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import {BrowserRouter} from 'react-router-dom';
 import {
   makeStyles,
   createMuiTheme
@@ -8,11 +7,16 @@ import { teal } from "@material-ui/core/colors";
 import { useSnackbar } from 'notistack';
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
+import {Route, Switch, BrowserRouter} from 'react-router-dom';
 
 import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import {Header} from "../Layouts";
 import PageHeader from "../components/PageHeader";
 import Users from "../components/Users";
+import Doors from "../components/Doors";
+import Permissions from "../components/Permissions";
+import Settings from "../components/Settings";
+import Ni from "../components/Ni";
 import Errors from "../components/Errors";
 import models from '../store/models';
 
@@ -30,12 +34,6 @@ const useStyles = makeStyles(theme=>({
 }));
 
 function Dashboard(props) {
-  const errors = [
-    {type: 'danger', msg: 'Error 1'},
-    {type: 'info', msg: 'Error 2'},
-    {type: 'warning', msg: 'Error 3'},
-    {type: 'success', msg: 'Error 4'},
-  ];
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const {users, logins} = props;
@@ -53,13 +51,17 @@ function Dashboard(props) {
 
   return (
       <div className={classes.main}>
-        <Header />
-        <PageHeader
-          title="SDG Goals"
-          subtitle="There are 17 SDG goals"
-          imageUrl="/images/good-health-and-well-being-sdg.jpg"
-        />
-          <Users />
+        <BrowserRouter basename="/">
+          <Header />
+          <Switch>
+            <Route exact path={`/`} component={Users}/>
+            <Route exact path={`/users`} component={Users}/>
+            <Route exact path={`/doors`} component={Doors}/>
+            <Route exact path={`/permissions`} component={Permissions}/>
+            <Route exact path={`/settings`} component={Settings}/>
+            <Route component={Ni}/>
+          </Switch>
+        </BrowserRouter>
       </div>
   );
 }
@@ -80,4 +82,4 @@ const mapStateToProps = state => ({
  */
 const mapActionsToProps = {};
 
-export default withRouter(connect(mapStateToProps, mapActionsToProps)(Dashboard));
+export default connect(mapStateToProps, mapActionsToProps)(Dashboard);
