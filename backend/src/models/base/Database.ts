@@ -14,7 +14,6 @@ export class Database {
     }
 
     async connect() {
-        console.log("Inside connect");
         if (Database.database !== undefined) return Database.database;
         try {
             const db = await MongoClient.connect(this.mongo.url, this.mongo.mongoOptions);

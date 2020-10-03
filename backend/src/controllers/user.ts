@@ -9,7 +9,6 @@ const database = new Database("rdigital");
 // @desc   Get all from Model
 // @route  GET /api/v1/users
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("getUsers");
     const model = new User( undefined);
     await model.read();
     return res.status(200).send(model.response);
