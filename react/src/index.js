@@ -53,7 +53,8 @@ const sagaMiddleware = createSagaMiddleware();
 // Redux compose cannot handle a null or undefined middleware
 const allStoreEnhancers = ENVIRONMENT.DEV
     ? compose(
-        applyMiddleware(sagaMiddleware)
+        applyMiddleware(sagaMiddleware),
+        window.devToolsExtension && window.devToolsExtension()
     )
     : applyMiddleware(sagaMiddleware);
 
