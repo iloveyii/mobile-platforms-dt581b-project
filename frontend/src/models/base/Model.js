@@ -62,17 +62,18 @@ class Model {
             // {id, status, form, list, errors}
             read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-            update: (data) => ({type: this.types.update, payload: {data}}),
-            update_success: (data) => ({type: this.types.update_success, payload: {data}}),
-            update_fail: (data) => ({type: this.types.update_fail, payload: {data}}),
+            update: (form) => ({type: this.types.update, payload: {id:shortid.generate(), type:this.types.delete, form, list:[], method:'PUT'}}),
+            update_success: (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
             edit: (data) => ({type: this.types.edit, payload: {data}}),
             edit_success: (data) => ({type: this.types.edit_success, payload: {data}}),
             edit_fail: (data) => ({type: this.types.edit_fail, payload: {data}}),
 
-            delete: (data) => ({type: this.types.delete, payload: data}),
-            delete_success: (data) => ({type: this.types.delete_success, payload: {data}}),
-            delete_fail: (data) => ({type: this.types.delete_fail, payload: {data}}),
+            delete: (form) => ({type: this.types.delete, payload: {id:shortid.generate(), type:this.types.delete, form, list:[], method:'DELETE'}}),
+            delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            delete_fail: (action, error) => ({type: this.types.delete_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
+
         };
     }
 
@@ -99,6 +100,8 @@ class Model {
         const reducer = (state = initState, action = {}) => {
 
             switch (action.type) {
+                case this.types.update: // Place action in state's actions
+                case this.types.delete:  // Place action in state's actions
                 case this.types.create : // Place action in state's actions
                 case this.types.read:
                     this.log('Inside Reducer read action is :  ');
@@ -110,6 +113,7 @@ class Model {
                       req: action.payload
                     };
                     return newState;
+                    break;
 
                 case this.types.create_success : // Put data in list
                 case this.types.read_success:
@@ -121,6 +125,7 @@ class Model {
                         newState.actions[id]['res'] = action.payload;
                       }
                     } else { // Place res in action's res success === fail is on server side and not http error
+                      console.log('ID not exist in actions');
                       newState = {...state}; // there was an error (server side) therefore don't touch list and form
                       if(newState.actions[id]) {
                         newState.actions[id]['res'] = action.payload;
@@ -128,7 +133,30 @@ class Model {
                     }
 
                     return newState;
+                    break;
 
+                case this.types.update_success: // Put data in list
+                case this.types.delete_success: // Put data in list
+                  console.log('DELETE SUCCESS HERE ', action)
+                  var {id, type, status, form, list, errors} = action.payload;
+                  if(status === 'success') { // Put data in list
+                    newState = {...state}; // fill both list and form from new data
+                    if(newState.actions[id]) {
+                      newState.actions[id]['res'] = action.payload;
+                    }
+                  } else { // Place res in action's res success === fail is on server side and not http error
+                    console.log('ID not exist in actions');
+                    newState = {...state}; // there was an error (server side) therefore don't touch list and form
+                    if(newState.actions[id]) {
+                      newState.actions[id]['res'] = action.payload;
+                    }
+                  }
+
+                  return newState;
+                  break;
+
+                case this.types.update_fail: // handle http exceptions
+                case this.types.delete_fail: // handle http exceptions
                 case this.types.create_fail : // handle http exceptions
                 case this.types.read_fail: // handle http exceptions
                     console.log('READ FAIL in redu', action);
@@ -141,47 +169,10 @@ class Model {
                       console.log('Action with id not found', action)
                     }
                     return newState;
-
-
-                case this.types.delete:  // Place action in state's actions
-                    break;
-
-                case this.types.delete_success: // Put data in list
-                    var {data, success} = action.payload.data;
-                    var newState = {
-                        actions: 'delete_success',
-                        success,
-                    }
-
-                    return {
-                        ...state, ...newState
-                    };
-
-                case this.types.delete_fail: // handle http exceptions
-                  break;
-
-                case this.types.update: // Place action in state's actions
-                  break;
-
-                case this.types.update_success: // Put data in list
-                    var {list, form, actions} = action.payload.data;
-                    var newState = {...state};
-                    if (list) {
-                        newState.list = list;
-                    }
-                    if (form) {
-                        newState.form = form;
-                    }
-                    if (actions) {
-                        newState.actions = actions;
-                    }
-                    return newState;
-
-                case this.types.update_fail: // handle http exceptions
                     break;
 
                 default:
-                    this.log('Inside default reducer of class ' + this.name + JSON.stringify(action));
+                    this.log('Inside default reducer of class ' + this.name );
                     return state;
             }
         };
@@ -205,7 +196,7 @@ class Model {
                     // yield put($this.actions.read());
                 } else {
                     console.log('CREATE fail', response);
-                    yield put($this.actions.create_fail(response));
+                    yield put($this.actions.create_fail(action, response));
                 }
             } catch (err) {
                 console.log('CREATE err', err);
@@ -220,7 +211,7 @@ class Model {
                     console.log('READ saga data received ', response)
                     yield put($this.actions.read_success(action, response));
                 } else {
-                    yield put($this.actions.read_fail(response));
+                    yield put($this.actions.read_fail(action, response));
                 }
             } catch (err) {
                 console.log('ERROR read : ', err.message);
@@ -249,20 +240,15 @@ class Model {
         const deleted = function* (action) {
             try {
                 // IF reset
-                if (action.payload.data === 'reset') {
-                    yield put($this.actions.delete_success(action.payload.data));
-                } else {
                     console.log('deleted saga ', action)
-                    const data = yield call($this.api.delete, action.payload);
-                    if (true || Array.isArray(Object.keys(data))) {
-                        yield put($this.actions.delete_success(data));
-                        // yield put($this.actions.read());
+                    const response = yield call($this.api.delete, action.payload);
+                    if (true || Array.isArray(Object.keys(response))) {
+                        yield put($this.actions.delete_success(action, response));
                     } else {
-                        yield put($this.actions.delete_fail(data));
+                        yield put($this.actions.delete_fail(action, response));
                     }
-                }
             } catch (err) {
-                yield put($this.actions.delete_fail(err));
+                yield put($this.actions.delete_fail(action, err.message));
             }
         };
 
@@ -295,10 +281,10 @@ class Model {
                     throw new Error(error);
                 })
             },
-            delete: (data) =>
-                axios.delete(this.server + '/' + data.id).then(res => res.data).catch(error => {
-                    throw new Error(error);
+            delete: (payload) =>
+                axios.delete(this.server + '/' + payload.form.id).then(res => res.data).catch(error => {
                     console.dir(error);
+                    throw new Error(error);
                 }),
             update: (data) => {
                 const formData = data.formData;

@@ -4,8 +4,12 @@ import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "
 import {Paper, Button} from "@material-ui/core";
 import OfflinePinOutlinedIcon from '@material-ui/icons/OfflinePinOutlined';
 import CancelPresentationOutlinedIcon from '@material-ui/icons/CancelPresentationOutlined';
+import {connect} from "react-redux";
+import {withRouter, Link} from "react-router-dom";
 
 import ConfirmDialog from '../ConfirmDialog';
+import models from '../../store/models';
+
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -14,11 +18,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function UsersList(props) {
-  const { rows, setValues, setOpenPopup, onDelete } = props;
+function UsersList(props) {
+  const { rows, users, values, setValues, onDelete, setOpenPopup, deleteAction} = props;
   const [showDialog, setShowDialog] = useState(false);
   console.log(rows, props);
   const classes = useStyles();
+
+  const deleted = (row) => {
+    console.log('Deleting ', row);
+    setValues(row);
+    props.deleteAction(row);
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -34,7 +44,7 @@ export default function UsersList(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, i) => (
+          {users.map((row, i) => (
             <TableRow
               style={{ cursor: "pointer" }}
               key={i}
@@ -55,7 +65,7 @@ export default function UsersList(props) {
                   size="small"
                   variant="contained"
                   color="primary"
-                  onClick={() => setShowDialog(true) }
+                  onClick={(e) => { deleted(row); setShowDialog(true); } }
                 >
                   <CancelPresentationOutlinedIcon />
                 </Button>
@@ -64,7 +74,25 @@ export default function UsersList(props) {
           ))}
         </TableBody>
       </Table>
-      <ConfirmDialog onDelete={onDelete} showDialog={showDialog} setShowDialog={setShowDialog} action={()=>console.log('delete')} />
+      <ConfirmDialog onDelete={deleted} showDialog={showDialog} setShowDialog={setShowDialog} action={()=>console.log('delete')} />
     </TableContainer>
   );
 }
+
+/**
+ * Get data from store
+ * @param state
+ */
+const mapStateToProps = state => ({
+    users: state.users.list || [],
+});
+
+/**
+ * Import action from dir action above - but must be passed to connect method in order to trigger reducer in store
+ * @type {{readAction: UserReadAction}}
+ */
+const mapActionsToProps = {
+  deleteAction: models.users.actions.delete
+};
+
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(UsersList));
