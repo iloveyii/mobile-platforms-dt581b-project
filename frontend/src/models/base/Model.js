@@ -54,7 +54,6 @@ class Model {
             create_success: (action, response) => ({type: this.types.create_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
             create_fail: (action, error) => ({type: this.types.create_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-
             //{id, type, form, list, method} - REQUEST
             read: (form) => ({type: this.types.read, payload: {id:shortid.generate(), type:this.types.read, form, list:[], method:'GET'}}),
             // {id, type, status, form, list, errors} - RESPONSE
@@ -66,14 +65,9 @@ class Model {
             update_success: (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-            edit: (data) => ({type: this.types.edit, payload: {data}}),
-            edit_success: (data) => ({type: this.types.edit_success, payload: {data}}),
-            edit_fail: (data) => ({type: this.types.edit_fail, payload: {data}}),
-
             delete: (form) => ({type: this.types.delete, payload: {id:shortid.generate(), type:this.types.delete, form, list:[], method:'DELETE'}}),
             delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
             delete_fail: (action, error) => ({type: this.types.delete_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
-
         };
     }
 
@@ -87,10 +81,6 @@ class Model {
                   id1: {
                     req: {id: 1, type: 'user.read', form:{}, list:[], method: 'get'},
                     res: {id: 1,status: 'success', form:{}, list:[], errors:{}}
-                  },
-                  id2: {
-                    req: {id: 2, type: 'user.read', form:{}, list:[], method: 'get'},
-                    res: {id: 2,status: 'success', form:{}, list:[], errors:{}}
                   }
                 },
         };
@@ -101,7 +91,7 @@ class Model {
 
             switch (action.type) {
                 case this.types.update: // Place action in state's actions
-                case this.types.delete:  // Place action in state's actions
+                case this.types.delete:  // Place action in state's actions - @todo make instant delete
                 case this.types.create : // Place action in state's actions
                 case this.types.read:
                     this.log('Inside Reducer read action is :  ');
@@ -221,19 +211,16 @@ class Model {
 
         const update = function* (action) {
             try {
-                const data = yield call($this.api.update, {
-                    formData: action.payload.data.formData,
-                    action: (d) => action.payload.data.action ? action.payload.data.action(d) : null
-                });
-                if (data && Array.isArray(Object.keys(data))) {
-                    yield put($this.actions.update_success(data));
+                const response = yield call($this.api.update, action.payload);
+                if (response && Array.isArray(Object.keys(response))) {
+                    yield put($this.actions.update_success(response));
                     yield put($this.actions.read());
                 } else {
-                    yield put($this.actions.update_fail(data));
+                    yield put($this.actions.update_fail(action, response));
                 }
             } catch (err) {
                 console.log(err);
-                yield put($this.actions.update_fail(err));
+                yield put($this.actions.update_fail(action, err.message));
             }
         };
 
@@ -286,20 +273,20 @@ class Model {
                     console.dir(error);
                     throw new Error(error);
                 }),
-            update: (data) => {
+            update: (payload) => {
                 const formData = data.formData;
                 const config = {
                     onUploadProgress: function (progressEvent) {
                         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                        data && data.action(percentCompleted);
+                        payload && payload.action(percentCompleted);
                     }
                 };
-                return axios.put(this.server + '/' + formData.getAll('_id'), formData, config).then(res => {
+                return axios.put(this.server + '/' + payload.form.id, payload.form, config).then(res => {
                     console.log('Update response: ', res);
                     return res.data;
                 }).catch(error => {
-                    throw new Error(error);
                     console.dir(error);
+                    throw new Error(error);
                 })
             }
         }
