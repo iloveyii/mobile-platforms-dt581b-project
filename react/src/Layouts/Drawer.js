@@ -92,7 +92,7 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
               <ListItemIcon>
                   <PeopleOutlineIcon />
               </ListItemIcon>
-              <ListItemText classes={classes.primary} primary="Users" />
+              <ListItemText className={classes.primary} primary="Users" />
           </ListItem>
         </Link>
 
