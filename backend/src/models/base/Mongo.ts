@@ -14,9 +14,11 @@ class Mongo implements ModelI {
         success: true,
         data: []
     };
+    private database : any;
 
-    constructor(protected database: Database, private readonly collection: string, public data: any) {
+    constructor(private readonly collection: string, public data: any) {
         console.log("Mongo Collection : ", collection, data);
+        this.database = Database.database;
     }
 
     // ----------------------------------
@@ -131,29 +133,4 @@ class Mongo implements ModelI {
     }
 }
 
-async function test_db() {
-    const database = new Database("shop");
-    const user: UserT | undefined = {email: "em@il.com", password: "p@$$w0rd"};
-    const model = await new Mongo(database, "users", undefined);
-    const condition1: ConditionI = new Condition({where: {email: "em@il.com"}});
-    const condition2: ConditionI = new Condition({where: {email: "em@ilupdated.com"}});
-
-    console.log("----------------CREATE------------------");
-    console.log((await model.create()).response.data.model);
-    console.log("----------------READ------------------");
-    console.log((await model.read(condition1)).response.data);
-    console.log("----------------UPDATE------------------");
-    console.log((await model.update(condition1)).response.data);
-    console.log("----------------DELETE------------------");
-    console.log((await model.delete(condition2)).response.data);
-}
-
-
-// test_db();
-
 export default Mongo;
-
-// const condition1: ConditionT = {where: {id: "5efbb5673ea71053ac4fc6ba", email: "em@il.com"}};
-//
-// const c = new Condition("mongodb", condition1);
-// console.log(c.get);

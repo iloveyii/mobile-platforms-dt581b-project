@@ -24,8 +24,8 @@ const COLLECTION = "users";
 
 class User extends Mongo {
 
-    constructor(protected database: Database, private user?: UserT) {
-        super(database, COLLECTION, user);
+    constructor(private user?: UserT) {
+        super(COLLECTION, user);
     }
 
     rules() {
@@ -37,5 +37,3 @@ class User extends Mongo {
 }
 
 export default User;
-
-

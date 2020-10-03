@@ -14,11 +14,6 @@ import user from "./routes/user";
 import fault from "./routes/fault";
 
 // ----------------------------------
-// Connect to DB
-// ----------------------------------
-const dialect = "mongodb"; // process.env.DB_DIALECT || "mongodb";
-
-// ----------------------------------
 // Express configuration
 // ----------------------------------
 const app: any = express();

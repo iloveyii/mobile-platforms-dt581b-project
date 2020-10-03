@@ -1,23 +1,25 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-
-const mongo = {
-    url: "mongodb://rdigital:rdigital@localhost:27017/rdigital", // conn with auth
-    mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
-};
+const DB_NAME="rdigital"; const DB_USER="rdigital"; const DB_PASS="rdigital";
 
 export class Database {
     static database: any = undefined;
+    private mongo : any;
 
-    constructor(private dbname: string) {
+    constructor(private dbname: string = DB_NAME, private dbuser: string = DB_USER, private dbpass: string=DB_PASS) {
+      this.mongo = {
+          url: `mongodb://${dbuser}:${dbpass}@localhost:27017/${dbname}`, // conn with auth
+          mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+      };
     }
 
     async connect() {
-        // if (Database.database !== undefined) return Database.database;
+        console.log("Inside connect");
+        if (Database.database !== undefined) return Database.database;
         try {
-            const client = await MongoClient.connect(mongo.url, mongo.mongoOptions);
+            const db = await MongoClient.connect(this.mongo.url, this.mongo.mongoOptions);
             console.log("Mongodb connected to : " + this.dbname);
-            Database.database = await client.db(this.dbname);
+            Database.database = db;
         } catch (error) {
             console.log("Error : ", error);
         }
@@ -29,3 +31,12 @@ export class Database {
         return Database.database;
     }
 }
+
+
+/**
+const DB_NAME="rdigital"; const DB_USER="rdigital"; const DB_PASS="rdigital";
+const db = new Database(DB_NAME, DB_USER, DB_PASS);
+db.connect();
+console.log("DB");
+db.connect();
+*/

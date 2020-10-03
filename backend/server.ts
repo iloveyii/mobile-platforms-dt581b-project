@@ -4,6 +4,7 @@ import chalk from "chalk";
 const session = require("express-session");
 
 import app from "./src/app";
+import {Database} from "./src/models/base/Database";
 
 // ----------------------------------
 // Environment setup
@@ -15,6 +16,9 @@ const {
     SESS_NAME = "sid",
     SESS_SECRET = "top-secret",
     SESS_LIFETIME = 1000 * 60 * 60 * 2, // 2 hrs
+    DB_NAME = "test",
+    DB_USER = "test",
+    DB_PASS = "test"
 } = process.env;
 
 app.use(
@@ -31,8 +35,13 @@ app.use(
     }));
 
 // ----------------------------------
-// Express server
+// Connect to DB
 // ----------------------------------
+const db = new Database(DB_NAME, DB_USER, DB_PASS);
+db.connect();
+console.log("DB DB_NAME, DB_USER, DB_PASS", DB_NAME, DB_USER, DB_PASS);
+
+
 // ----------------------------------
 // Express server
 // ----------------------------------

@@ -12,8 +12,8 @@ type FaultT = {
 const COLLECTION = "faults";
 
 class Fault extends Mongo {
-    constructor(database: Database, private fault?: FaultT) {
-        super(database, COLLECTION, fault);
+    constructor(private fault?: FaultT) {
+        super(COLLECTION, fault);
     }
 
     rules() {

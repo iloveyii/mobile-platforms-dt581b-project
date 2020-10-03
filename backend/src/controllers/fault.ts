@@ -10,7 +10,7 @@ const database = new Database("receipt");
 // @route  GET /api/v1/faults
 export const getFaults = async (req: Request, res: Response, next: NextFunction) => {
     console.log("getFaults");
-    const model = new Fault(database, undefined);
+    const model = new Fault(undefined);
     await model.read();
     return res.status(200).send(model.response);
 };
@@ -19,16 +19,16 @@ export const getFaults = async (req: Request, res: Response, next: NextFunction)
 // @route  GET /api/v1/faults/:id
 export const getFault = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Fault(database, req.body.product);
+    const model = new Fault(req.body.product);
     await model.read(condition);
     return res.status(200).send(model.response);
 };
 
-// @desc   Register/Create a Model - using bcrypt hashed passwords
+// @desc   Register/Create a Model - using bcrypt hashed passwords 
 // @route  POST /api/v1/register
 export const createFault = async (req: Request, res: Response, next: NextFunction) => {
     console.log("Fault received :", req.body.product);
-    const model = new Fault(database, req.body.product);
+    const model = new Fault(req.body.product);
     await model.validate() && await model.create();
     return res.status(201).send(model.response);
 };
@@ -37,7 +37,7 @@ export const createFault = async (req: Request, res: Response, next: NextFunctio
 // @route  UPDATE /api/v1/crud
 export const updateFault = async (req: Request, res: Response, next: NextFunction) => {
     const condition = new Condition({where: {id: req.params.id}});
-    const model = new Fault(database, req.body.product);
+    const model = new Fault(req.body.product);
     await model.validate() && await model.update(condition);
     return res.status(200).send(model.response);
 };
@@ -45,7 +45,7 @@ export const updateFault = async (req: Request, res: Response, next: NextFunctio
 // @desc   Delete Model
 // @route  DELETE /api/v1/crud
 export const deleteFault = async (req: Request, res: Response, next: NextFunction) => {
-    const model = new Fault(database, req.body.product);
+    const model = new Fault(req.body.product);
     const condition = new Condition({where: {id: req.params.id}});
     await model.delete(condition);
     return res.status(200).send(model.response);

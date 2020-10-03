@@ -9,7 +9,8 @@ require("dotenv").config();
 
 const token_secret = process.env.TOKEN_SECRET || "secret";
 
-const database = new Database("shop");
+const DB_NAME="rdigital"; const DB_USER="rdigital"; const DB_PASS="rdigital";
+const database = new Database(DB_NAME, DB_USER, DB_PASS);
 
 
 // @desc   Make a user log in
@@ -18,7 +19,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 
     try {
         const condition = new Condition({where: {email: req.body.user.email}});
-        const model = new Mongo(database, "users", req.body.user);
+        const model = new Mongo("users", req.body.user);
         await model.read(condition);
         const response = model.response;
         const user = response.data[0];
@@ -36,4 +37,3 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         return res.status(403).send({success: false, data: ["Server error"]});
     }
 };
-
