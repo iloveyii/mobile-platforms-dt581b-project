@@ -2,3 +2,4 @@
 .idea
 *.pdf
 .remote-sync.json
+tmp
