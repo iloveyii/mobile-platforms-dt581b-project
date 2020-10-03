@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import UseForm from "./UseForm";
 import { Container, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import {connect} from "react-redux";
-import {withRouter, Link} from "react-router-dom";
 
-import models from '../../store/models';
 import UsersList from "./UsersList";
 import UserService from "./UserService";
 import Popup from "../Popup";
@@ -32,10 +29,6 @@ function index(props) {
   });
   const userService = UserService();
   const [openPopup, setOpenPopup] = useState(false);
-  const {users} = props;
-
-  console.log('USERS ', users);
-  console.log('USERS ERRORS', models.users.errors(users.actions)); // array of responses
 
   return (
     <>
@@ -79,23 +72,5 @@ function index(props) {
   );
 }
 
-/**
- * Get data from store
- * @param state
- */
-const mapStateToProps = state => ({
-    users: state.users,
-});
 
-/**
- * Import action from dir action above - but must be passed to connect method in order to trigger reducer in store
- * @type {{readAction: UserReadAction}}
- */
-const mapActionsToProps = {
-    createAction: models.users.actions.create,
-    readAction: models.users.actions.read,
-    updateAction: models.users.actions.update,
-    deleteAction: models.users.actions.delete,
-};
-
-export default withRouter(connect(mapStateToProps, mapActionsToProps)(index));
+export default index;

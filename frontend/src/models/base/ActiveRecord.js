@@ -18,14 +18,14 @@ class ActiveRecord extends Model {
 
     set form(form) {
         this._form = {};
-        for (let key in form) {
+        for (let key in form) { // ?
             this._form[key] = form[key];
         }
         return this;
     }
 
     get form() {
-        return this._form;
+        return {user: this._form};
     }
 
     setUploadProgress(value) {
@@ -80,6 +80,10 @@ class ActiveRecord extends Model {
         }
       });
       return errors;
+    }
+
+    create = (form) =>  {
+      return true;
     }
 }
 

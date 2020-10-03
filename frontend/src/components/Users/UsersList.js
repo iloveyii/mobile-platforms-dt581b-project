@@ -10,7 +10,6 @@ import ConfirmDialog from '../ConfirmDialog';
 const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 650,
-    padding: 50
     // marginTop: theme.spacing(3)
   }
 }));
@@ -55,7 +54,7 @@ export default function UsersList(props) {
                   margin="normal"
                   size="small"
                   variant="contained"
-                  color="error"
+                  color="primary"
                   onClick={() => setShowDialog(true) }
                 >
                   <CancelPresentationOutlinedIcon />

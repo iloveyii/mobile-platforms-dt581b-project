@@ -1,5 +1,9 @@
 import React from "react";
 import { TextField, Typography, Button, makeStyles } from "@material-ui/core";
+import {connect} from "react-redux";
+import {withRouter, Link} from "react-router-dom";
+
+import models from '../../store/models';
 
 const useStyle = makeStyles(theme => ({
   form: {
@@ -10,9 +14,20 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-export default function Form(props) {
+function Form(props) {
   const { onChange, values, onSubmit, onDelete } = props;
   const classes = useStyle();
+
+  const create = (e) => {
+    e.preventDefault();
+    onSubmit(e);
+    const model = models.users;
+
+    if(model && model.validate(values)) {
+      props.createAction(model.form);
+      console.log('User created;', model.form);
+    }
+  }
   return (
     <form autoComplete="off" noValidate className={classes.form}>
       <Typography variant="h5">Users</Typography>
@@ -47,7 +62,7 @@ export default function Form(props) {
         size="large"
         variant="contained"
         color="primary"
-        onClick={onSubmit}
+        onClick={create}
       >
         Save
       </Button>
@@ -66,3 +81,25 @@ export default function Form(props) {
     </form>
   );
 }
+
+
+/**
+ * Get data from store
+ * @param state
+ */
+const mapStateToProps = state => ({
+    users: state.users,
+});
+
+/**
+ * Import action from dir action above - but must be passed to connect method in order to trigger reducer in store
+ * @type {{readAction: UserReadAction}}
+ */
+const mapActionsToProps = {
+    createAction: models.users.actions.create,
+    readAction: models.users.actions.read,
+    updateAction: models.users.actions.update,
+    deleteAction: models.users.actions.delete
+};
+
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(Form));

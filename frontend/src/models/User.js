@@ -10,6 +10,11 @@ class User extends ActiveRecord {
             quiz: [],
         };
     }
+
+    validate = (form) => {
+      this.form = form;
+      return true;
+    }
 }
 
 export default User;

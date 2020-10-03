@@ -50,9 +50,10 @@ class Model {
     // ACTIONS
     get actions() {
         return {
-            create: (data) => ({type: this.types.create, payload: {data}}),
-            create_success: (data) => ({type: this.types.create_success, payload: {data}}),
-            create_fail: (data) => ({type: this.types.create_fail, payload: {data}}),
+            create: (form) => ({type: this.types.create,payload: {id:shortid.generate(), type:this.types.create, form, list:[], method:'POST'}}),
+            create_success: (action, response) => ({type: this.types.create_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            create_fail: (action, error) => ({type: this.types.create_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
+
 
             //{id, type, form, list, method} - REQUEST
             read: (form) => ({type: this.types.read, payload: {id:shortid.generate(), type:this.types.read, form, list:[], method:'GET'}}),
@@ -98,6 +99,7 @@ class Model {
         const reducer = (state = initState, action = {}) => {
 
             switch (action.type) {
+                case this.types.create : // Place action in state's actions
                 case this.types.read:
                     this.log('Inside Reducer read action is :  ');
                     this.log(action);
@@ -109,8 +111,9 @@ class Model {
                     };
                     return newState;
 
+                case this.types.create_success : // Put data in list
                 case this.types.read_success:
-                    console.log('READ SUCCESS HERE ', action)
+                    console.log('READ/CREATE SUCCESS HERE ', action)
                     var {id, type, status, form, list, errors} = action.payload;
                     if(status === 'success') { // Put data in list
                       newState = {...state, list, form}; // fill both list and form from new data
@@ -126,6 +129,7 @@ class Model {
 
                     return newState;
 
+                case this.types.create_fail : // handle http exceptions
                 case this.types.read_fail: // handle http exceptions
                     console.log('READ FAIL in redu', action);
                     var {id, type, status, form, list, errors} = action.payload;
@@ -154,26 +158,6 @@ class Model {
                     };
 
                 case this.types.delete_fail: // handle http exceptions
-                  break;
-
-                case this.types.create : // Place action in state's actions
-                  break;
-
-                case this.types.create_success : // Put data in list
-                    console.log("create_success :", action.payload);
-                    var {data, success} = action.payload.data;
-                    var newState;
-
-                    newState = {
-                        actions: success ? 'create_success': 'create_fail',
-                        success,
-                        form: data
-                    }
-
-                    return {
-                        ...state, ...newState
-                    };
-                case this.types.create_fail : // handle http exceptions
                   break;
 
                 case this.types.update: // Place action in state's actions
@@ -213,24 +197,19 @@ class Model {
         const create = function* (action) {
             console.log('Action in saga', action.payload);
             try {
-                const data = yield call($this.api.create, {
-                    formData: action.payload.data.formData ? action.payload.data.formData : action.payload.data,
-                    action: (d) => action.payload.data.action ? action.payload.data.action(d) : null
-                });
-                console.log('CREATE ', data);
-                if (true || data && Array.isArray(Object.keys(data))) {
-                    console.log('CREATE if', data);
-                    yield put($this.actions.create_success(data));
+                const response = yield call($this.api.create, action.payload);
+                console.log('CREATE ', response);
+                if (true || response && Array.isArray(Object.keys(response))) {
+                    console.log('CREATE if', response);
+                    yield put($this.actions.create_success(action, response));
                     // yield put($this.actions.read());
                 } else {
-                    console.log('CREATE fail', data);
-                    yield put($this.actions.create_fail(data));
+                    console.log('CREATE fail', response);
+                    yield put($this.actions.create_fail(response));
                 }
             } catch (err) {
-                console.log(err);
                 console.log('CREATE err', err);
-
-                yield put($this.actions.create_fail(err));
+                yield put($this.actions.create_fail(action, err.message));
             }
         };
 
@@ -303,17 +282,17 @@ class Model {
                     console.dir(error);
                     throw new Error(error);
                 }),
-            create: (data) => {
+            create: (payload) => {
                 const config = {
                     onUploadProgress: function (progressEvent) {
                         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                        data.action && data.action(percentCompleted);
+                        payload.action && payload.action(percentCompleted);
                     }
                 };
-                console.log('API create', data);
-                return axios.post(this.server, data.formData, config).then(res => res.data).catch(error => {
-                    throw new Error(error);
+                console.log('API create', payload);
+                return axios.post(this.server, payload.form, config).then(res => res.data).catch(error => {
                     console.dir(error);
+                    throw new Error(error);
                 })
             },
             delete: (data) =>
