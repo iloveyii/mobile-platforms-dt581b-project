@@ -60,15 +60,10 @@ class  UsersList extends React.Component {
               <TableRow
                 style={{ cursor: "pointer" }}
                 key={i}
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.props.editAction(row);
-                  this.setState({openPopup:true});
-                }}
               >
-                <TableCell onClick={()=>null } component="th" scope="row">{row.name}</TableCell>
-                <TableCell onClick={()=>null } align="right">{row.email}</TableCell>
-                <TableCell onClick={()=>null } align="right">{row.address}</TableCell>
+                <TableCell onClick={()=> {this.props.editAction(row); this.setState({openPopup:true});} } component="th" scope="row">{row.name}</TableCell>
+                <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.email}</TableCell>
+                <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.address}</TableCell>
 
                 <TableCell align="right">
                   <Button
@@ -77,7 +72,7 @@ class  UsersList extends React.Component {
                     size="small"
                     variant="contained"
                     color="primary"
-                    onClick={(e) => { this.deleted(row); this.setState({openConfirmDialog:true}); } }
+                    onClick={(e) => { this.setState({openConfirmDialog:true}); } }
                   >
                     <CancelPresentationOutlinedIcon />
                   </Button>
