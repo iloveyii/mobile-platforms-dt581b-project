@@ -59,7 +59,7 @@ function index(props) {
 
         <UsersList/>
       </Container>
-      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
+      <Popup open={openPopup} setOpen={setOpenPopup}>
         <Form/>
       </Popup>
     </>

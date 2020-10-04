@@ -38,13 +38,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ConfirmDialog(props) {
-    const { showDialog, setShowDialog, action, onDelete } = props;
+    const { open, setOpen, onDelete } = props;
     const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
 
     return (
 
-        <Popup openPopup={showDialog} setOpenPopup={setShowDialog} title='Confirm ?'>
+        <Popup open={open} setOpen={setOpen} title='Confirm ?'>
             <div className={classes.container}>
               <div className={classes.left}>
                 <IconButton className={classes.titleIcon}>
@@ -62,7 +62,7 @@ export default function ConfirmDialog(props) {
                       size="large"
                       variant="contained"
                       color="secondary"
-                      onClick={(e)=>{onDelete(e); setShowDialog(false);}}
+                      onClick={(e)=>{onDelete(e); setOpen(false);}}
                   >
                       Yes
                   </Button>
@@ -73,7 +73,7 @@ export default function ConfirmDialog(props) {
                       size="large"
                       variant="contained"
                       color="primary"
-                      onClick={() => setShowDialog(false)}
+                      onClick={() => setOpen(false)}
                   >
                       No
                   </Button>

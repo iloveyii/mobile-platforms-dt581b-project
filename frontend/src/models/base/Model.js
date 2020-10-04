@@ -65,9 +65,15 @@ class Model {
             // {id, status, form, list, errors}
             read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-            edit: (form) => ( { type: this.types.edit, payload: {id:(new ObjectID()).toString(), type:this.types.edit, form, method:'EDIT'} }),
+            edit: (form) => {
+              const id = form.id;
+              return { type: this.types.edit, payload: {id, type:this.types.edit, form, method:'EDIT'} }
+            },
             edit_reset: (form) => ( { type: this.types.edit_reset, payload: {id:(new ObjectID()).toString(), type:this.types.edit_reset, form, method:'EDIT_RESET'} }),
-            update: (form) => ({type: this.types.update, payload: {id:(new ObjectID()).toString(), type:this.types.update, form, list:[], method:'PUT'}}),
+            update: (form) => {
+              const id = form.id;
+              return {type: this.types.update, payload: {id, type:this.types.update, form, list:[], method:'PUT'}}
+            },
             update_success:  (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data[0], list:response.data, errors: {}} }),
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
@@ -137,7 +143,10 @@ class Model {
                     newState = {...state};
                     const index = newState.list.findIndex(item => item.id === form.id);
                     if(index !== -1) {
+                      console.log('UPDATE index: ', index, form, newState.list);
                       newState.list[index] = form;
+                    } else {
+                      console.log('UPDATE : ', form, newState.list);
                     }
                     newState.actions[id] = {
                       req: action.payload

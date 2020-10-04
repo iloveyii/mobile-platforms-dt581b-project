@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { ResponseT, UserT } from "../../types";
 import { ConditionI, ModelI } from "../../interfaces";
 import { Database } from "./Database";
@@ -27,6 +28,7 @@ class Mongo implements ModelI {
     async create(): Promise<any> {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
+        this.data._id = new ObjectId(this.data.id);
         const model = await collection.insertOne(this.data);
         this.setResponse(
             true,

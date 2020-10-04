@@ -15,14 +15,14 @@ const useStyle = makeStyles(theme => ({
 }));
 
 export default function Popup(props) {
-  const { openPopup, setOpenPopup, title } = props;
+  const { open, setOpen, title } = props;
   const classes = useStyle();
   return (
     <Dialog
       className={classes.paper}
       fullWidth={true}
       maxWidth="xs"
-      open={openPopup}
+      open={open}
     >
       <DialogTitle>
         {title ? title : 'User Form'}
@@ -32,7 +32,7 @@ export default function Popup(props) {
           size="small"
           variant="contained"
           color="primary"
-          onClick={() => setOpenPopup(false)}
+          onClick={() => setOpen(false)}
         >
           X
         </Button>
