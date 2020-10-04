@@ -9,7 +9,7 @@ const router = express.Router();
 router.route("/:id")
     .get([authenticate_user, same_user_id], getUser)
     .delete(deleteUser) // should admin delete
-    .put([authenticate_user, same_user_id], updateUser);
+    .put(updateUser);
 
 router.route("/")
     .get(getUsers)

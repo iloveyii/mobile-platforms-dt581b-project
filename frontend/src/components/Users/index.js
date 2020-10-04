@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import UseForm from "./UseForm";
 import { Container, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { green } from '@material-ui/core/colors';
+import Icon from '@material-ui/core/Icon';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import UsersList from "./UsersList";
 import UserService from "./UserService";
@@ -13,7 +16,7 @@ const useStyle = makeStyles(theme => ({
   form: {
     display: "flex",
     flexDirection: "column"
-  }
+  },
 }));
 
 const defaultValues = {
@@ -39,18 +42,20 @@ function index(props) {
       <Container maxWidth="md">
         <PageHeader
           title="SDG Goals"
-          subtitle="There are 17 SDG goals"
+          subtitle="Description about SDG goals"
           imageUrl="/images/good-health-and-well-being-sdg.jpg"
         />
+
         <Button
-          style={{ marginTop: "1em" }}
-          margin="normal"
+          style={{ marginTop: "1em", float: 'right', marginBottom: 20 }}
+          margin="small"
           size="large"
           variant="contained"
           color="primary"
-          onClick={() => setOpenPopup(true)}
+          startIcon={<AddCircleOutlineIcon/>}
+          onClick={() => {setValues({...defaultValues}); setOpenPopup(true);}}
         >
-          Add New
+         { /* <Icon style={{ color: green[500] }}>add_circle</Icon> */ }
         </Button>
 
         <UsersList

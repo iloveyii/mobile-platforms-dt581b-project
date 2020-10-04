@@ -61,7 +61,7 @@ class Model {
             // {id, status, form, list, errors}
             read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-            update: (form) => ({type: this.types.update, payload: {id:shortid.generate(), type:this.types.delete, form, list:[], method:'PUT'}}),
+            update: (form) => ({type: this.types.update, payload: {id:shortid.generate(), type:this.types.update, form, list:[], method:'PUT'}}),
             update_success: (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
@@ -274,7 +274,7 @@ class Model {
                     throw new Error(error);
                 }),
             update: (payload) => {
-                const formData = data.formData;
+                const formData = payload.formData;
                 const config = {
                     onUploadProgress: function (progressEvent) {
                         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);

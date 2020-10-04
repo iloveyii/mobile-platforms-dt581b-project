@@ -35,9 +35,7 @@ function UsersList(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>
-              Name
-            </TableCell>
+            <TableCell>Name</TableCell>
             <TableCell align="right">Email</TableCell>
             <TableCell align="right">Address</TableCell>
             <TableCell align="right">X</TableCell>
@@ -53,11 +51,9 @@ function UsersList(props) {
                 setValues(row);
               }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell onClick={()=> setOpenPopup(true)} align="right">{row.email}</TableCell>
-              <TableCell onClick={()=> setOpenPopup(true)} align="right">{row.address}</TableCell>
+              <TableCell onClick={()=>{ setValues(row); setOpenPopup(true)} } component="th" scope="row">{row.name}</TableCell>
+              <TableCell onClick={()=>{ setValues(row); setOpenPopup(true)} } align="right">{row.email}</TableCell>
+              <TableCell onClick={()=>{ setValues(row); setOpenPopup(true)} } align="right">{row.address}</TableCell>
               <TableCell align="right">
                 <Button
                   style={{ float: "right", padding: 3 }}

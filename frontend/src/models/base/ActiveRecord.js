@@ -25,7 +25,11 @@ class ActiveRecord extends Model {
     }
 
     get form() {
-        return {user: this._form};
+        const formName = this.name.slice(0, -1);
+        if(this._form.id) {
+          return {id: this._form.id, [formName]:this._form}
+        }
+        return {[formName]: this._form};
     }
 
     setUploadProgress(value) {

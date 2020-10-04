@@ -57,6 +57,7 @@ class Mongo implements ModelI {
     async update(condition: ConditionI) {
         const db = await this.database.db();
         const collection = await db.collection(this.collection);
+        delete this.data['_id'];
         const model = await collection.findOneAndUpdate(condition?.where, {$set: {...this.data}}, {
             upsert: true,
             returnOriginal: false,
