@@ -25,7 +25,7 @@ class ActiveRecord extends Model {
     }
 
     get form() {
-        return {...this._form};
+        return this._form;
     }
 
     setUploadProgress(value) {
@@ -42,11 +42,11 @@ class ActiveRecord extends Model {
      * Avoid problem of bound to unbound controls on form
      */
     resetForm() {
-        Object.keys(this.form).forEach(key => {
+        Object.keys(this._form).forEach(key => {
             this._form[key] = '';
         });
         this._uploadProgress = 0;
-        this._forceUpdate();
+        return true;
     }
 
     submitForm(createAction, updateAction) {

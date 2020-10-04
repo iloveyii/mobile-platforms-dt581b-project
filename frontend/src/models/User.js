@@ -4,10 +4,10 @@ class User extends ActiveRecord {
 
     constructor(name) {
         super(name);
-        this.form = {
+        this._form = {
+            name: '',
             email: '',
-            password: '',
-            quiz: [],
+            address: ''
         };
     }
 

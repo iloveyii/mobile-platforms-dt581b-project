@@ -2,91 +2,113 @@ import React from "react";
 import { TextField, Typography, Button, makeStyles } from "@material-ui/core";
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
+import { withStyles } from '@material-ui/styles';
+
 
 import models from '../../store/models';
 
-const useStyle = makeStyles(theme => ({
+const styles = theme => ({
   form: {
     display: "flex",
     flexDirection: "column",
     marginBottom: theme.spacing(3),
     marginTop: theme.spacing(3)
   }
-}));
+});
 
-function Form(props) {
-  const { onChange, values, onSubmit, onDelete } = props;
-  const classes = useStyle();
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      form : models.users.form
+    }
+  }
 
-  const create = (e) => {
+  onCreate = (e) => {
     e.preventDefault();
-    onSubmit(e);
     const model = models.users;
+    const {form} = this.state;
 
-    if(model && model.validate(values)) {
-      console.log('Update or create ', values, model.form)
-      if(values.id) {
+    if(model && model.validate(form)) {
+      console.log('Update or create ', form, model.form)
+      if(form.id) {
         console.log('UPDATE')
-        // props.updateAction(model.form);
+        this.props.updateAction(model.form);
       } else {
         console.log('CREATE')
-        // props.createAction(model.form);
+        this.props.createAction(model.form);
       }
+      model.resetForm() && this.setState({form: model.form});
       console.log('User created;', model.form);
     }
   }
-  return (
-    <form autoComplete="off" noValidate className={classes.form}>
-      <Typography variant="h5">Users</Typography>
-      <TextField
-        margin="normal"
-        label="Name"
-        variant="outlined"
-        name="name"
-        onChange={onChange}
-        value={values.name}
-      />
-      <TextField
-        margin="normal"
-        label="Email"
-        variant="outlined"
-        name="email"
-        onChange={onChange}
-        value={values.email}
-        fullWidth
-      />
-      <TextField
-        margin="normal"
-        label="Address"
-        variant="outlined"
-        name="address"
-        onChange={onChange}
-        value={values.address}
-      />
-      <Button
-        style={{ marginTop: "1em" }}
-        margin="normal"
-        size="large"
-        variant="contained"
-        color="primary"
-        onClick={create}
-      >
-        Save
-      </Button>
-      {values.id && (
+
+  onDelete = e => {}
+
+  onChange = e => {
+    e.preventDefault();
+    const {name, value} = e.target;
+    const {form} = this.state;
+    this.setState({form: {...form, [name]:value}});
+  }
+
+  render() {
+    const {classes} = this.props;
+    const {form} = this.state;
+
+    return (
+      <form autoComplete="off" noValidate className={classes.form}>
+        <Typography variant="h5">Users</Typography>
+        <TextField
+          margin="normal"
+          label="Name"
+          variant="outlined"
+          name="name"
+          onChange={this.onChange}
+          value={form.name}
+        />
+        <TextField
+          margin="normal"
+          label="Email"
+          variant="outlined"
+          name="email"
+          onChange={this.onChange}
+          value={form.email}
+          fullWidth
+        />
+        <TextField
+          margin="normal"
+          label="Address"
+          variant="outlined"
+          name="address"
+          onChange={this.onChange}
+          value={form.address}
+        />
         <Button
           style={{ marginTop: "1em" }}
           margin="normal"
           size="large"
           variant="contained"
-          color="secondary"
-          onClick={onDelete}
+          color="primary"
+          onClick={this.onCreate}
         >
-          Delete
+          Save
         </Button>
-      )}
-    </form>
-  );
+        {form.id && (
+          <Button
+            style={{ marginTop: "1em" }}
+            margin="normal"
+            size="large"
+            variant="contained"
+            color="secondary"
+            onClick={this.onDelete}
+          >
+            Delete
+          </Button>
+        )}
+      </form>
+    );
+  }
 }
 
 
@@ -109,4 +131,4 @@ const mapActionsToProps = {
     deleteAction: models.users.actions.delete
 };
 
-export default withRouter(connect(mapStateToProps, mapActionsToProps)(Form));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(Form)));
