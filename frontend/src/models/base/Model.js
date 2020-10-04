@@ -191,7 +191,7 @@ class Model {
                 case this.types.delete_success: //  Put res in state
                   console.log('DELETE SUCCESS HERE - Dealing with form ', action)
                   var {id, type, status, form, list, errors} = action.payload;
-                  if(status === 'success') { // Put data in list
+                  if(status === 'success' || status === true) { // Put data in list
                     newState = {...state, form: this.form}; // fill both list and form from new data/clear
                     if(newState.actions[id]) {
                       newState.actions[id]['res'] = action.payload;
