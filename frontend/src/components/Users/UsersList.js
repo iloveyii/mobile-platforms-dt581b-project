@@ -35,7 +35,7 @@ class  UsersList extends React.Component {
 
   deleted = (row) => {
     console.log('Deleting ', row);
-    props.deleteAction(row);
+    this.props.deleteAction(row);
   }
 
   componentWillReceiveProps(nextProps, context) {
@@ -112,7 +112,8 @@ const mapStateToProps = state => ({
  * @type {{readAction: UserReadAction}}
  */
 const mapActionsToProps = {
-  editAction: models.users.actions.edit
+  editAction: models.users.actions.edit,
+  deleteAction: models.users.actions.delete
 };
 
 export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(UsersList)));
