@@ -61,8 +61,9 @@ class Model {
             // {id, status, form, list, errors}
             read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
+            edit: (form) => ( { type: this.types.edit, payload: {id:shortid.generate(), type:this.types.update, form, method:'EDIT'} }),
             update: (form) => ({type: this.types.update, payload: {id:shortid.generate(), type:this.types.update, form, list:[], method:'PUT'}}),
-            update_success: (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            update_success:  (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data[0], list:response.data, errors: {}} }),
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
             delete: (form) => ({type: this.types.delete, payload: {id:shortid.generate(), type:this.types.delete, form, list:[], method:'DELETE'}}),
@@ -104,6 +105,13 @@ class Model {
                     return newState;
                     break;
 
+                case this.types.edit : // Place payload form of what is editing for global access in components
+                    var {form} = action.payload;
+                    // Place action in state's form
+                    newState = {...state, form};
+                    return newState;
+                    break;
+
                 case this.types.update: // Place action in state's actions - AND update list instantly
                     var {id, type, form, list, method} = action.payload;
                     // Place action in state's actions
@@ -122,19 +130,24 @@ class Model {
                       var {id, type, form, list, method} = action.payload;
                       // Place action in state's actions
                       newState = {...state};
-                      newState.list.push(form);
+                      newState.list.push({...form});
                       newState.actions[id] = {
                         req: action.payload
                       };
                       return newState;
                       break;
 
-                case this.types.create_success : // Put data in list
+
                 case this.types.read_success:
                     console.log('READ/CREATE SUCCESS HERE ', action)
                     var {id, type, status, form, list, errors} = action.payload;
                     if(status === 'success') { // Put data in list
-                      newState = {...state, list, form}; // fill both list and form from new data
+                      // action has id then it is single read else readAll
+                      if(action.payload.form.id) { // single read
+                        newState = {...state, form};
+                      } else {
+                        newState = {...state, list}; // fill list  from new data
+                      }
                       if(newState.actions[id]) {
                         newState.actions[id]['res'] = action.payload;
                       }
@@ -149,17 +162,17 @@ class Model {
                     return newState;
                     break;
 
-                case this.types.update_success: // Put data in list
-                case this.types.delete_success: // Put data in list
+                case this.types.create_success : // Clear form  - Put res in state
+                case this.types.update_success: // Clear form - Put res in state
+                case this.types.delete_success: //  Put res in state
                   console.log('DELETE SUCCESS HERE ', action)
                   var {id, type, status, form, list, errors} = action.payload;
                   if(status === 'success') { // Put data in list
-                    newState = {...state}; // fill both list and form from new data
+                    newState = {...state, form: this.form}; // fill both list and form from new data/clear
                     if(newState.actions[id]) {
                       newState.actions[id]['res'] = action.payload;
                     }
                   } else { // Place res in action's res success === fail is on server side and not http error
-                    console.log('ID not exist in actions');
                     newState = {...state}; // there was an error (server side) therefore don't touch list and form
                     if(newState.actions[id]) {
                       newState.actions[id]['res'] = action.payload;
@@ -237,8 +250,8 @@ class Model {
             try {
                 const response = yield call($this.api.update, action.payload);
                 if (response && Array.isArray(Object.keys(response))) {
-                    yield put($this.actions.update_success(response));
-                    yield put($this.actions.read());
+                  console.log('UPDATE response ', action, response);
+                    yield put($this.actions.update_success(action, response));
                 } else {
                     yield put($this.actions.update_fail(action, response));
                 }
@@ -298,14 +311,7 @@ class Model {
                     throw new Error(error);
                 }),
             update: (payload) => {
-                const formData = payload.formData;
-                const config = {
-                    onUploadProgress: function (progressEvent) {
-                        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                        payload && payload.action(percentCompleted);
-                    }
-                };
-                return axios.put(this.server + '/' + payload.form.id, payload.form, config).then(res => {
+                return axios.put(this.server + '/' + payload.form.id, payload.form).then(res => {
                     console.log('Update response: ', res);
                     return res.data;
                 }).catch(error => {

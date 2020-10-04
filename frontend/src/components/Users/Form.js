@@ -24,6 +24,20 @@ class Form extends React.Component {
     }
   }
 
+  setForm = props => {
+    const {form} = props;
+    this.setState({form});
+  }
+  componentWillReceiveProps(nextProps, context) {
+    this.setForm(nextProps);
+    console.log('componentWillReceiveProps')
+  }
+
+  componentDidMount() {
+    this.setForm(this.props);
+    console.log('componentDidMount')
+  }
+
   onCreate = (e) => {
     e.preventDefault();
     const model = models.users;
@@ -33,10 +47,10 @@ class Form extends React.Component {
       console.log('Update or create ', form, model.form)
       if(form.id) {
         console.log('UPDATE')
-        this.props.updateAction(model.form);
+        this.props.updateAction({...model.form});
       } else {
         console.log('CREATE')
-        this.props.createAction(model.form);
+        this.props.createAction({...model.form});
       }
       model.resetForm() && this.setState({form: model.form});
       console.log('User created;', model.form);
@@ -118,6 +132,7 @@ class Form extends React.Component {
  */
 const mapStateToProps = state => ({
     users: state.users,
+    form: state.users.form
 });
 
 /**

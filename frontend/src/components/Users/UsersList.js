@@ -7,6 +7,9 @@ import CancelPresentationOutlinedIcon from '@material-ui/icons/CancelPresentatio
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
 
+import Popup from "../Popup";
+import Form from "./Form";
+
 import ConfirmDialog from '../ConfirmDialog';
 import models from '../../store/models';
 
@@ -19,8 +22,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function UsersList(props) {
-  const { rows, users, values, setValues, onDelete, setOpenPopup, deleteAction} = props;
+  const { rows, users, values, setValues, onDelete, deleteAction} = props;
   const [showDialog, setShowDialog] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
+
   console.log(rows, props);
   const classes = useStyles();
 
@@ -48,12 +53,13 @@ function UsersList(props) {
               key={i}
               onClick={(e) => {
                 e.preventDefault();
-                setValues(row);
+                props.editAction(row);
+                setOpenPopup(true);
               }}
             >
-              <TableCell onClick={()=>{ setValues(row); setOpenPopup(true)} } component="th" scope="row">{row.name}</TableCell>
-              <TableCell onClick={()=>{ setValues(row); setOpenPopup(true)} } align="right">{row.email}</TableCell>
-              <TableCell onClick={()=>{ setValues(row); setOpenPopup(true)} } align="right">{row.address}</TableCell>
+              <TableCell onClick={()=>{ props.editAction(row); setOpenPopup(true)} } component="th" scope="row">{row.name}</TableCell>
+              <TableCell onClick={()=>{ props.editAction(row); setOpenPopup(true)} } align="right">{row.email}</TableCell>
+              <TableCell onClick={()=>{ props.editAction(row); setOpenPopup(true)} } align="right">{row.address}</TableCell>
               <TableCell align="right">
                 <Button
                   style={{ float: "right", padding: 3 }}
@@ -71,6 +77,9 @@ function UsersList(props) {
         </TableBody>
       </Table>
       <ConfirmDialog onDelete={deleted} showDialog={showDialog} setShowDialog={setShowDialog} action={()=>console.log('delete')} />
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
+        <Form />
+      </Popup>
     </TableContainer>
   );
 }
@@ -88,7 +97,7 @@ const mapStateToProps = state => ({
  * @type {{readAction: UserReadAction}}
  */
 const mapActionsToProps = {
-  deleteAction: models.users.actions.delete
+  editAction: models.users.actions.edit
 };
 
 export default withRouter(connect(mapStateToProps, mapActionsToProps)(UsersList));
