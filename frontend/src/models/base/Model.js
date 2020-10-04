@@ -67,7 +67,7 @@ class Model {
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
             delete: (form) => ({type: this.types.delete, payload: {id:shortid.generate(), type:this.types.delete, form, list:[], method:'DELETE'}}),
-            delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: {}} }),
             delete_fail: (action, error) => ({type: this.types.delete_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
         };
     }
@@ -92,7 +92,9 @@ class Model {
 
             switch (action.type) {
 
-                case this.types.delete:  // Place action in state's actions - @todo make instant delete
+              // ----------------------------------
+              // Dealing with actions.req
+              // ----------------------------------
                 case this.types.read:
                     this.log('Inside Reducer read action is :  ');
                     this.log(action);
@@ -105,6 +107,9 @@ class Model {
                     return newState;
                     break;
 
+                // ----------------------------------
+                // Dealing with form - only
+                // ----------------------------------
                 case this.types.edit : // Place payload form of what is editing for global access in components
                     var {form} = action.payload;
                     // Place action in state's form
@@ -112,6 +117,9 @@ class Model {
                     return newState;
                     break;
 
+                // ----------------------------------
+                // Dealing with list and actions.req
+                // ----------------------------------
                 case this.types.update: // Place action in state's actions - AND update list instantly
                     var {id, type, form, list, method} = action.payload;
                     // Place action in state's actions
@@ -137,9 +145,22 @@ class Model {
                       return newState;
                       break;
 
+                  case this.types.delete:  // Place action in state's actions.req - make instant delete
+                      var {id, type, form, list, method} = action.payload;
+                      newState = {...state};
+                      newState.list = newState.list.filter(item => item.id !== form.id);
+                      newState.actions[id] = {
+                        req: action.payload
+                      };
+                      return newState;
+                      break;
 
+
+                // ----------------------------------
+                // Dealing with list and  actions.res
+                // ----------------------------------
                 case this.types.read_success:
-                    console.log('READ/CREATE SUCCESS HERE ', action)
+                    console.log('READ/CREATE SUCCESS HERE - Dealing with list ', action)
                     var {id, type, status, form, list, errors} = action.payload;
                     if(status === 'success') { // Put data in list
                       // action has id then it is single read else readAll
@@ -162,10 +183,13 @@ class Model {
                     return newState;
                     break;
 
+                // ----------------------------------
+                // Dealing with form and actions.res
+                // ----------------------------------
                 case this.types.create_success : // Clear form  - Put res in state
                 case this.types.update_success: // Clear form - Put res in state
                 case this.types.delete_success: //  Put res in state
-                  console.log('DELETE SUCCESS HERE ', action)
+                  console.log('DELETE SUCCESS HERE - Dealing with form ', action)
                   var {id, type, status, form, list, errors} = action.payload;
                   if(status === 'success') { // Put data in list
                     newState = {...state, form: this.form}; // fill both list and form from new data/clear
@@ -175,6 +199,7 @@ class Model {
                   } else { // Place res in action's res success === fail is on server side and not http error
                     newState = {...state}; // there was an error (server side) therefore don't touch list and form
                     if(newState.actions[id]) {
+                      action.payload.errors = [{msg: action.payload.form[0]}]
                       newState.actions[id]['res'] = action.payload;
                     }
                   }
@@ -182,6 +207,9 @@ class Model {
                   return newState;
                   break;
 
+                // ----------------------------------
+                // Dealing with failted actions.res
+                // ----------------------------------
                 case this.types.update_fail: // handle http exceptions
                 case this.types.delete_fail: // handle http exceptions
                 case this.types.create_fail : // handle http exceptions

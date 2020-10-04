@@ -71,7 +71,7 @@ class ActiveRecord extends Model {
       const errors = [];
       console.log(Object.keys(actions));
       Object.keys(actions).map(id => {
-        if(actions[id].res && actions[id].res.status === 'fail') {
+        if(actions[id].res && ( actions[id].res.status === 'fail' || actions[id].res.status === false ) ) {
           console.log('Err in RESP', actions[id].res);
           if( (!actions[id].res.shown) || (actions[id].res.shown === false) ) {
             errors.push(actions[id].res);

@@ -57,7 +57,10 @@ class Form extends React.Component {
     }
   }
 
-  onDelete = e => {}
+  onDelete = e => {
+    const {form} = this.state;
+    this.props.deleteAction({...form});
+  }
 
   onChange = e => {
     e.preventDefault();
