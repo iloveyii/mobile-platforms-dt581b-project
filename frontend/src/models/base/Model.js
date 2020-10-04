@@ -1,6 +1,6 @@
 import {call, put} from 'redux-saga/effects';
 import axios from "axios";
-import shortid from "shortid";
+import {ObjectID} from "bson";
 import {apiServer} from "../../common/constants";
 
 class Model {
@@ -51,24 +51,27 @@ class Model {
     // ACTIONS
     get actions() {
         return {
-            create: (form) => ({type: this.types.create,payload: {id:shortid.generate(), type:this.types.create, form, list:[], method:'POST'}}),
+            create: (form) => {
+              const id = form.id = (new ObjectID()).toString();
+              return {type: this.types.create,payload: {id, type:this.types.create, form, list:[], method:'POST'} }
+            },
             create_success: (action, response) => ({type: this.types.create_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
             create_fail: (action, error) => ({type: this.types.create_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
             //{id, type, form, list, method} - REQUEST
-            read: (form) => ({type: this.types.read, payload: {id:shortid.generate(), type:this.types.read, form, list:[], method:'GET'}}),
+            read: (form) => ({type: this.types.read, payload: {id:(new ObjectID()).toString(), type:this.types.read, form, list:[], method:'GET'}}),
             // {id, type, status, form, list, errors} - RESPONSE
             read_success: (action, response) => ({type: this.types.read_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
             // {id, status, form, list, errors}
             read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-            edit: (form) => ( { type: this.types.edit, payload: {id:shortid.generate(), type:this.types.edit, form, method:'EDIT'} }),
-            edit_reset: (form) => ( { type: this.types.edit_reset, payload: {id:shortid.generate(), type:this.types.edit_reset, form, method:'EDIT_RESET'} }),
-            update: (form) => ({type: this.types.update, payload: {id:shortid.generate(), type:this.types.update, form, list:[], method:'PUT'}}),
+            edit: (form) => ( { type: this.types.edit, payload: {id:(new ObjectID()).toString(), type:this.types.edit, form, method:'EDIT'} }),
+            edit_reset: (form) => ( { type: this.types.edit_reset, payload: {id:(new ObjectID()).toString(), type:this.types.edit_reset, form, method:'EDIT_RESET'} }),
+            update: (form) => ({type: this.types.update, payload: {id:(new ObjectID()).toString(), type:this.types.update, form, list:[], method:'PUT'}}),
             update_success:  (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data[0], list:response.data, errors: {}} }),
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-            delete: (form) => ({type: this.types.delete, payload: {id:shortid.generate(), type:this.types.delete, form, list:[], method:'DELETE'}}),
+            delete: (form) => ({type: this.types.delete, payload: {id:(new ObjectID()).toString(), type:this.types.delete, form, list:[], method:'DELETE'}}),
             delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: {}} }),
             delete_fail: (action, error) => ({type: this.types.delete_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
         };
