@@ -201,6 +201,7 @@ class Model {
                     if(newState.actions[id]) {
                       action.payload.errors = [{msg: action.payload.form[0]}]
                       newState.actions[id]['res'] = action.payload;
+                      newState.list.push({...newState.form});
                     }
                   }
 
