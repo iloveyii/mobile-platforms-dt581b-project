@@ -27,10 +27,10 @@ function Form(props) {
       console.log('Update or create ', values, model.form)
       if(values.id) {
         console.log('UPDATE')
-        props.updateAction(model.form);
+        // props.updateAction(model.form);
       } else {
-        console.log('CRATE')
-        props.createAction(model.form);
+        console.log('CREATE')
+        // props.createAction(model.form);
       }
       console.log('User created;', model.form);
     }

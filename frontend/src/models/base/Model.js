@@ -90,9 +90,8 @@ class Model {
         const reducer = (state = initState, action = {}) => {
 
             switch (action.type) {
-                case this.types.update: // Place action in state's actions
+
                 case this.types.delete:  // Place action in state's actions - @todo make instant delete
-                case this.types.create : // Place action in state's actions
                 case this.types.read:
                     this.log('Inside Reducer read action is :  ');
                     this.log(action);
@@ -104,6 +103,31 @@ class Model {
                     };
                     return newState;
                     break;
+
+                case this.types.update: // Place action in state's actions - AND update list instantly
+                    var {id, type, form, list, method} = action.payload;
+                    // Place action in state's actions
+                    newState = {...state};
+                    const index = newState.list.findIndex(item => item.id === form.id);
+                    if(index !== -1) {
+                      newState.list[index] = form;
+                    }
+                    newState.actions[id] = {
+                      req: action.payload
+                    };
+                    return newState;
+                    break;
+
+                  case this.types.create : // Place action in state's actions
+                      var {id, type, form, list, method} = action.payload;
+                      // Place action in state's actions
+                      newState = {...state};
+                      newState.list.push(form);
+                      newState.actions[id] = {
+                        req: action.payload
+                      };
+                      return newState;
+                      break;
 
                 case this.types.create_success : // Put data in list
                 case this.types.read_success:
