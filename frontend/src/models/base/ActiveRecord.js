@@ -46,7 +46,7 @@ class ActiveRecord extends Model {
             this._form[key] = '';
         });
         this._uploadProgress = 0;
-        return true;
+        return this._form;
     }
 
     submitForm(createAction, updateAction) {

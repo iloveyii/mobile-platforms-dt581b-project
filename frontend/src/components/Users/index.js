@@ -5,9 +5,12 @@ import { makeStyles } from "@material-ui/styles";
 import { green } from '@material-ui/core/colors';
 import Icon from '@material-ui/core/Icon';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import {connect} from "react-redux";
+import {withRouter, Link} from "react-router-dom";
 
+
+import models from '../../store/models';
 import UsersList from "./UsersList";
-import UserService from "./UserService";
 import Popup from "../Popup";
 import Form from "./Form";
 import PageHeader from "../PageHeader";
@@ -19,19 +22,15 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const defaultValues = {
-  name: "",
-  email: "",
-  address: ""
-};
-
 function index(props) {
   const classes = useStyle();
-  const { values, setValues, onChange, onSubmit, onDelete, list } = UseForm({
-    defaultValues
-  });
-  const userService = UserService();
   const [openPopup, setOpenPopup] = useState(false);
+
+  const onClickOpenPopup = e => {
+    e.preventDefault();
+    setOpenPopup(true);
+    props.editResetAction();
+  }
 
   return (
     <>
@@ -53,29 +52,33 @@ function index(props) {
           variant="contained"
           color="primary"
           startIcon={<AddCircleOutlineIcon/>}
-          onClick={() => {setValues({...defaultValues}); setOpenPopup(true);}}
+          onClick={onClickOpenPopup}
         >
          { /* <Icon style={{ color: green[500] }}>add_circle</Icon> */ }
         </Button>
 
-        <UsersList
-          setOpenPopup={setOpenPopup}
-          setValues={setValues}
-          onDelete={onDelete}
-          rows={userService.readAll()}
-        />
+        <UsersList/>
       </Container>
       <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
-        <Form
-          onChange={onChange}
-          values={values}
-          onSubmit={onSubmit}
-          onDelete={onDelete}
-        />
+        <Form/>
       </Popup>
     </>
   );
 }
 
 
-export default index;
+/**
+ * Get data from store
+ * @param state
+ */
+const mapStateToProps = state => ({});
+
+/**
+ * Import action from dir action above - but must be passed to connect method in order to trigger reducer in store
+ * @type {{readAction: UserReadAction}}
+ */
+const mapActionsToProps = {
+    editResetAction: models.users.actions.edit_reset,
+};
+
+export default withRouter(connect(mapStateToProps, mapActionsToProps)(index));

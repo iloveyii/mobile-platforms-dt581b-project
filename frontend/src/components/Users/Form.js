@@ -52,7 +52,7 @@ class Form extends React.Component {
         console.log('CREATE')
         this.props.createAction({...model.form});
       }
-      model.resetForm() && this.setState({form: model.form});
+      this.setState({form: model.resetForm()});
       console.log('User created;', model.form);
     }
   }

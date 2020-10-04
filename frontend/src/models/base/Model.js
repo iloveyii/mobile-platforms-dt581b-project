@@ -34,6 +34,7 @@ class Model {
             read_fail: this.name + '.read.fail',
 
             edit: this.name + '.edit',
+            edit_reset: this.name + '.edit_reset',
             edit_success: this.name + '.edit.success',
             edit_fail: this.name + '.edit.fail',
 
@@ -61,7 +62,8 @@ class Model {
             // {id, status, form, list, errors}
             read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
-            edit: (form) => ( { type: this.types.edit, payload: {id:shortid.generate(), type:this.types.update, form, method:'EDIT'} }),
+            edit: (form) => ( { type: this.types.edit, payload: {id:shortid.generate(), type:this.types.edit, form, method:'EDIT'} }),
+            edit_reset: (form) => ( { type: this.types.edit_reset, payload: {id:shortid.generate(), type:this.types.edit_reset, form, method:'EDIT_RESET'} }),
             update: (form) => ({type: this.types.update, payload: {id:shortid.generate(), type:this.types.update, form, list:[], method:'PUT'}}),
             update_success:  (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data[0], list:response.data, errors: {}} }),
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
@@ -114,6 +116,12 @@ class Model {
                     var {form} = action.payload;
                     // Place action in state's form
                     newState = {...state, form};
+                    return newState;
+                    break;
+                case this.types.edit_reset : // Place payload form of what is editing for global access in components
+                    var {form} = action.payload;
+                    // Place action in state's form
+                    newState = {...state, form: this.resetForm()};
                     return newState;
                     break;
 
