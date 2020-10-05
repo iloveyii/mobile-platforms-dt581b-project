@@ -31,7 +31,7 @@ class User extends Mongo {
     rules() {
         return {
             email: "required|email",
-            // password: "required",
+            name: "required",
         };
     }
 }

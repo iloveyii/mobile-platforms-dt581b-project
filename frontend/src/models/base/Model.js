@@ -55,13 +55,13 @@ class Model {
               const id = form.id = (new ObjectID()).toString();
               return {type: this.types.create,payload: {id, type:this.types.create, form, list:[], method:'POST'} }
             },
-            create_success: (action, response) => ({type: this.types.create_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            create_success: (action, response) => ({type: this.types.create_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: []} }),
             create_fail: (action, error) => ({type: this.types.create_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
             //{id, type, form, list, method} - REQUEST
             read: (form) => ({type: this.types.read, payload: {id:(new ObjectID()).toString(), type:this.types.read, form, list:[], method:'GET'}}),
             // {id, type, status, form, list, errors} - RESPONSE
-            read_success: (action, response) => ({type: this.types.read_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data, list:response.data, errors: {}} }),
+            read_success: (action, response) => ({type: this.types.read_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: []} }),
             // {id, status, form, list, errors}
             read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
@@ -74,11 +74,11 @@ class Model {
               const id = form.id;
               return {type: this.types.update, payload: {id, type:this.types.update, form, list:[], method:'PUT'}}
             },
-            update_success:  (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:'success', form: response.data[0], list:response.data, errors: {}} }),
+            update_success:  (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data[0], list:response.data, errors: []} }),
             update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
 
             delete: (form) => ({type: this.types.delete, payload: {id:(new ObjectID()).toString(), type:this.types.delete, form, list:[], method:'DELETE'}}),
-            delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: {}} }),
+            delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: []} }),
             delete_fail: (action, error) => ({type: this.types.delete_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
         };
     }
@@ -92,7 +92,7 @@ class Model {
                 {
                   id1: {
                     req: {id: 1, type: 'user.read', form:{}, list:[], method: 'get'},
-                    res: {id: 1,status: 'success', form:{}, list:[], errors:{}}
+                    res: {id: 1,status: 'success', form:{}, list:[], errors: []}
                   }
                 },
         };
@@ -182,7 +182,7 @@ class Model {
                 case this.types.read_success:
                     console.log('READ/CREATE SUCCESS HERE - Dealing with list ', action)
                     var {id, type, status, form, list, errors} = action.payload;
-                    if(status === 'success') { // Put data in list
+                    if(status === true ) { // Put data in list
                       // action has id then it is single read else readAll
                       if(action.payload.form.id) { // single read
                         newState = {...state, form};
@@ -207,14 +207,17 @@ class Model {
                 // Dealing with form and actions.res
                 // ----------------------------------
                 case this.types.create_success : // Clear form  - Put res in state
-                case this.types.update_success: // Clear form - Put res in state
-                case this.types.delete_success: //  Put res in state
-                  console.log('DELETE SUCCESS HERE - Dealing with form ', action)
+                case this.types.update_success:  // Clear form - Put res in state
+                case this.types.delete_success:  //  Put res in state
+                  console.log('DELETE SUCCESS HERE - Dealing with form ', action);
                   var {id, type, status, form, list, errors} = action.payload;
-                  if(status === 'success' || status === true) { // Put data in list
+                  if(status === true) {         // Put data in list
                     newState = {...state, form: this.form}; // fill both list and form from new data/clear
                     if(newState.actions[id]) {
                       newState.actions[id]['res'] = action.payload;
+                      if(newState.actions[id]['res']['errors'].length === 0) {
+                        newState.actions[id]['res']['errors'] = [{msg: 'Success'}];
+                      }
                     }
                   } else { // Place res in action's res success === fail is on server side and not http error
                     newState = {...state}; // there was an error (server side) therefore don't touch list and form

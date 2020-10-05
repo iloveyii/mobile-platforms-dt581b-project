@@ -28,14 +28,15 @@ class  UsersList extends React.Component {
     super(props);
     this.state = {
       openPopup : false,
-      openConfirmDialog: false
+      openConfirmDialog: false,
+      currentUser: null
     }
   }
 
 
-  deleted = (row) => {
+  onDelete = (row) => {
     console.log('Deleting ', row);
-    this.props.deleteAction(row);
+    this.setState({currentUser: row, openConfirmDialog:true});
   }
 
   componentWillReceiveProps(nextProps, context) {
@@ -72,7 +73,7 @@ class  UsersList extends React.Component {
                     size="small"
                     variant="contained"
                     color="primary"
-                    onClick={(e) => { this.setState({openConfirmDialog:true}); } }
+                    onClick={(e) => { this.onDelete(row) } }
                   >
                     <CancelPresentationOutlinedIcon />
                   </Button>
@@ -82,7 +83,7 @@ class  UsersList extends React.Component {
           </TableBody>
         </Table>
 
-        <ConfirmDialog open={this.state.openConfirmDialog} setOpen={status=>this.setState({openConfirmDialog:status})} onDelete={this.deleted} />
+        <ConfirmDialog open={this.state.openConfirmDialog} setOpen={status=>this.setState({openConfirmDialog:status})} onDelete={() =>this.props.deleteAction(this.state.currentUser)} />
 
         <Popup open={this.state.openPopup} setOpen={status => this.setState({openPopup:status})}>
           <Form />

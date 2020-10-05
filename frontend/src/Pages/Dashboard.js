@@ -41,11 +41,11 @@ function Dashboard(props) {
   const loginsResponses = models.users.errors(logins.actions);
 
   useEffect(() => {
-    usersResponses.map(res =>   enqueueSnackbar(res.errors[0].msg + ' - ' + res.type , {variant: 'error'}) );
+    usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: 'error'}) );
   }, [usersResponses]);
 
   useEffect(() => {
-    loginsResponses.map(res =>   enqueueSnackbar(res.errors[0].msg + ' - ' + res.type , {variant: 'error'}) );
+    loginsResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: 'error'}) );
   }, [loginsResponses]);
 
 
