@@ -82,8 +82,19 @@ class ActiveRecord extends Model {
       return errors;
     }
 
-    create = (form) =>  {
-      return true;
+    messages (type) {
+      switch (type) {
+        case this.types.create_success:
+          return [{type: 'success', msg : 'Created successfully'}];
+        case this.types.read_success:
+            return [{type: 'info', msg : 'Read successfully'}];
+        case this.types.update_success:
+          return [{type: 'warning', msg : 'Updated successfully'}];
+        case this.types.delete_success:
+          return [{type: 'error', msg : 'Deleted successfully'}];
+        default:
+          return [{type: 'success', msg : 'Success'}];
+      }
     }
 }
 

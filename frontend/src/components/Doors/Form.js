@@ -20,7 +20,7 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form : models.users.form
+      form : models.doors.form
     }
   }
 
@@ -40,7 +40,7 @@ class Form extends React.Component {
 
   onCreate = (e) => {
     e.preventDefault();
-    const model = models.users;
+    const model = models.doors;
     const {form} = this.state;
 
     if(model && model.validate(form)) {
@@ -53,7 +53,7 @@ class Form extends React.Component {
         this.props.createAction({...model.form});
       }
       this.setState({form: model.resetForm()});
-      console.log('User created;', model.form);
+      console.log('Door created;', model.form);
     }
   }
 
@@ -77,17 +77,17 @@ class Form extends React.Component {
       <form autoComplete="off" noValidate className={classes.form}>
         <TextField
           margin="normal"
-          label="Name"
+          label="Building"
           variant="outlined"
-          name="name"
+          name="building"
           onChange={this.onChange}
           value={form.name}
         />
         <TextField
           margin="normal"
-          label="Email"
+          label="Room number"
           variant="outlined"
-          name="email"
+          name="room_number"
           onChange={this.onChange}
           value={form.email}
           fullWidth
@@ -130,11 +130,10 @@ class Form extends React.Component {
 
 /**
  * Get data from store
- * @param state
- */
+ * @param statdoors **/
 const mapStateToProps = state => ({
     users: state.users,
-    form: state.users.form
+    form: state.doors.form
 });
 
 /**
@@ -142,10 +141,10 @@ const mapStateToProps = state => ({
  * @type {{readAction: UserReadAction}}
  */
 const mapActionsToProps = {
-    createAction: models.users.actions.create,
-    readAction: models.users.actions.read,
-    updateAction: models.users.actions.update,
-    deleteAction: models.users.actions.delete
+    createAction: models.doors.actions.create,
+    readAction: models.doors.actions.read,
+    updateAction: models.doors.actions.update,
+    deleteAction: models.doors.actions.delete
 };
 
 export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(Form)));

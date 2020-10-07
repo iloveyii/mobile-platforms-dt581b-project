@@ -21,7 +21,6 @@ import Errors from "../components/Errors";
 import models from '../store/models';
 
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme=>({
@@ -41,11 +40,18 @@ function Dashboard(props) {
   const loginsResponses = models.users.errors(logins.actions);
 
   useEffect(() => {
-    usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: 'error'}) );
+    // usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: res.errors[0].type}) );
+    usersResponses.map(res =>   {
+      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, {variant: res.errors[0].type});
+    } );
   }, [usersResponses]);
 
   useEffect(() => {
-    loginsResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: 'error'}) );
+    loginsResponses.map(res =>   {
+      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, {variant: res.errors[0].type});
+    } );
   }, [loginsResponses]);
 
 

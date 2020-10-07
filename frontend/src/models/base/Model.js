@@ -19,9 +19,6 @@ class Model {
         if (this.debug) console.log(msg);
     }
 
-    // Subscribers
-
-
     // CRUD constants
     get types() {
         return {
@@ -56,14 +53,14 @@ class Model {
               return {type: this.types.create,payload: {id, type:this.types.create, form, list:[], method:'POST'} }
             },
             create_success: (action, response) => ({type: this.types.create_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: []} }),
-            create_fail: (action, error) => ({type: this.types.create_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
+            create_fail: (action, error) => ({type: this.types.create_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{type: 'error', msg: error}]}}),
 
             //{id, type, form, list, method} - REQUEST
             read: (form) => ({type: this.types.read, payload: {id:(new ObjectID()).toString(), type:this.types.read, form, list:[], method:'GET'}}),
             // {id, type, status, form, list, errors} - RESPONSE
             read_success: (action, response) => ({type: this.types.read_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: []} }),
             // {id, status, form, list, errors}
-            read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
+            read_fail: (action, error) => ({type: this.types.read_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{type: 'error', msg: error}]}}),
 
             edit: (form) => {
               const id = form.id;
@@ -75,11 +72,11 @@ class Model {
               return {type: this.types.update, payload: {id, type:this.types.update, form, list:[], method:'PUT'}}
             },
             update_success:  (action, response) => ({type: this.types.update_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data[0], list:response.data, errors: []} }),
-            update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
+            update_fail: (action, error) => ({type: this.types.update_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{type: 'error', msg: error}]}}),
 
             delete: (form) => ({type: this.types.delete, payload: {id:(new ObjectID()).toString(), type:this.types.delete, form, list:[], method:'DELETE'}}),
             delete_success: (action, response) => ({type: this.types.delete_success, payload: {id:action.payload.id, type: action.payload.type, status:response.success, form: response.data, list:response.data, errors: []} }),
-            delete_fail: (action, error) => ({type: this.types.delete_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{msg: error}]}}),
+            delete_fail: (action, error) => ({type: this.types.delete_fail, payload: {id:action.payload.id, type: action.payload.type, status:'fail', form:action.payload.form, list:[], errors: [{type: 'error', msg: error}]}}),
         };
     }
 
@@ -102,7 +99,6 @@ class Model {
         const reducer = (state = initState, action = {}) => {
 
             switch (action.type) {
-
               // ----------------------------------
               // Dealing with actions.req
               // ----------------------------------
@@ -116,7 +112,6 @@ class Model {
                       req: action.payload
                     };
                     return newState;
-                    break;
 
                 // ----------------------------------
                 // Dealing with form - only
@@ -126,13 +121,12 @@ class Model {
                     // Place action in state's form
                     newState = {...state, form};
                     return newState;
-                    break;
+
                 case this.types.edit_reset : // Place payload form of what is editing for global access in components
                     var {form} = action.payload;
                     // Place action in state's form
                     newState = {...state, form: this.resetForm()};
                     return newState;
-                    break;
 
                 // ----------------------------------
                 // Dealing with list and actions.req
@@ -152,7 +146,6 @@ class Model {
                       req: action.payload
                     };
                     return newState;
-                    break;
 
                   case this.types.create : // Place action in state's actions
                       var {id, type, form, list, method} = action.payload;
@@ -163,7 +156,6 @@ class Model {
                         req: action.payload
                       };
                       return newState;
-                      break;
 
                   case this.types.delete:  // Place action in state's actions.req - make instant delete
                       var {id, type, form, list, method} = action.payload;
@@ -173,8 +165,6 @@ class Model {
                         req: action.payload
                       };
                       return newState;
-                      break;
-
 
                 // ----------------------------------
                 // Dealing with list and  actions.res
@@ -201,7 +191,6 @@ class Model {
                     }
 
                     return newState;
-                    break;
 
                 // ----------------------------------
                 // Dealing with form and actions.res
@@ -216,20 +205,19 @@ class Model {
                     if(newState.actions[id]) {
                       newState.actions[id]['res'] = action.payload;
                       if(newState.actions[id]['res']['errors'].length === 0) {
-                        newState.actions[id]['res']['errors'] = [{msg: 'Success'}];
+                        newState.actions[id]['res']['errors'] = this.messages(action.type);
                       }
                     }
                   } else { // Place res in action's res success === fail is on server side and not http error
                     newState = {...state}; // there was an error (server side) therefore don't touch list and form
                     if(newState.actions[id]) {
-                      action.payload.errors = [{msg: action.payload.form[0]}]
+                      action.payload.errors =  [{type: 'error', msg: action.payload.form[0] ? action.payload.form[0] : action.payload.form}]
                       newState.actions[id]['res'] = action.payload;
                       newState.list.push({...newState.form});
                     }
                   }
 
                   return newState;
-                  break;
 
                 // ----------------------------------
                 // Dealing with failted actions.res
@@ -248,7 +236,6 @@ class Model {
                       console.log('Action with id not found', action)
                     }
                     return newState;
-                    break;
 
                 default:
                     this.log('Inside default reducer of class ' + this.name );
@@ -259,7 +246,6 @@ class Model {
         return reducer;
     }
 
-
     // SAGAS
     get sagas() {
         const $this = this;// new Model('show');
@@ -269,7 +255,7 @@ class Model {
             try {
                 const response = yield call($this.api.create, action.payload);
                 console.log('CREATE ', response);
-                if (true || response && Array.isArray(Object.keys(response))) {
+                if ( response && (typeof response === 'object') ) {
                     console.log('CREATE if', response);
                     yield put($this.actions.create_success(action, response));
                     // yield put($this.actions.read());
@@ -286,7 +272,7 @@ class Model {
         const read = function* (action) {
             try {
                 const response = yield call($this.api.read, action.payload);
-                if (true || Array.isArray(response)) {
+                if ( response && (typeof response === 'object')) {
                     console.log('READ saga data received ', response)
                     yield put($this.actions.read_success(action, response));
                 } else {
@@ -301,7 +287,7 @@ class Model {
         const update = function* (action) {
             try {
                 const response = yield call($this.api.update, action.payload);
-                if (response && Array.isArray(Object.keys(response))) {
+                if ( response && (typeof response === 'object')) {
                   console.log('UPDATE response ', action, response);
                     yield put($this.actions.update_success(action, response));
                 } else {
@@ -318,7 +304,7 @@ class Model {
                 // IF reset
                     console.log('deleted saga ', action)
                     const response = yield call($this.api.delete, action.payload);
-                    if (true || Array.isArray(Object.keys(response))) {
+                    if ( response && (typeof response === 'object')) {
                         yield put($this.actions.delete_success(action, response));
                     } else {
                         yield put($this.actions.delete_fail(action, response));

@@ -1,15 +1,43 @@
 import React from 'react';
+import PageHeader from "../PageHeader";
+import { Container, Paper } from "@material-ui/core";
 
+import Button from "../Button";
+import Popup from "../Popup";
+import Form from "./Form";
 
+class Doors extends React.Component {
 
-class Permissions extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openPopup : false
+    }
+  }
+
+  onAdd = (e) => {
+    e.preventDefault();
+    this.setState({openPopup:true});
+  }
 
   render() {
 
     return (
-      <h1>Permissions</h1>
+      <Container maxWidth="md">
+        <PageHeader
+          title="PERMISSIONS"
+          subtitle="Description about permissions"
+          imageUrl="/images/permissions.png"
+        />
+        <Button onClick={this.onAdd} />
+
+        <Popup title="Add Permissions" open={this.state.openPopup} setOpen={(status)=>this.setState({openPopup: status})}>
+          <Form/>
+        </Popup>
+
+      </Container>
     )
   }
 }
 
-export default Permissions;
+export default Doors;

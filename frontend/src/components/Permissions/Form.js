@@ -77,17 +77,17 @@ class Form extends React.Component {
       <form autoComplete="off" noValidate className={classes.form}>
         <TextField
           margin="normal"
-          label="Name"
+          label="Building"
           variant="outlined"
-          name="name"
+          name="building"
           onChange={this.onChange}
           value={form.name}
         />
         <TextField
           margin="normal"
-          label="Email"
+          label="Room number"
           variant="outlined"
-          name="email"
+          name="room_number"
           onChange={this.onChange}
           value={form.email}
           fullWidth

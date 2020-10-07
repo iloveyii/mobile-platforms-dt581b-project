@@ -34,10 +34,6 @@ function index(props) {
 
   return (
     <>
-      <Container maxWidth="xs">
-        <Paper elevation={0}></Paper>
-      </Container>
-
       <Container maxWidth="md">
         <PageHeader
           title="SDG Goals"

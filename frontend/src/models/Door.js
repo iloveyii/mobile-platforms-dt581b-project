@@ -1,12 +1,12 @@
 import ActiveRecord from './base/ActiveRecord';
 
-class User extends ActiveRecord {
+class Door extends ActiveRecord {
 
     constructor(name) {
         super(name);
         this._form = {
-            name: '',
-            email: '',
+            building: '',
+            room_number: '',
             address: ''
         };
     }
@@ -19,17 +19,17 @@ class User extends ActiveRecord {
     messages (type) {
       switch (type) {
         case this.types.create_success:
-          return [{type: 'success', msg : 'Created user successfully'}];
+          return [{type: 'success', msg : 'Created door successfully'}];
         case this.types.read_success:
-            return [{type: 'info', msg : 'Read all users successfully'}];
+            return [{type: 'info', msg : 'Read all doors successfully'}];
         case this.types.update_success:
-          return [{type: 'warning', msg : 'Updated user successfully'}];
+          return [{type: 'warning', msg : 'Updated doors successfully'}];
         case this.types.delete_success:
-          return [{type: 'error', msg : 'Deleted user successfully'}];
+          return [{type: 'error', msg : 'Deleteddoorr successfully'}];
         default:
-          return [{type: 'success', msg : 'User success'}];
+          return [{type: 'success', msg : 'Door success'}];
       }
     }
 }
 
-export default User;
+export default Door;
