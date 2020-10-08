@@ -15,7 +15,6 @@ export default function Form(props) {
   const classes = useStyle();
   return (
     <form autoComplete="off" noValidate className={classes.form}>
-      <Typography variant="h5">Users</Typography>
       <TextField
         margin="normal"
         label="Name"

@@ -6,8 +6,11 @@ import {
   Typography,
   Button,
   makeStyles,
-  Slide
+  Slide,
+  useMediaQuery
 } from "@material-ui/core";
+import { useTheme } from '@material-ui/core/styles';
+
 
 const useStyle = makeStyles(theme => ({
   paper: {
@@ -26,11 +29,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function Popup(props) {
   const { openPopup, setOpenPopup } = props;
   const classes = useStyle();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Dialog
       className={classes.paper}
+      fullScreen={fullScreen}
       fullWidth={true}
       maxWidth="xs"
+      aria-labelledby="responsive-dialog-title"
       TransitionComponent={Transition}
       open={openPopup}
     >
