@@ -5,9 +5,11 @@ class Permission extends ActiveRecord {
     constructor(name) {
         super(name);
         this._form = {
+            name: '',
+            email: '',
             building: '',
             room_number: '',
-            address: ''
+            status: ''
         };
     }
 

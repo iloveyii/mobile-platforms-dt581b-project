@@ -77,28 +77,44 @@ class Form extends React.Component {
       <form autoComplete="off" noValidate className={classes.form}>
         <TextField
           margin="normal"
-          label="Building"
+          label="Name"
           variant="outlined"
-          name="building"
+          name="name"
           onChange={this.onChange}
           value={form.name}
         />
         <TextField
           margin="normal"
-          label="Room number"
+          label="Email"
           variant="outlined"
-          name="room_number"
+          name="email"
           onChange={this.onChange}
           value={form.email}
           fullWidth
         />
         <TextField
           margin="normal"
-          label="Address"
+          label="Building"
           variant="outlined"
-          name="address"
+          name="building"
           onChange={this.onChange}
-          value={form.address}
+          value={form.building}
+        />
+        <TextField
+          margin="normal"
+          label="Room"
+          variant="outlined"
+          name="room_number"
+          onChange={this.onChange}
+          value={form.room_number}
+        />
+        <TextField
+          margin="normal"
+          label="Status"
+          variant="outlined"
+          name="status"
+          onChange={this.onChange}
+          value={form.status}
         />
         <Button
           style={{ marginTop: "1em" }}
