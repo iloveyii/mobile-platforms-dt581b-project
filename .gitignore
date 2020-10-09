@@ -1,5 +1,7 @@
 *.docx
 .idea
 *.pdf
+react/dist/
 .remote-sync.json
 tmp
+**/node_modules/**
