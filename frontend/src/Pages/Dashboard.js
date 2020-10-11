@@ -35,10 +35,24 @@ const useStyles = makeStyles(theme=>({
 function Dashboard(props) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const {users, logins, doors} = props;
+  const {users, logins, doors, permissions} = props;
+  console.log('props', Object.keys(props));
   const usersResponses = models.users.errors(users.actions);
-  const loginsResponses = models.users.errors(logins.actions);
+  const loginsResponses = models.logins.errors(logins.actions);
   const doorsResponses = models.doors.errors(doors.actions);
+  const permissionsResponses = models.permissions.errors(permissions.actions);
+
+  /*
+  Object.keys(props).map(stateVar => {
+    const modelsResponses = models[stateVar].errors(props[stateVar].actions);
+    useEffect(() => {
+      // usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: res.errors[0].type}) );
+      modelsResponses.map(res =>   {
+        const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
+        enqueueSnackbar(msg, {variant: res.errors[0].type});
+      } );
+    }, [modelsResponses]);
+  }) */
 
   useEffect(() => {
     // usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: res.errors[0].type}) );
@@ -61,6 +75,13 @@ function Dashboard(props) {
       enqueueSnackbar(msg, {variant: res.errors[0].type});
     } );
   }, [doorsResponses]);
+
+  useEffect(() => {
+    permissionsResponses.map(res => {
+      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, {variant: res.errors[0].type});
+    } );
+  }, [permissionsResponses]);
 
 
   return (
@@ -88,7 +109,8 @@ function Dashboard(props) {
 const mapStateToProps = state => ({
     users: state.users,
     logins: state.logins,
-    doors: state.doors
+    doors: state.doors,
+    permissions: state.permissions
 });
 
 /**
