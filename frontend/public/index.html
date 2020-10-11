@@ -15,14 +15,25 @@
             .MuiBox-root {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
-                maring-left: 0 !important;
-                maring-right: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
             }
         }
 
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ==" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="root"></div>
+<script>
+    const client = io.connect("//localhost:7700");
+    client.emit("client", {
+        message: "client connected"
+    });
+
+    client.on("change", function(data) {
+        console.log('Change ', data);
+    })
+</script>
 </body>
 </html>

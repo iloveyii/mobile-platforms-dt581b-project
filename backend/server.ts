@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import boxen from "boxen";
 import chalk from "chalk";
+import socket from "socket.io";
+
 const session = require("express-session");
 
 import app from "./src/app";
@@ -55,7 +57,19 @@ const server = app.listen(API_PORT, () => {
             borderColor: 'green',
             margin: 1
         }));
-}
+    }
 );
+
+// ----------------------------------
+// Socket IO
+// ----------------------------------
+export const io = socket(server);
+io.on("connection", client => {
+    console.log("Made socket connection with id ", client.id);
+    client.on("client", data => {
+        console.log(data);
+        io.sockets.emit("change", data);
+    })
+})
 
 export default server;
