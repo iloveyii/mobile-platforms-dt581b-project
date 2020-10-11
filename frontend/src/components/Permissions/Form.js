@@ -5,7 +5,7 @@ import {withRouter, Link} from "react-router-dom";
 import { withStyles } from '@material-ui/styles';
 
 
-import models from '../../store/models';
+import models from '../../store';
 
 const styles = theme => ({
   form: {
@@ -20,7 +20,7 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form : models.users.form
+      form : models.permissions.form
     }
   }
 
@@ -40,7 +40,7 @@ class Form extends React.Component {
 
   onCreate = (e) => {
     e.preventDefault();
-    const model = models.users;
+    const model = models.permissions;
     const {form} = this.state;
 
     if(model && model.validate(form)) {
@@ -77,28 +77,44 @@ class Form extends React.Component {
       <form autoComplete="off" noValidate className={classes.form}>
         <TextField
           margin="normal"
-          label="Building"
+          label="Name"
           variant="outlined"
-          name="building"
+          name="name"
           onChange={this.onChange}
           value={form.name}
         />
         <TextField
           margin="normal"
-          label="Room number"
+          label="Email"
           variant="outlined"
-          name="room_number"
+          name="email"
           onChange={this.onChange}
           value={form.email}
           fullWidth
         />
         <TextField
           margin="normal"
-          label="Address"
+          label="Building"
           variant="outlined"
-          name="address"
+          name="building"
           onChange={this.onChange}
-          value={form.address}
+          value={form.building}
+        />
+        <TextField
+          margin="normal"
+          label="Room"
+          variant="outlined"
+          name="room_number"
+          onChange={this.onChange}
+          value={form.room_number}
+        />
+        <TextField
+          margin="normal"
+          label="Status"
+          variant="outlined"
+          name="status"
+          onChange={this.onChange}
+          value={form.status}
         />
         <Button
           style={{ marginTop: "1em" }}
@@ -133,8 +149,8 @@ class Form extends React.Component {
  * @param state
  */
 const mapStateToProps = state => ({
-    users: state.users,
-    form: state.users.form
+    permissions: state.permissions,
+    form: state.permissions.form
 });
 
 /**
@@ -142,10 +158,10 @@ const mapStateToProps = state => ({
  * @type {{readAction: UserReadAction}}
  */
 const mapActionsToProps = {
-    createAction: models.users.actions.create,
-    readAction: models.users.actions.read,
-    updateAction: models.users.actions.update,
-    deleteAction: models.users.actions.delete
+    createAction: models.permissions.actions.create,
+    readAction: models.permissions.actions.read,
+    updateAction: models.permissions.actions.update,
+    deleteAction: models.permissions.actions.delete
 };
 
 export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(Form)));

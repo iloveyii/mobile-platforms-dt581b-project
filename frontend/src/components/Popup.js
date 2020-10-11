@@ -38,13 +38,9 @@ export default function Popup(props) {
       fullScreen={fullScreen}
       fullWidth={true}
       maxWidth="xs"
-<<<<<<< HEAD:react/src/components/Popup.js
       aria-labelledby="responsive-dialog-title"
       TransitionComponent={Transition}
-      open={openPopup}
-=======
       open={open}
->>>>>>> cd5196ab2c6996b346eb4053fb2689ef5337def6:frontend/src/components/Popup.js
     >
       <DialogTitle>
         {title ? title : 'User Form'}

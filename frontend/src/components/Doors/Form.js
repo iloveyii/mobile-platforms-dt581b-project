@@ -5,7 +5,7 @@ import {withRouter, Link} from "react-router-dom";
 import { withStyles } from '@material-ui/styles';
 
 
-import models from '../../store/models';
+import models from '../../store';
 
 const styles = theme => ({
   form: {
@@ -81,7 +81,7 @@ class Form extends React.Component {
           variant="outlined"
           name="building"
           onChange={this.onChange}
-          value={form.name}
+          value={form.building}
         />
         <TextField
           margin="normal"
@@ -89,7 +89,7 @@ class Form extends React.Component {
           variant="outlined"
           name="room_number"
           onChange={this.onChange}
-          value={form.email}
+          value={form.room_number}
           fullWidth
         />
         <TextField
