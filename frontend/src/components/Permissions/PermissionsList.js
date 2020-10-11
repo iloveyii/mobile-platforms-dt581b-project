@@ -50,9 +50,11 @@ class  PermissionsList extends React.Component {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
               <TableCell>Building</TableCell>
               <TableCell align="right">Room</TableCell>
-              <TableCell align="right">Address</TableCell>
+              <TableCell align="right">Status</TableCell>
               <TableCell align="right">X</TableCell>
             </TableRow>
           </TableHead>
@@ -62,9 +64,11 @@ class  PermissionsList extends React.Component {
                 style={{ cursor: "pointer" }}
                 key={i}
               >
+                <TableCell onClick={()=> {this.props.editAction(row); this.setState({openPopup:true});} } component="th" scope="row">{row.name}</TableCell>
+                <TableCell onClick={()=> {this.props.editAction(row); this.setState({openPopup:true});} } component="th" scope="row">{row.email}</TableCell>
                 <TableCell onClick={()=> {this.props.editAction(row); this.setState({openPopup:true});} } component="th" scope="row">{row.building}</TableCell>
                 <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.room_number}</TableCell>
-                <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.address}</TableCell>
+                <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.status}</TableCell>
 
                 <TableCell align="right">
                   <Button

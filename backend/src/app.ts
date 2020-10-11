@@ -24,6 +24,7 @@ import { notFound } from "./middlewares/not_found";
 import login from "./routes/login";
 import user from "./routes/user";
 import door from "./routes/door";
+import permission from "./routes/permission";
 import fault from "./routes/fault";
 
 // ----------------------------------
@@ -65,6 +66,7 @@ app.set("view engine", "ejs");
 // ----------------------------------
 app.use("/api/v1/users", user);
 app.use("/api/v1/doors", door);
+app.use("/api/v1/permissions", permission);
 app.use("/api/v1/logins", login);
 app.use("/api/v1/faults", fault);
 
