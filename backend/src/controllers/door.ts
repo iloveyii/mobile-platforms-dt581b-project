@@ -4,8 +4,6 @@ import Condition from "../models/base/Condition";
 import Door from "../models/Door";
 
 
-const database = new Database("rdigital");
-
 // @desc   Get all from Model
 // @route  GET /api/v1/doors
 export const getDoors = async (req: Request, res: Response, next: NextFunction) => {

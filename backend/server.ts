@@ -16,9 +16,9 @@ const {
     SESS_NAME = "sid",
     SESS_SECRET = "top-secret",
     SESS_LIFETIME = 1000 * 60 * 60 * 2, // 2 hrs
-    DB_NAME = "test",
-    DB_USER = "test",
-    DB_PASS = "test"
+    DB_NAME = "rdigital",
+    DB_USER = "",
+    DB_PASS = ""
 } = process.env;
 
 app.use(

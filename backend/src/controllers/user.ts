@@ -4,8 +4,6 @@ import Condition from "../models/base/Condition";
 import User from "../models/User";
 
 
-const database = new Database("rdigital");
-
 // @desc   Get all from Model
 // @route  GET /api/v1/users
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {

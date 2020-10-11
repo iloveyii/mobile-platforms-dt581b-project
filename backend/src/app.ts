@@ -24,7 +24,6 @@ import { notFound } from "./middlewares/not_found";
 import login from "./routes/login";
 import user from "./routes/user";
 import door from "./routes/door";
-// RDigital
 import fault from "./routes/fault";
 
 // ----------------------------------

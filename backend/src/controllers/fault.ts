@@ -4,8 +4,6 @@ import Condition from "../models/base/Condition";
 import Fault from "../models/Fault";
 
 
-const database = new Database("receipt");
-
 // @desc   Get all from Model
 // @route  GET /api/v1/faults
 export const getFaults = async (req: Request, res: Response, next: NextFunction) => {

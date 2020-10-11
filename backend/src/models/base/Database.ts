@@ -1,16 +1,22 @@
 import { MongoClient, ObjectId } from "mongodb";
 
-const DB_NAME="rdigital"; const DB_USER="rdigital"; const DB_PASS="rdigital";
 
 export class Database {
     static database: any = undefined;
     private mongo : any;
 
-    constructor(private dbname: string = DB_NAME, private dbuser: string = DB_USER, private dbpass: string=DB_PASS) {
-      this.mongo = {
-          url: `mongodb://${dbuser}:${dbpass}@localhost:27017/${dbname}`, // conn with auth
-          mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
-      };
+    constructor(private dbname: string, private dbuser: string, private dbpass: string) {
+        if(dbuser && dbpass) {
+            this.mongo = {
+                url: `mongodb://${dbuser}:${dbpass}@localhost:27017/${dbname}`, // conn with auth
+                mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+            };
+        } else {
+            this.mongo = {
+                url: `mongodb://localhost:27017/${dbname}`, // conn with auth
+                mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+            };
+        }
     }
 
     async connect() {
