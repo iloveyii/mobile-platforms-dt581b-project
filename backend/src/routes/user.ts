@@ -13,7 +13,7 @@ router.route("/:id")
     .put(ws_update, updateUser);
 
 router.route("/")
-    .get(ws_update, getUsers)
+    .get(getUsers)
     .post(ws_update, createUser);
 
 

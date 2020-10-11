@@ -8,6 +8,8 @@ import { useSnackbar } from 'notistack';
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
 import {Route, Switch, BrowserRouter} from 'react-router-dom';
+import io from "socket.io-client";
+
 
 import Sidebar from "../components/Sidebar";
 import {Header} from "../Layouts";
@@ -21,6 +23,9 @@ import Errors from "../components/Errors";
 import models from '../store';
 
 
+const socket = io("http://localhost:7700", {
+  transports: ["websocket", "polling"]
+});
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme=>({
@@ -83,6 +88,19 @@ function Dashboard(props) {
     } );
   }, [permissionsResponses]);
 
+  useEffect(()=> {
+    socket.on('change', data => {
+      console.log('Change', data);
+
+        if(data.url && data.url.includes('/api/v1/users') ) {
+          console.log('Change USERS  ');
+          props.usersReadAction({});
+        }
+
+    });
+    
+  }, []);
+
 
   return (
       <div className={classes.main}>
@@ -117,6 +135,10 @@ const mapStateToProps = state => ({
  * Import action from dir action above - but must be passed to connect method in order to trigger reducer in store
  * @type {{readAction: UserReadAction}}
  */
-const mapActionsToProps = {};
+const mapActionsToProps = {
+  usersReadAction: models.users.actions.read,
+  doorsReadAction: models.doors.actions.read,
+  permissionsReadAction: models.permissions.actions.read,
+};
 
 export default connect(mapStateToProps, mapActionsToProps)(Dashboard);
