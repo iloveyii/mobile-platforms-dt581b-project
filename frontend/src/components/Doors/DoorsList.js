@@ -23,7 +23,7 @@ const styles = theme => ({
   }
 });
 
-class  UsersList extends React.Component {
+class  DoorsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,26 +44,26 @@ class  UsersList extends React.Component {
   }
 
   render() {
-    const {classes, users} = this.props;
+    const {classes, doors} = this.props;
     return (
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Email</TableCell>
+              <TableCell>Building</TableCell>
+              <TableCell align="right">Room</TableCell>
               <TableCell align="right">Address</TableCell>
               <TableCell align="right">X</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            { users.map((row, i) =>
+            { doors.map((row, i) =>
               <TableRow
                 style={{ cursor: "pointer" }}
                 key={i}
               >
-                <TableCell onClick={()=> {this.props.editAction(row); this.setState({openPopup:true});} } component="th" scope="row">{row.name}</TableCell>
-                <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.email}</TableCell>
+                <TableCell onClick={()=> {this.props.editAction(row); this.setState({openPopup:true});} } component="th" scope="row">{row.building}</TableCell>
+                <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.room_number}</TableCell>
                 <TableCell onClick={()=>{this.props.editAction(row); this.setState({openPopup:true});} } align="right">{row.address}</TableCell>
 
                 <TableCell align="right">
@@ -85,7 +85,7 @@ class  UsersList extends React.Component {
 
         <ConfirmDialog open={this.state.openConfirmDialog} setOpen={status=>this.setState({openConfirmDialog:status})} onDelete={() =>this.props.deleteAction(this.state.currentUser)} />
 
-        <Popup open={this.state.openPopup} setOpen={status => this.setState({openPopup:status})}>
+        <Popup title="Add Door" open={this.state.openPopup} setOpen={status => this.setState({openPopup:status})}>
           <Form />
         </Popup>
 
@@ -100,7 +100,7 @@ class  UsersList extends React.Component {
  * @param state
  */
 const mapStateToProps = state => ({
-    users: state.users.list || [],
+    doors: state.doors.list || [],
 });
 
 /**
@@ -108,8 +108,8 @@ const mapStateToProps = state => ({
  * @type {{readAction: UserReadAction}}
  */
 const mapActionsToProps = {
-  editAction: models.users.actions.edit,
-  deleteAction: models.users.actions.delete
+  editAction: models.doors.actions.edit,
+  deleteAction: models.doors.actions.delete
 };
 
-export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(UsersList)));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(DoorsList)));

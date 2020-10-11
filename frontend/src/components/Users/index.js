@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
 
 
-import models from '../../store/models';
+import models from '../../store';
 import UsersList from "./UsersList";
 import Popup from "../Popup";
 import Form from "./Form";

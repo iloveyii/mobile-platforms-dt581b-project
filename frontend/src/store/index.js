@@ -9,7 +9,7 @@ const models = {
     logins: new Login('logins'),
     users: new User('users'),
     doors: new Door('doors'),
-    permissions: new Door('permissions'),
+    permissions: new Permission('permissions'),
 };
 
 export default models;

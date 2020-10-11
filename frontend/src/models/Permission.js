@@ -21,13 +21,13 @@ class Permission extends ActiveRecord {
     messages (type) {
       switch (type) {
         case this.types.create_success:
-          return [{type: 'success', msg : 'Created Permission successfully'}];
+          return [{type: 'success', msg : 'Created Permissions successfully'}];
         case this.types.read_success:
             return [{type: 'info', msg : 'Read all Permissions successfully'}];
         case this.types.update_success:
           return [{type: 'warning', msg : 'Updated Permissions successfully'}];
         case this.types.delete_success:
-          return [{type: 'error', msg : 'DeletedPermissionr successfully'}];
+          return [{type: 'error', msg : 'Deleted Permissions successfully'}];
         default:
           return [{type: 'success', msg : 'Permission success'}];
       }

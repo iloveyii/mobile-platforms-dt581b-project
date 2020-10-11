@@ -23,9 +23,9 @@ class Door extends ActiveRecord {
         case this.types.read_success:
             return [{type: 'info', msg : 'Read all doors successfully'}];
         case this.types.update_success:
-          return [{type: 'warning', msg : 'Updated doors successfully'}];
+          return [{type: 'warning', msg : 'Updated door successfully'}];
         case this.types.delete_success:
-          return [{type: 'error', msg : 'Deleteddoorr successfully'}];
+          return [{type: 'error', msg : 'Deleted door successfully'}];
         default:
           return [{type: 'success', msg : 'Door success'}];
       }

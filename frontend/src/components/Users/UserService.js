@@ -3,7 +3,7 @@ import shortid from "shortid";
 import {withRouter, Link} from "react-router-dom";
 import {connect} from "react-redux";
 
-import models from '../../store/models';
+import models from '../../store';
 
 export default function UserService() {
   const create = form => {

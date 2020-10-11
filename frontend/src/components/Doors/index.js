@@ -5,6 +5,7 @@ import { Container, Paper } from "@material-ui/core";
 import Button from "../Button";
 import Popup from "../Popup";
 import Form from "./Form";
+import DoorsList from "./DoorsList";
 
 class Doors extends React.Component {
 
@@ -30,6 +31,8 @@ class Doors extends React.Component {
           imageUrl="/images/doors.jpg"
         />
         <Button onClick={this.onAdd} />
+
+        <DoorsList />
 
         <Popup title="Add Door" open={this.state.openPopup} setOpen={(status)=>this.setState({openPopup: status})}>
           <Form/>

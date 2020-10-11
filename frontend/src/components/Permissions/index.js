@@ -5,8 +5,9 @@ import { Container, Paper } from "@material-ui/core";
 import Button from "../Button";
 import Popup from "../Popup";
 import Form from "./Form";
+import PermissionsList from "./PermissionsList";
 
-class Doors extends React.Component {
+class Permissions extends React.Component {
 
   constructor(props) {
     super(props);
@@ -31,6 +32,8 @@ class Doors extends React.Component {
         />
         <Button onClick={this.onAdd} />
 
+        <PermissionsList />
+
         <Popup title="Add Permissions" open={this.state.openPopup} setOpen={(status)=>this.setState({openPopup: status})}>
           <Form/>
         </Popup>
@@ -40,4 +43,4 @@ class Doors extends React.Component {
   }
 }
 
-export default Doors;
+export default Permissions;

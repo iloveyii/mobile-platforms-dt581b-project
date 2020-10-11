@@ -18,7 +18,7 @@ import Permissions from "../components/Permissions";
 import Settings from "../components/Settings";
 import Ni from "../components/Ni";
 import Errors from "../components/Errors";
-import models from '../store/models';
+import models from '../store';
 
 
 const drawerWidth = 240;
@@ -35,9 +35,10 @@ const useStyles = makeStyles(theme=>({
 function Dashboard(props) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const {users, logins} = props;
+  const {users, logins, doors} = props;
   const usersResponses = models.users.errors(users.actions);
   const loginsResponses = models.users.errors(logins.actions);
+  const doorsResponses = models.doors.errors(doors.actions);
 
   useEffect(() => {
     // usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: res.errors[0].type}) );
@@ -53,6 +54,13 @@ function Dashboard(props) {
       enqueueSnackbar(msg, {variant: res.errors[0].type});
     } );
   }, [loginsResponses]);
+
+  useEffect(() => {
+    doorsResponses.map(res =>   {
+      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, {variant: res.errors[0].type});
+    } );
+  }, [doorsResponses]);
 
 
   return (
@@ -79,7 +87,8 @@ function Dashboard(props) {
  */
 const mapStateToProps = state => ({
     users: state.users,
-    logins: state.logins
+    logins: state.logins,
+    doors: state.doors
 });
 
 /**

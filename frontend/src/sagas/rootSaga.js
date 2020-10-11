@@ -1,5 +1,5 @@
 import {takeLatest, takeEvery} from 'redux-saga/effects';
-import models from "../store/models";
+import models from "../store";
 
 export default function* rootSaga() {
     for(let i=0; i < Object.keys(models).length; i++) {
