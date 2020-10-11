@@ -36,7 +36,7 @@ function index(props) {
     <>
       <Container maxWidth="md">
         <PageHeader
-          title="SDG Goals"
+          title="USERS"
           subtitle="Description about SDG goals"
           imageUrl="/images/good-health-and-well-being-sdg.jpg"
         />
