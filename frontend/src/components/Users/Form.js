@@ -20,7 +20,8 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form : models.users.form
+      form : models.users.form,
+      form_errors: {}
     }
   }
 
@@ -44,16 +45,14 @@ class Form extends React.Component {
     const {form} = this.state;
 
     if(model && model.validate(form)) {
-      console.log('Update or create ', form, model.form)
       if(form.id) {
-        console.log('UPDATE')
         this.props.updateAction({...model.form});
       } else {
-        console.log('CREATE')
         this.props.createAction({...model.form});
       }
-      this.setState({form: model.resetForm()});
-      console.log('User created;', model.form);
+      this.setState({form: model.resetForm(), form_errors: {}});
+    } else {
+      this.setState({form_errors: model.form_errors});
     }
   }
 
@@ -69,6 +68,11 @@ class Form extends React.Component {
     this.setState({form: {...form, [name]:value}});
   }
 
+  display_error = (errors) => {
+    if(!errors) return null;
+    return errors.join(', ');
+  }
+
   render() {
     const {classes} = this.props;
     const {form} = this.state;
@@ -80,6 +84,8 @@ class Form extends React.Component {
           label="Name"
           variant="outlined"
           name="name"
+          helperText={this.display_error(this.state.form_errors.name)}
+          error={this.state.form_errors.name ? true : false}
           onChange={this.onChange}
           value={form.name}
         />
@@ -88,6 +94,8 @@ class Form extends React.Component {
           label="Email"
           variant="outlined"
           name="email"
+          helperText={this.display_error(this.state.form_errors.email)}
+          error={this.state.form_errors.email ? true : false}
           onChange={this.onChange}
           value={form.email}
           fullWidth
@@ -97,6 +105,8 @@ class Form extends React.Component {
           label="Address"
           variant="outlined"
           name="address"
+          helperText={<label>{this.state.form_errors.address}</label>}
+          error={this.state.form_errors.address ? true : false}
           onChange={this.onChange}
           value={form.address}
         />

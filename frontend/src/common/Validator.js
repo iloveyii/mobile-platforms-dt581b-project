@@ -2,7 +2,7 @@
 
 class Validator {
     constructor(form, rules) {
-        this.errors = {};
+        this._errors = {};
         this.form = form;
         this.rules = rules; // {email: required|email}
     }
@@ -15,6 +15,7 @@ class Validator {
             }
         }
         console.log(this.errors);
+        return Object.keys(this._errors).length === 0;
     }
 
     applyRules(field) {
@@ -27,10 +28,10 @@ class Validator {
     }
 
     addError(field, message) {
-        if(this.errors[field]) {
-            this.errors[field].push(message)
+        if(this._errors[field]) {
+            this._errors[field].push(message)
         } else {
-            this.errors[field] = [message];
+            this._errors[field] = [message];
         }
     }
 
@@ -43,11 +44,17 @@ class Validator {
                 if( ! re.test(String(this.form[field]).toLowerCase())) this.addError(field, 'This should be a valid email'); break;
             case 'number':
                 if(isNaN(this.form[field])) this.addError(field, 'This should be a number'); break;
+            
         }
+    }
+
+    get errors() {
+        return this._errors;
     }
 
 }
 
+/**
 const form = {
     email: '',
     name: '',
@@ -62,3 +69,6 @@ const rules = {
 
 const v = new Validator(form, rules);
 v.check();
+ */
+
+ export default Validator; 

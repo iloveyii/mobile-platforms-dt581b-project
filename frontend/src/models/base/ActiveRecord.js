@@ -83,6 +83,12 @@ class ActiveRecord extends Model {
       return errors;
     }
 
+    get form_errors () {
+      return this._form_errors;
+    }
+
+    
+
     messages (type) {
       switch (type) {
         case this.types.create_success:
