@@ -66,10 +66,6 @@ const server = app.listen(API_PORT, () => {
 export const io = socket(server);
 io.on("connection", client => {
     console.log("Made socket connection with id ", client.id);
-    client.on("client", data => {
-        console.log(data);
-        io.sockets.emit("change", data);
-    })
-})
+});
 
 export default server;

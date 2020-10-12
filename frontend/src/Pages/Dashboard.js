@@ -88,13 +88,24 @@ function Dashboard(props) {
     } );
   }, [permissionsResponses]);
 
+  // Call method when ws send an update
   useEffect(()=> {
-    socket.on('change', data => {
-      console.log('Change', data);
+    socket.on('update', data => {
+      console.log('Update', data);
 
         if(data.url && data.url.includes('/api/v1/users') ) {
-          console.log('Change USERS  ');
+          console.log('Update USERS  ');
           props.usersReadAction({});
+        }
+
+        if(data.url && data.url.includes('/api/v1/doors') ) {
+          console.log('Update DOORS  ');
+          props.doorsReadAction({});
+        }
+
+        if(data.url && data.url.includes('/api/v1/permissions') ) {
+          console.log('Update PERMISSIONS  ');
+          props.permissionsReadAction({});
         }
 
     });
