@@ -12,6 +12,8 @@ import io from "socket.io-client";
 
 
 import Sidebar from "../components/Sidebar";
+import {apiServer} from "../common/constants";
+
 import {Header} from "../Layouts";
 import PageHeader from "../components/PageHeader";
 import Users from "../components/Users";
@@ -23,7 +25,7 @@ import Errors from "../components/Errors";
 import models from '../store';
 
 
-const socket = io("http://localhost:7700", {
+const socket = io(apiServer, {
   transports: ["websocket", "polling"]
 });
 const drawerWidth = 240;

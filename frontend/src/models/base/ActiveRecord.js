@@ -5,6 +5,7 @@ class ActiveRecord extends Model {
     _mode = 'create';
     _uploadProgress = 0;
     _form = {};
+    _form_errors = {};
 
     constructor(name) {
         super(name);

@@ -1,4 +1,5 @@
 import ActiveRecord from './base/ActiveRecord';
+import Validator from '../Validator';
 
 class User extends ActiveRecord {
 
@@ -11,8 +12,21 @@ class User extends ActiveRecord {
         };
     }
 
-    validate = (form) => {
+    rules = () => {
+      return {
+          email: "required|email",
+          name: "required",
+      };
+    }
+
+    validate = async (form) => {
       this.form = form;
+      const rules = this.rules();
+      const validator = new Validator(form, rules);
+      const matched = await validator.check();
+      if (!matched) {
+          return validator.errors;
+      }
       return true;
     }
 
