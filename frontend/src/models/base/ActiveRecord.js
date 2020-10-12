@@ -1,5 +1,7 @@
 
 import Model from './Model';
+import Validator from '../../common/Validator';
+
 
 class ActiveRecord extends Model {
     _mode = 'create';
@@ -102,6 +104,15 @@ class ActiveRecord extends Model {
         default:
           return [{type: 'success', msg : 'Success'}];
       }
+    }
+
+    validate = (form) => {
+      this.form = form;
+      const rules = this.rules();
+      const validator = new Validator(form, rules);
+      const valid = validator.check();
+      this._form_errors = validator.errors;
+      return valid;
     }
 }
 

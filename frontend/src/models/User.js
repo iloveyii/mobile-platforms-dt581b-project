@@ -1,5 +1,4 @@
 import ActiveRecord from './base/ActiveRecord';
-import Validator from '../common/Validator';
 
 class User extends ActiveRecord {
 
@@ -12,20 +11,11 @@ class User extends ActiveRecord {
         };
     }
 
-    rules = () => {
+    rules (){
       return {
           email: "required|email",
           name: "required",
       };
-    }
-
-    validate = (form) => {
-      this.form = form;
-      const rules = this.rules();
-      const validator = new Validator(form, rules);
-      const valid = validator.check();
-      this._form_errors = validator.errors;
-      return valid;
     }
 
     messages (type) {
