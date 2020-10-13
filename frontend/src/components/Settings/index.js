@@ -10,8 +10,17 @@ import {
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/styles";
+import {Header} from "../../Layouts";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
+  main: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth
+    }
+  },
   root: {
     // marginTop: theme.spacing(1),
     display: "flex",
@@ -44,6 +53,8 @@ function Settings(props) {
     const { title, subtitle, imageUrl } = props;
 
     return (
+      <div className={classes.main}>
+      <Header />
       <Container maxWidth="md">
         <PageHeader
           title="SETTINGS"
@@ -66,6 +77,7 @@ function Settings(props) {
           </Card>
         </Paper>
       </Container>
+      </div>
     )
   }
 

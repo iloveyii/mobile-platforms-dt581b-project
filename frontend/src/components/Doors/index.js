@@ -1,13 +1,27 @@
 import React from 'react';
 import PageHeader from "../PageHeader";
 import { Container, Paper } from "@material-ui/core";
+import { withStyles } from '@material-ui/styles';
+
 
 import Button from "../Button";
 import Popup from "../Popup";
 import Form from "./Form";
 import DoorsList from "./DoorsList";
 import Dashboard from '../../Pages/Dashboard';
+import {Header} from "../../Layouts";
 
+const drawerWidth = 240;
+
+
+const styles = theme => ({
+  main: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth
+    }
+  },
+});
 
 class Doors extends React.Component {
 
@@ -24,8 +38,10 @@ class Doors extends React.Component {
   }
 
   render() {
-
+    const {classes} = this.props;
     return (
+      <div className={classes.main}>
+        <Header />
         <Container maxWidth="md">
           <PageHeader
             title="DOORS"
@@ -40,8 +56,9 @@ class Doors extends React.Component {
             <Form/>
           </Popup>
         </Container>
+        </div>
     )
   }
 }
 
-export default Doors;
+export default withStyles(styles)(Doors);

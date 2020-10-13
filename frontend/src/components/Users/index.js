@@ -15,8 +15,17 @@ import UsersList from "./UsersList";
 import Popup from "../Popup";
 import Form from "./Form";
 import PageHeader from "../PageHeader";
+import {Header} from "../../Layouts";
+
+const drawerWidth = 240;
 
 const useStyle = makeStyles(theme => ({
+  main: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth
+    }
+  },
   form: {
     display: "flex",
     flexDirection: "column"
@@ -34,7 +43,8 @@ function index(props) {
   }
 
   return (
-    <>
+    <div className={classes.main}>
+      <Header />
       <Container maxWidth="md">
         <PageHeader
           title="USERS"
@@ -59,7 +69,7 @@ function index(props) {
       <Popup title="Add user" open={openPopup} setOpen={setOpenPopup}>
         <Form/>
       </Popup>
-    </>
+    </div>
   );
 }
 

@@ -94,7 +94,7 @@ class Login extends React.Component {
                                         color="primary"
                                         fullWidth={true}
                                         >
-                                        Login
+                                        <Link to='/users'>Login</Link>
                                     </Button>
                                 </form>
                             </CardContent>

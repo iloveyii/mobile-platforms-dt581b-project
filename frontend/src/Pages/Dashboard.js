@@ -121,9 +121,8 @@ function Dashboard(props) {
 
 
   return (
-      <div className={classes.main}>
+      
         <BrowserRouter basename="/">
-          <Header />
           <Switch>
             <Route exact path={`/`} component={Login}/>
             <Route exact path={`/users`} component={Users}/>
@@ -133,7 +132,7 @@ function Dashboard(props) {
             <Route component={Ni}/>
           </Switch>
         </BrowserRouter>
-      </div>
+      
   );
 }
 
