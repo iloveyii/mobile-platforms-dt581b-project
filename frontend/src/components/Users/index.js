@@ -39,7 +39,7 @@ function index(props) {
         <PageHeader
           title="USERS"
           subtitle="Users management"
-          imageUrl="/images/users.png"
+          imageUrl="/images/users.jpg"
         />
 
         <Button
