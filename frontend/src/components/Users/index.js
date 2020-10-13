@@ -7,6 +7,7 @@ import Icon from '@material-ui/core/Icon';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
+import Dashboard from '../../Pages/Dashboard';
 
 
 import models from '../../store';
@@ -33,12 +34,12 @@ function index(props) {
   }
 
   return (
-    <>
+    <Dashboard>
       <Container maxWidth="md">
         <PageHeader
           title="USERS"
-          subtitle="Description about SDG goals"
-          imageUrl="/images/good-health-and-well-being-sdg.jpg"
+          subtitle="Users management"
+          imageUrl="/images/users.png"
         />
 
         <Button
@@ -55,10 +56,10 @@ function index(props) {
 
         <UsersList/>
       </Container>
-      <Popup open={openPopup} setOpen={setOpenPopup}>
+      <Popup title="Add user" open={openPopup} setOpen={setOpenPopup}>
         <Form/>
       </Popup>
-    </>
+    </Dashboard>
   );
 }
 

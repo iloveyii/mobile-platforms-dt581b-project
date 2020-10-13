@@ -6,6 +6,8 @@ import Button from "../Button";
 import Popup from "../Popup";
 import Form from "./Form";
 import PermissionsList from "./PermissionsList";
+import Dashboard from '../../Pages/Dashboard';
+
 
 class Permissions extends React.Component {
 
@@ -24,21 +26,22 @@ class Permissions extends React.Component {
   render() {
 
     return (
-      <Container maxWidth="md">
-        <PageHeader
-          title="PERMISSIONS"
-          subtitle="Description about permissions"
-          imageUrl="/images/permissions.png"
-        />
-        <Button onClick={this.onAdd} />
+      <Dashboard>
+        <Container maxWidth="md">
+          <PageHeader
+            title="PERMISSIONS"
+            subtitle="Description about permissions"
+            imageUrl="/images/permissions.png"
+          />
+          <Button onClick={this.onAdd} />
 
-        <PermissionsList />
+          <PermissionsList />
 
-        <Popup title="Add Permissions" open={this.state.openPopup} setOpen={(status)=>this.setState({openPopup: status})}>
-          <Form/>
-        </Popup>
-
-      </Container>
+          <Popup title="Add Permissions" open={this.state.openPopup} setOpen={(status)=>this.setState({openPopup: status})}>
+            <Form/>
+          </Popup>
+        </Container>
+      </Dashboard>
     )
   }
 }

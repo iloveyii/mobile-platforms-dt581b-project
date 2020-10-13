@@ -21,19 +21,37 @@
         }
 
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ==" crossorigin="anonymous"></script>
+    <style>
+        html, body {
+            height: 100% !important;
+        }
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            background-color: red;
+        }
+        .content {
+            flex: 1 0 auto !important;
+            background-color: lightblue;
+        }
+        .footer {
+            flex-shrink: 0 !important;
+            background-color:#444;
+        }
+        .footer p {
+            text-align: right;
+            margin-right: 2em;
+        }
+        .top {
+            background: url('/images/bg.png') repeat-x top center;
+        }
+    </style>
 </head>
 <body>
-<div id="root"></div>
-<script>
-    const client = io.connect("//localhost:7700");
-    client.emit("client", {
-        message: "client connected"
-    });
+    <div class="content" id="root"> </div>
 
-    client.on("change", function(data) {
-        console.log('Change ', data);
-    })
-</script>
+    <footer class="footer"> 
+        <p>This website uses cookies</p>    
+    </footer>
 </body>
 </html>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Dashboard from '../../Pages/Dashboard';
 
 
 
@@ -7,7 +8,9 @@ class Settings extends React.Component {
   render() {
 
     return (
-      <h1>Settings</h1>
+      <Dashboard>
+        <h1>Settings</h1>
+      </Dashboard>
     )
   }
 }

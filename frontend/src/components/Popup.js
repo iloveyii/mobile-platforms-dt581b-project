@@ -42,8 +42,11 @@ export default function Popup(props) {
       TransitionComponent={Transition}
       open={open}
     >
-      <DialogTitle>
-        {title ? title : 'User Form'}
+      {
+        title 
+        && 
+        <DialogTitle>
+        {title }
         <Button
           style={{ float: "right" }}
           margin="normal"
@@ -55,6 +58,8 @@ export default function Popup(props) {
           X
         </Button>
       </DialogTitle>
+      }
+      
       <DialogContent>{props.children}</DialogContent>
     </Dialog>
   );

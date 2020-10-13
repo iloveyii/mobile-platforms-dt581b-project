@@ -11,8 +11,8 @@ import { withSnackbar } from 'notistack';
 import { teal } from "@material-ui/core/colors";
 
 import Dashboard from '../Pages/Dashboard';
-import Doors from './Doors';
-import Ni from './Ni';
+import Router from '../Pages/Router';
+import Login from '../components/Login'
 
 const theme = createMuiTheme({
   palette: {
@@ -46,7 +46,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider maxSnack={3}>
-        <Dashboard />
+        <Router />
         <CssBaseline />
       </SnackbarProvider>
     </ThemeProvider>

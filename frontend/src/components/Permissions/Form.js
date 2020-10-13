@@ -3,6 +3,7 @@ import { TextField, Typography, Button, makeStyles } from "@material-ui/core";
 import {connect} from "react-redux";
 import {withRouter, Link} from "react-router-dom";
 import { withStyles } from '@material-ui/styles';
+import ButtonIcon from '../ButtonIcon';
 
 
 import models from '../../store';
@@ -92,22 +93,10 @@ class Form extends React.Component {
           value={form.email}
           fullWidth
         />
-        <TextField
-          margin="normal"
-          label="Building"
-          variant="outlined"
-          name="building"
-          onChange={this.onChange}
-          value={form.building}
-        />
-        <TextField
-          margin="normal"
-          label="Room"
-          variant="outlined"
-          name="room_number"
-          onChange={this.onChange}
-          value={form.room_number}
-        />
+        
+        <ButtonIcon onChange={(e)=>this.onChange(e)} label='Building' name="building" value={form.building}/>
+        <ButtonIcon onChange={(e)=>this.onChange(e)} label='Room' name="room_number" value={form.room_number}/>
+
         <TextField
           margin="normal"
           label="Status"

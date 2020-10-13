@@ -85,7 +85,7 @@ class  UsersList extends React.Component {
 
         <ConfirmDialog open={this.state.openConfirmDialog} setOpen={status=>this.setState({openConfirmDialog:status})} onDelete={() =>this.props.deleteAction(this.state.currentUser)} />
 
-        <Popup open={this.state.openPopup} setOpen={status => this.setState({openPopup:status})}>
+        <Popup title="Update user" open={this.state.openPopup} setOpen={status => this.setState({openPopup:status})}>
           <Form />
         </Popup>
 

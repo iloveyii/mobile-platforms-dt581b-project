@@ -117,17 +117,8 @@ function Dashboard(props) {
 
   return (
       <div className={classes.main}>
-        <BrowserRouter basename="/">
           <Header />
-          <Switch>
-            <Route exact path={`/`} component={Users}/>
-            <Route exact path={`/users`} component={Users}/>
-            <Route exact path={`/doors`} component={Doors}/>
-            <Route exact path={`/permissions`} component={Permissions}/>
-            <Route exact path={`/settings`} component={Settings}/>
-            <Route component={Ni}/>
-          </Switch>
-        </BrowserRouter>
+          {props.children}
       </div>
   );
 }

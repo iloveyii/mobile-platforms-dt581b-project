@@ -8,32 +8,32 @@ import Popup from './Popup';
 import { makeStyles } from "@material-ui/core/styles";
 import { useSnackbar } from 'notistack';
 import red from '@material-ui/core/colors/red';
+import { Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
     titleIcon: {
-        backgroundColor: red[500],
+        color: red[500],
         '& .MuiSvgIcon-root': {
             fontSize: '8rem'
         }
     },
     container: {
-      display: 'flex'
-    },
-    left:{
-      flex: 1
-    },
-    right: {
-      flex: 2,
       display: 'flex',
       flexDirection: 'column'
     },
-    top: {
-      flex: 2
+    top:{
+      flex: 1,
+      textAlign: 'center'
+    },
+    middle: {
+      flex: 1,
+      textAlign: 'center'
     },
     bottom: {
       flex: 1,
-      textAlign: 'right'
+      textAlign: 'center',
+      marginBottom: theme.spacing(2)
     }
 }));
 
@@ -44,16 +44,18 @@ export default function ConfirmDialog(props) {
 
     return (
 
-        <Popup open={open} setOpen={setOpen} title='Confirm ?'>
+        <Popup open={open} setOpen={setOpen}>
             <div className={classes.container}>
-              <div className={classes.left}>
+              <div className={classes.top}>
                 <IconButton className={classes.titleIcon}>
                     <HelpOutlineIcon />
                 </IconButton>
               </div>
-              <div className={classes.right}>
-                <div className={classes.top}>
-                </div>
+
+              <div className={classes.middle}>
+                <Typography variant='h4'>Are you sure ?</Typography>
+                <Typography variant='subtitle1'>You will not be able to undo it !</Typography>
+              </div>
 
                 <div className={classes.bottom}>
                   <Button
@@ -77,7 +79,6 @@ export default function ConfirmDialog(props) {
                   >
                       No
                   </Button>
-                </div>
               </div>
             </div>
         </Popup>

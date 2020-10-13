@@ -6,6 +6,8 @@ import Button from "../Button";
 import Popup from "../Popup";
 import Form from "./Form";
 import DoorsList from "./DoorsList";
+import Dashboard from '../../Pages/Dashboard';
+
 
 class Doors extends React.Component {
 
@@ -24,21 +26,22 @@ class Doors extends React.Component {
   render() {
 
     return (
-      <Container maxWidth="md">
-        <PageHeader
-          title="DOORS"
-          subtitle="Description about doors"
-          imageUrl="/images/doors.jpg"
-        />
-        <Button onClick={this.onAdd} />
+      <Dashboard>
+        <Container maxWidth="md">
+          <PageHeader
+            title="DOORS"
+            subtitle="Description about doors"
+            imageUrl="/images/doors.jpg"
+          />
+          <Button onClick={this.onAdd} />
 
-        <DoorsList />
+          <DoorsList />
 
-        <Popup title="Add Door" open={this.state.openPopup} setOpen={(status)=>this.setState({openPopup: status})}>
-          <Form/>
-        </Popup>
-
-      </Container>
+          <Popup title="Add Door" open={this.state.openPopup} setOpen={(status)=>this.setState({openPopup: status})}>
+            <Form/>
+          </Popup>
+        </Container>
+      </Dashboard>
     )
   }
 }
