@@ -50,10 +50,10 @@ class  UsersList extends React.Component {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Address</TableCell>
-              <TableCell align="right">X</TableCell>
+              <TableCell><label>Name</label></TableCell>
+              <TableCell align="right"><label>Email</label></TableCell>
+              <TableCell align="right"><label>Address</label></TableCell>
+              <TableCell align="right"><label>X</label></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
