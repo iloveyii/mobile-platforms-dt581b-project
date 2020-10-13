@@ -15,6 +15,11 @@ import CardActions from '@material-ui/core/CardActions';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import HomeWorkOutlinedIcon from '@material-ui/icons/HomeWorkOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
+import {withRouter, Link} from "react-router-dom";
+import {connect} from "react-redux";
+
+import models from '../../store';
+
 
 
 import './style.css';
@@ -58,7 +63,7 @@ class Login extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const imageUrl = '/images/logo.png';
+        const imageUrl = '/images/lock.jpg';
         const title = 'Login';
         const subtitle = 'Sign up';
 
@@ -68,7 +73,7 @@ class Login extends React.Component {
 
                     <div className="login-container">
                         <div className="login-header">
-                            <img src='/images/logo.png' style={{height: '72px', width: '180px'}}/>
+                            <img src='/images/lock.jpg' style={{height: '72px'}}/>
                         </div>
                         <div className="login-content">
                         <Paper className={classes.root}>
@@ -120,4 +125,19 @@ class Login extends React.Component {
     }
 }
 
-export default withStyles(styles)(Login);
+
+/**
+ * Get data from store
+ * @param state
+ */
+const mapStateToProps = state => ({});
+
+/**
+ * Import action from dir action above - but must be passed to connect method in order to trigger reducer in store
+ * @type {{readAction: UserReadAction}}
+ */
+const mapActionsToProps = {
+    editResetAction: models.users.actions.edit_reset,
+};
+
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(Login)));

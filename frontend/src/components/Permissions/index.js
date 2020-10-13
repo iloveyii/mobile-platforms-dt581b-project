@@ -26,7 +26,6 @@ class Permissions extends React.Component {
   render() {
 
     return (
-      <Dashboard>
         <Container maxWidth="md">
           <PageHeader
             title="PERMISSIONS"
@@ -41,7 +40,6 @@ class Permissions extends React.Component {
             <Form/>
           </Popup>
         </Container>
-      </Dashboard>
     )
   }
 }

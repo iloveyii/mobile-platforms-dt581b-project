@@ -11,12 +11,14 @@ import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import io from "socket.io-client";
 
 
+
 import Sidebar from "../components/Sidebar";
 import {apiServer} from "../common/constants";
 
 import {Header} from "../Layouts";
 import PageHeader from "../components/PageHeader";
 import Users from "../components/Users";
+import Login from "../components/Login";
 import Doors from "../components/Doors";
 import Permissions from "../components/Permissions";
 import Settings from "../components/Settings";
@@ -36,6 +38,9 @@ const useStyles = makeStyles(theme=>({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth
     }
+  },
+  loginMargin: {
+    marginLeft: -1 * drawerWidth
   }
 }));
 
@@ -117,8 +122,17 @@ function Dashboard(props) {
 
   return (
       <div className={classes.main}>
+        <BrowserRouter basename="/">
           <Header />
-          {props.children}
+          <Switch>
+            <Route exact path={`/`} component={Login}/>
+            <Route exact path={`/users`} component={Users}/>
+            <Route exact path={`/doors`} component={Doors}/>
+            <Route exact path={`/permissions`} component={Permissions}/>
+            <Route exact path={`/settings`} component={Settings}/>
+            <Route component={Ni}/>
+          </Switch>
+        </BrowserRouter>
       </div>
   );
 }

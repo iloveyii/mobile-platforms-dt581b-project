@@ -19,7 +19,7 @@ import Drawer from "./Drawer";
 const drawerWidth = 250;
 const useStyles = makeStyles(theme => ({
   root: {
-    transform: "translateZ(0)"
+    transform: "translateZ(0)",
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {

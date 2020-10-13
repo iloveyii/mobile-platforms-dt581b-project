@@ -123,6 +123,15 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
           </ListItem>
         </Link>
 
+        <Link to='/'>
+          <ListItem button key="key-settings">
+              <ListItemIcon>
+                  <SettingsApplicationsOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Login" />
+          </ListItem>
+        </Link>
+
         {["All mail", "Mail", "Settings"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>

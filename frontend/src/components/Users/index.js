@@ -34,7 +34,7 @@ function index(props) {
   }
 
   return (
-    <Dashboard>
+    <>
       <Container maxWidth="md">
         <PageHeader
           title="USERS"
@@ -59,7 +59,7 @@ function index(props) {
       <Popup title="Add user" open={openPopup} setOpen={setOpenPopup}>
         <Form/>
       </Popup>
-    </Dashboard>
+    </>
   );
 }
 
