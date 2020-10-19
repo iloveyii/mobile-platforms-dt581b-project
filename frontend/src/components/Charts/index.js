@@ -49,14 +49,59 @@ class Charts extends React.Component {
     super(props);
   }
 
+  drawChart = (elementId, d) => {
+    let labels = ["time"];
+
+    window.d = d;
+    let max = 0;
+    var series0 = [];
+    d.forEach((data) => {
+      max = max > data[elementId] ? max : data[elementId];
+      series0.push(data[elementId]);
+      labels.push(data[elementId]);
+    });
+    var series = [series0];
+    const dataTemperatureChart = {
+      labels: labels,
+      series: series,
+    };
+
+    const optionsTemperatureChart = {
+      lineSmooth: Chartist.Interpolation.cardinal({
+        tension: 0,
+      }),
+      low: 0,
+      high: max + 10, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      chartPadding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      },
+      showArea: true,
+      showLine: false,
+      showPoint: false,
+      fullWidth: true,
+    };
+
+    var ds = new Chartist.Line(
+      "#" + elementId + "Chart",
+      dataTemperatureChart,
+      optionsTemperatureChart
+    );
+    let historySeries = [];
+  };
+
+  componentDidMount() {
+    this.drawChart("temperature", data);
+  }
+
   render() {
     return (
       <>
         <h1>Charts</h1>
         <div className="row">
-          <Graph id="temperature1" data={data} type="success" />
-          <Graph id="temperature2" data={data} type="warning" />
-          <Graph id="temperature3" data={data} type="danger" />
+          <Graph />
         </div>
       </>
     );
