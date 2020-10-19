@@ -7,80 +7,81 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { MoveToInbox, Mail } from "@material-ui/icons";
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-import SettingsApplicationsOutlinedIcon from '@material-ui/icons/SettingsApplicationsOutlined';
-import OfflinePinOutlinedIcon from '@material-ui/icons/OfflinePinOutlined';
+import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
+import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
+import SettingsApplicationsOutlinedIcon from "@material-ui/icons/SettingsApplicationsOutlined";
+import OfflinePinOutlinedIcon from "@material-ui/icons/OfflinePinOutlined";
+import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import Hidden from "@material-ui/core/Hidden";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    textDecoration: 'none'
+    textDecoration: "none",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0
-    }
+      flexShrink: 0,
+    },
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+      marginLeft: drawerWidth,
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   list: {
-    width: 250
+    width: 250,
   },
   primary: {
-      width: 40,
+    width: 40,
   },
   brandImgContainer: {
-    display: 'flex',
+    display: "flex",
     padding: theme.spacing(3),
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
   brandImg: {
     height: 80,
-    flex: 1
+    flex: 1,
   },
   brandTxt: {
-    flex: 1
+    flex: 1,
   },
   link: {
-    textDecoration: 'none',
-    color: 'orange',
-    fontWeight: 'bold',
+    textDecoration: "none",
+    color: "orange",
+    fontWeight: "bold",
   },
   listItemText: {
-    '& span' : {
-      letterSpacing: '0.2em'
-    }
-  }
+    "& span": {
+      letterSpacing: "0.2em",
+    },
+  },
 }));
 
 export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
@@ -101,56 +102,62 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
     >
       <div className={classes.brandImgContainer}>
         <img className={classes.brandImg} src="/images/smart-home.png" />
-        <Typography className={classes.brandTxt} color="secondary" variant="h6">Smart Home</Typography>
+        <Typography className={classes.brandTxt} color="secondary" variant="h6">
+          Smart Home
+        </Typography>
       </div>
       <Divider />
       <List>
-
-        <Link className={classes.link} to='/users'>
+        <Link className={classes.link} to="/users">
           <ListItem button key="key-users">
-              <ListItemIcon>
-                  <PeopleOutlineIcon />
-              </ListItemIcon>
-              <ListItemText className={classes.listItemText} primary="Users" />
+            <ListItemIcon>
+              <PeopleOutlineIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.listItemText} primary="Users" />
           </ListItem>
         </Link>
 
-        <Link className={classes.link} to='/doors'>
+        <Link className={classes.link} to="/doors">
           <ListItem button key="key-doors">
-              <ListItemIcon>
-                  <MeetingRoomIcon />
-              </ListItemIcon>
-              <ListItemText className={classes.listItemText} primary="Doors" />
+            <ListItemIcon>
+              <MeetingRoomIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.listItemText} primary="Doors" />
           </ListItem>
         </Link>
 
-        <Link className={classes.link} to='/permissions'>
+        <Link className={classes.link} to="/permissions">
           <ListItem button key="key-permissions">
-              <ListItemIcon>
-                  <OfflinePinOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText className={classes.listItemText} primary="Permissions" />
+            <ListItemIcon>
+              <OfflinePinOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText
+              className={classes.listItemText}
+              primary="Permissions"
+            />
           </ListItem>
         </Link>
 
-        <Link className={classes.link} to='/settings'>
+        <Link className={classes.link} to="/settings">
           <ListItem button key="key-settings">
-              <ListItemIcon>
-                  <SettingsApplicationsOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText className={classes.listItemText} primary="Settings" />
+            <ListItemIcon>
+              <SettingsApplicationsOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.listItemText} primary="Settings" />
           </ListItem>
         </Link>
 
-        <Link to='/'>
+        <Link to="/">
           <ListItem button key="key-settings">
-              <ListItemIcon>
-                  <SettingsApplicationsOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText className={classes.listItemText} primary="Login" />
+            <ListItemIcon>
+              <DashboardOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText
+              className={classes.listItemText}
+              primary="Dashboard"
+            />
           </ListItem>
         </Link>
-
       </List>
     </div>
   );
@@ -167,10 +174,10 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
           {list()}
@@ -184,10 +191,10 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
           onOpen={toggleDrawer(true)}
           variant="permanent"
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
           {list()}

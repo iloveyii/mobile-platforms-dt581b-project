@@ -1,7 +1,6 @@
-export function drawChart(elementId, d) {
-  let labels = ["time"];
+export function drawChart(elementId, d, label) {
+  let labels = [];
 
-  window.d = d;
   let max = 0;
   var series0 = [];
   d.forEach((data) => {
@@ -20,16 +19,16 @@ export function drawChart(elementId, d) {
       tension: 0,
     }),
     low: 0,
-    high: max + 10, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high: max + 10, // we recommend you to set the high sa the biggest value + something for a better look
     chartPadding: {
       top: 0,
       right: 0,
       bottom: 0,
       left: 0,
     },
-    showArea: true,
-    showLine: false,
-    showPoint: false,
+    showArea: false, // Shows a light shade area below line
+    showLine: true, // Shows a prominant line
+    showPoint: true, // Marks edges as points
     fullWidth: true,
   };
 
@@ -48,7 +47,7 @@ export const data = [
     heading: "80.00",
     humidity: 37,
     pressure: 1362,
-    temperature: 1362,
+    temperature: 1200,
   },
   {
     color: "#aab0d0",
@@ -56,7 +55,7 @@ export const data = [
     heading: "91.00",
     humidity: 34,
     pressure: 665,
-    temperature: 665,
+    temperature: 450,
   },
   {
     color: "#fb4710",
@@ -64,7 +63,7 @@ export const data = [
     heading: "8.00",
     humidity: 24,
     pressure: 999,
-    temperature: 999,
+    temperature: 2400,
   },
   {
     color: "#435ffc",
@@ -72,7 +71,7 @@ export const data = [
     heading: "210.00",
     humidity: 34,
     pressure: 1297,
-    temperature: 1297,
+    temperature: 750,
   },
   {
     color: "#6217a9",
@@ -80,6 +79,6 @@ export const data = [
     heading: "348.00",
     humidity: 29,
     pressure: 637,
-    temperature: 637,
+    temperature: 1100,
   },
 ];

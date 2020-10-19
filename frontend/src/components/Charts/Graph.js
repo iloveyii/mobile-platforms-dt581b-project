@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { drawChart, data } from "./functions";
 
 export default function Graph({ id, type, title }) {
-  setTimeout(() => {
-    drawChart(id, data);
-  }, 4000);
+  useEffect(() => {
+    drawChart(id, data, title);
+  }, []);
 
   return (
     <div className="col-md-4">
