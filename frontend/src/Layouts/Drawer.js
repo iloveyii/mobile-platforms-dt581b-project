@@ -6,7 +6,8 @@ import {
   Divider,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Typography
 } from "@material-ui/core";
 import { MoveToInbox, Mail } from "@material-ui/icons";
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
@@ -55,6 +56,30 @@ const useStyles = makeStyles(theme => ({
   },
   primary: {
       width: 40,
+  },
+  brandImgContainer: {
+    display: 'flex',
+    padding: theme.spacing(3),
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  brandImg: {
+    height: 80,
+    flex: 1
+  },
+  brandTxt: {
+    flex: 1
+  },
+  link: {
+    textDecoration: 'none',
+    color: 'orange',
+    fontWeight: 'bold',
+  },
+  listItemText: {
+    '& span' : {
+      letterSpacing: '0.2em'
+    }
   }
 }));
 
@@ -74,52 +99,46 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      <div className={classes.brandImgContainer}>
+        <img className={classes.brandImg} src="/images/smart-home.png" />
+        <Typography className={classes.brandTxt} color="secondary" variant="h6">Smart Home</Typography>
+      </div>
       <Divider />
       <List>
 
-        <Link to='/users'>
+        <Link className={classes.link} to='/users'>
           <ListItem button key="key-users">
               <ListItemIcon>
                   <PeopleOutlineIcon />
               </ListItemIcon>
-              <ListItemText className={classes.primary} primary="Users" />
+              <ListItemText className={classes.listItemText} primary="Users" />
           </ListItem>
         </Link>
 
-        <Link to='/doors'>
+        <Link className={classes.link} to='/doors'>
           <ListItem button key="key-doors">
               <ListItemIcon>
                   <MeetingRoomIcon />
               </ListItemIcon>
-              <ListItemText primary="Doors" />
+              <ListItemText className={classes.listItemText} primary="Doors" />
           </ListItem>
         </Link>
 
-        <Link to='/permissions'>
+        <Link className={classes.link} to='/permissions'>
           <ListItem button key="key-permissions">
               <ListItemIcon>
                   <OfflinePinOutlinedIcon />
               </ListItemIcon>
-              <ListItemText primary="Permissions" />
+              <ListItemText className={classes.listItemText} primary="Permissions" />
           </ListItem>
         </Link>
 
-        <Link to='/settings'>
+        <Link className={classes.link} to='/settings'>
           <ListItem button key="key-settings">
               <ListItemIcon>
                   <SettingsApplicationsOutlinedIcon />
               </ListItemIcon>
-              <ListItemText primary="Settings" />
+              <ListItemText className={classes.listItemText} primary="Settings" />
           </ListItem>
         </Link>
 
@@ -128,7 +147,7 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
               <ListItemIcon>
                   <SettingsApplicationsOutlinedIcon />
               </ListItemIcon>
-              <ListItemText primary="Login" />
+              <ListItemText className={classes.listItemText} primary="Login" />
           </ListItem>
         </Link>
 
