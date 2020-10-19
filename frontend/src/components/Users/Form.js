@@ -36,7 +36,7 @@ class Form extends React.Component {
 
   componentDidMount() {
     this.setForm(this.props);
-    console.log('componentDidMount')
+    console.log('componentDidMount');
   }
 
   onCreate = (e) => {
@@ -143,7 +143,6 @@ class Form extends React.Component {
  * @param state
  */
 const mapStateToProps = state => ({
-    users: state.users,
     form: state.users.form
 });
 

@@ -20,7 +20,8 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form : models.doors.form
+      form : models.doors.form,
+      form_errors: {}
     }
   }
 
@@ -44,7 +45,7 @@ class Form extends React.Component {
     const {form} = this.state;
 
     if(model && model.validate(form)) {
-      console.log('Update or create ', form, model.form)
+      console.log('Update or create ')
       if(form.id) {
         console.log('UPDATE')
         this.props.updateAction({...model.form});
@@ -52,8 +53,10 @@ class Form extends React.Component {
         console.log('CREATE')
         this.props.createAction({...model.form});
       }
-      this.setState({form: model.resetForm()});
+      this.setState({form: model.resetForm(), form_errors: {}});
       console.log('Door created;', model.form);
+    } else {
+      this.setState({form_errors: model.form_errors});
     }
   }
 
@@ -69,6 +72,11 @@ class Form extends React.Component {
     this.setState({form: {...form, [name]:value}});
   }
 
+  display_error = (errors) => {
+    if(!errors) return null;
+    return errors.join(', ');
+  }
+
   render() {
     const {classes} = this.props;
     const {form} = this.state;
@@ -80,6 +88,8 @@ class Form extends React.Component {
           label="Building"
           variant="outlined"
           name="building"
+          helperText={this.display_error(this.state.form_errors.building)}
+          error={this.state.form_errors.building ? true : false}
           onChange={this.onChange}
           value={form.building}
         />
@@ -132,7 +142,6 @@ class Form extends React.Component {
  * Get data from store
  * @param statdoors **/
 const mapStateToProps = state => ({
-    users: state.users,
     form: state.doors.form
 });
 

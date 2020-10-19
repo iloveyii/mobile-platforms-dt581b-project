@@ -11,9 +11,10 @@ class Door extends ActiveRecord {
         };
     }
 
-    validate = (form) => {
-      this.form = form;
-      return true;
+    rules (){
+      return {
+          building: "required"
+      };
     }
 
     messages (type) {
