@@ -12,6 +12,7 @@ import Login from "../components/Login";
 import Doors from "../components/Doors";
 import Permissions from "../components/Permissions";
 import Settings from "../components/Settings";
+import Charts from "../components/Charts";
 import Ni from "../components/Ni";
 import models from '../store';
 
@@ -113,7 +114,7 @@ function Dashboard(props) {
 
         <BrowserRouter basename="/">
           <Switch>
-            <Route exact path={`/`} component={Login}/>
+            <Route exact path={`/`} component={Charts}/>
             <Route exact path={`/users`} component={Users}/>
             <Route exact path={`/doors`} component={Doors}/>
             <Route exact path={`/permissions`} component={Permissions}/>
