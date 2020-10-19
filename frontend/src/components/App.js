@@ -12,7 +12,7 @@ import { teal } from "@material-ui/core/colors";
 
 import Dashboard from '../Pages/Dashboard';
 import Router from '../Pages/Router';
-import Login from '../components/Login'
+import Login from '../components/Login';
 
 const theme = createMuiTheme({
   palette: {
@@ -38,7 +38,26 @@ const theme = createMuiTheme({
   shape: {
     borderRadius: 3
   },
-  spacing: 8
+  spacing: 8,
+  overrides: {
+    MuiButton: {
+      root: {
+        // borderRadius: 8,
+        // padding: '13%',
+        // border: '5px solid rebeccapurple'
+      }, 
+    },
+    MuiIconButton: {
+      root: {
+        flex:1,
+        borderRadius: 0,
+        backgroundColor: "#re4c474c",
+        '&:hover': {
+          backgroundColor: "rebeccapurple"
+        }
+      }
+    } 
+  }, 
 });
 
 

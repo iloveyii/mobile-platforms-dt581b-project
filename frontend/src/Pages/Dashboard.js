@@ -1,29 +1,18 @@
 import React, {useEffect} from "react";
-import {
-  makeStyles,
-  createMuiTheme
-} from "@material-ui/core";
-import { teal } from "@material-ui/core/colors";
 import { useSnackbar } from 'notistack';
 import {connect} from "react-redux";
-import {withRouter, Link} from "react-router-dom";
 import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import io from "socket.io-client";
+import { makeStyles } from "@material-ui/core";
 
 
-
-import Sidebar from "../components/Sidebar";
 import {apiServer} from "../common/constants";
-
-import {Header} from "../Layouts";
-import PageHeader from "../components/PageHeader";
 import Users from "../components/Users";
 import Login from "../components/Login";
 import Doors from "../components/Doors";
 import Permissions from "../components/Permissions";
 import Settings from "../components/Settings";
 import Ni from "../components/Ni";
-import Errors from "../components/Errors";
 import models from '../store';
 
 
@@ -116,12 +105,12 @@ function Dashboard(props) {
         }
 
     });
-    
+
   }, []);
 
 
   return (
-      
+
         <BrowserRouter basename="/">
           <Switch>
             <Route exact path={`/`} component={Login}/>
@@ -132,7 +121,7 @@ function Dashboard(props) {
             <Route component={Ni}/>
           </Switch>
         </BrowserRouter>
-      
+
   );
 }
 

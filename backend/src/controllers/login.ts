@@ -9,9 +9,6 @@ require("dotenv").config();
 
 const token_secret = process.env.TOKEN_SECRET || "secret";
 
-const DB_NAME="rdigital"; const DB_USER="rdigital"; const DB_PASS="rdigital";
-const database = new Database(DB_NAME, DB_USER, DB_PASS);
-
 
 // @desc   Make a user log in
 // @route  Post /api/v1/login

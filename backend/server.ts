@@ -40,7 +40,7 @@ app.use(
 // Connect to DB
 // ----------------------------------
 const db = new Database(DB_NAME, DB_USER, DB_PASS);
-db.connect();
+const db_connected = db.connect();
 console.log("DB DB_NAME, DB_USER, DB_PASS", DB_NAME, DB_USER, DB_PASS);
 
 
@@ -51,6 +51,9 @@ const server = app.listen(API_PORT, () => {
     const ENV_MODE = process.env.NODE_ENV ? process.env.NODE_ENV : "prod";
     let message = `\n${chalk.bold(`SERVER is running on ${API_URL}:${API_PORT} in ${ENV_MODE} mode `)}`;
         message += `\n${chalk.green('To change these config(server and port), edit .env file')}`;
+        if(db_connected) {
+            message += `\n${chalk.blue('Mongodb connected to ' + DB_NAME)}`;
+        }
         message += `\n\n${chalk.red('Press CTRL-C to stop')}`;
         console.log(boxen(message, {
             padding: 1,

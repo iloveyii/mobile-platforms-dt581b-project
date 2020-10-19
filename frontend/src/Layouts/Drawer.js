@@ -132,14 +132,6 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
           </ListItem>
         </Link>
 
-        {["All mail", "Mail", "Settings"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
       </List>
     </div>
   );

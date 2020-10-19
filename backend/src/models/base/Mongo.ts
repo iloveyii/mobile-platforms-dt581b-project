@@ -2,7 +2,6 @@ import { ObjectId } from "mongodb";
 import { ResponseT, UserT } from "../../types";
 import { ConditionI, ModelI } from "../../interfaces";
 import { Database } from "./Database";
-import Condition from "./Condition";
 import { Validator } from "node-input-validator";
 
 
@@ -15,7 +14,7 @@ class Mongo implements ModelI {
         success: true,
         data: []
     };
-    private database : any;
+    public database : any;
 
     constructor(private readonly collection: string, public data: any) {
         // console.log("Mongo Collection : ", collection, data);

@@ -50,12 +50,12 @@ class  PermissionsList extends React.Component {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Building</TableCell>
-              <TableCell align="right">Room</TableCell>
-              <TableCell align="right">Status</TableCell>
-              <TableCell align="right">X</TableCell>
+              <TableCell><label>Name</label></TableCell>
+              <TableCell><label>Email</label></TableCell>
+              <TableCell><label>Building</label></TableCell>
+              <TableCell align="right"><label>Room</label></TableCell>
+              <TableCell align="right"><label>Status</label></TableCell>
+              <TableCell align="right"><label>X</label></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -63,7 +63,7 @@ class Login extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const imageUrl = '/images/lock.jpg';
+        const imageUrl = '/images/lock.png';
         const title = 'Login';
         const subtitle = 'Sign up';
 
@@ -73,7 +73,7 @@ class Login extends React.Component {
 
                     <div className="login-container">
                         <div className="login-header">
-                            <img src='/images/lock.jpg' style={{height: '72px'}}/>
+                            <img src={imageUrl} style={{height: '80px'}}/>
                         </div>
                         <div className="login-content">
                         <Paper className={classes.root}>

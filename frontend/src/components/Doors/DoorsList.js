@@ -50,10 +50,10 @@ class  DoorsList extends React.Component {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Building</TableCell>
-              <TableCell align="right">Room</TableCell>
-              <TableCell align="right">Address</TableCell>
-              <TableCell align="right">X</TableCell>
+              <TableCell><label>Building</label></TableCell>
+              <TableCell align="right"><label>Room</label></TableCell>
+              <TableCell align="right"><label>Address</label></TableCell>
+              <TableCell align="right"><label>X</label></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -28,7 +28,8 @@ export class Database {
         } catch (error) {
             console.log("Error : ", error);
         }
-        return Database.database;
+        // return Database.database;
+        return this.dbname;
     }
 
     async db() {
