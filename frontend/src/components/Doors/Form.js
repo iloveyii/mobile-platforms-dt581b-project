@@ -27,7 +27,9 @@ class Form extends React.Component {
 
   setForm = props => {
     const {form} = props;
-    this.setState({form});
+    if(Object.keys(form).length !== 0) {
+      this.setState({form});
+    }
   }
   componentWillReceiveProps(nextProps, context) {
     this.setForm(nextProps);

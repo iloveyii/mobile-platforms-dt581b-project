@@ -21,13 +21,16 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form : models.permissions.form
+      form : models.permissions.form,
+      form_errors: {}
     }
   }
 
   setForm = props => {
     const {form} = props;
-    this.setState({form});
+    if(Object.keys(form).length !== 0) {
+      this.setState({form});
+    }
   }
   componentWillReceiveProps(nextProps, context) {
     this.setForm(nextProps);
@@ -53,8 +56,10 @@ class Form extends React.Component {
         console.log('CREATE')
         this.props.createAction({...model.form});
       }
-      this.setState({form: model.resetForm()});
+      this.setState({form: model.resetForm(), form_errors: {}});
       console.log('User created;', model.form);
+    } else {
+      this.setState({form_errors: model.form_errors});
     }
   }
 
@@ -70,6 +75,11 @@ class Form extends React.Component {
     this.setState({form: {...form, [name]:value}});
   }
 
+  display_error = (errors) => {
+    if(!errors) return null;
+    return errors.join(', ');
+  }
+
   render() {
     const {classes} = this.props;
     const {form} = this.state;
@@ -81,6 +91,8 @@ class Form extends React.Component {
           label="Name"
           variant="outlined"
           name="name"
+          helperText={this.display_error(this.state.form_errors.name)}
+          error={this.state.form_errors.name ? true : false}
           onChange={this.onChange}
           value={form.name}
         />
@@ -89,6 +101,8 @@ class Form extends React.Component {
           label="Email"
           variant="outlined"
           name="email"
+          helperText={this.display_error(this.state.form_errors.email)}
+          error={this.state.form_errors.email ? true : false}
           onChange={this.onChange}
           value={form.email}
           fullWidth
@@ -102,6 +116,8 @@ class Form extends React.Component {
           label="Status"
           variant="outlined"
           name="status"
+          helperText={this.display_error(this.state.form_errors.status)}
+          error={this.state.form_errors.status ? true : false}
           onChange={this.onChange}
           value={form.status}
         />
@@ -138,7 +154,6 @@ class Form extends React.Component {
  * @param state
  */
 const mapStateToProps = state => ({
-    permissions: state.permissions,
     form: state.permissions.form
 });
 

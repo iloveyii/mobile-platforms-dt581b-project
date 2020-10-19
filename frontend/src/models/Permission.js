@@ -13,9 +13,13 @@ class Permission extends ActiveRecord {
         };
     }
 
-    validate = (form) => {
-      this.form = form;
-      return true;
+    rules (){
+      return {
+          email: "required|email",
+          name: "required",
+          building: "required",
+          status: "required",
+      };
     }
 
     messages (type) {
