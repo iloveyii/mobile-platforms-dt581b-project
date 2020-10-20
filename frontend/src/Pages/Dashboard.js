@@ -1,12 +1,11 @@
-import React, {useEffect} from "react";
-import { useSnackbar } from 'notistack';
-import {connect} from "react-redux";
-import {Route, Switch, BrowserRouter} from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useSnackbar } from "notistack";
+import { connect } from "react-redux";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import io from "socket.io-client";
 import { makeStyles } from "@material-ui/core";
 
-
-import {apiServer} from "../common/constants";
+import { apiServer } from "../common/constants";
 import Users from "../components/Users";
 import Login from "../components/Login";
 import Doors from "../components/Doors";
@@ -14,128 +13,122 @@ import Permissions from "../components/Permissions";
 import Settings from "../components/Settings";
 import Charts from "../components/Charts";
 import Ni from "../components/Ni";
-import models from '../store';
-
+import models from "../store";
 
 const socket = io(apiServer, {
-  transports: ["websocket", "polling"]
+  transports: ["websocket", "polling"],
 });
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles((theme) => ({
   main: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+      marginLeft: drawerWidth,
+    },
   },
   loginMargin: {
-    marginLeft: -1 * drawerWidth
-  }
+    marginLeft: -1 * drawerWidth,
+  },
 }));
 
 function Dashboard(props) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const {users, logins, doors, permissions} = props;
-  console.log('props', Object.keys(props));
+  const { users, logins, doors, permissions } = props;
+  console.log("props", Object.keys(props));
   const usersResponses = models.users.errors(users.actions);
   const loginsResponses = models.logins.errors(logins.actions);
   const doorsResponses = models.doors.errors(doors.actions);
   const permissionsResponses = models.permissions.errors(permissions.actions);
 
-  /*
-  Object.keys(props).map(stateVar => {
-    const modelsResponses = models[stateVar].errors(props[stateVar].actions);
-    useEffect(() => {
-      // usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: res.errors[0].type}) );
-      modelsResponses.map(res =>   {
-        const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
-        enqueueSnackbar(msg, {variant: res.errors[0].type});
-      } );
-    }, [modelsResponses]);
-  }) */
-
   useEffect(() => {
     // usersResponses.map(res =>   enqueueSnackbar(JSON.stringify(res.errors[0].msg) + ' - ' + res.type , {variant: res.errors[0].type}) );
-    usersResponses.map(res =>   {
-      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
-      enqueueSnackbar(msg, {variant: res.errors[0].type});
-    } );
+    usersResponses.map((res) => {
+      const msg =
+        typeof res.errors[0].msg === "string"
+          ? res.errors[0].msg
+          : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, { variant: res.errors[0].type });
+    });
   }, [usersResponses]);
 
   useEffect(() => {
-    loginsResponses.map(res =>   {
-      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
-      enqueueSnackbar(msg, {variant: res.errors[0].type});
-    } );
+    loginsResponses.map((res) => {
+      const msg =
+        typeof res.errors[0].msg === "string"
+          ? res.errors[0].msg
+          : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, { variant: res.errors[0].type });
+    });
   }, [loginsResponses]);
 
   useEffect(() => {
-    doorsResponses.map(res =>   {
-      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
-      enqueueSnackbar(msg, {variant: res.errors[0].type});
-    } );
+    doorsResponses.map((res) => {
+      const msg =
+        typeof res.errors[0].msg === "string"
+          ? res.errors[0].msg
+          : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, { variant: res.errors[0].type });
+    });
   }, [doorsResponses]);
 
   useEffect(() => {
-    permissionsResponses.map(res => {
-      const msg = (typeof res.errors[0].msg) === 'string' ? res.errors[0].msg : JSON.stringify(res.errors[0].msg);
-      enqueueSnackbar(msg, {variant: res.errors[0].type});
-    } );
+    permissionsResponses.map((res) => {
+      const msg =
+        typeof res.errors[0].msg === "string"
+          ? res.errors[0].msg
+          : JSON.stringify(res.errors[0].msg);
+      enqueueSnackbar(msg, { variant: res.errors[0].type });
+    });
   }, [permissionsResponses]);
 
   // Call method when ws send an update
-  useEffect(()=> {
-    socket.on('update', data => {
-      console.log('Update', data);
+  useEffect(() => {
+    socket.on("update", (data) => {
+      console.log("Update", data);
 
-        if(data.url && data.url.includes('/api/v1/users') ) {
-          console.log('Update USERS  ');
-          props.usersReadAction({});
-        }
+      if (data.url && data.url.includes("/api/v1/users")) {
+        console.log("Update USERS  ");
+        props.usersReadAction({});
+      }
 
-        if(data.url && data.url.includes('/api/v1/doors') ) {
-          console.log('Update DOORS  ');
-          props.doorsReadAction({});
-        }
+      if (data.url && data.url.includes("/api/v1/doors")) {
+        console.log("Update DOORS  ");
+        props.doorsReadAction({});
+      }
 
-        if(data.url && data.url.includes('/api/v1/permissions') ) {
-          console.log('Update PERMISSIONS  ');
-          props.permissionsReadAction({});
-        }
-
+      if (data.url && data.url.includes("/api/v1/permissions")) {
+        console.log("Update PERMISSIONS  ");
+        props.permissionsReadAction({});
+      }
     });
-
   }, []);
 
-
   return (
-
-        <BrowserRouter basename="/">
-          <Switch>
-            <Route exact path={`/`} component={Charts}/>
-            <Route exact path={`/users`} component={Users}/>
-            <Route exact path={`/doors`} component={Doors}/>
-            <Route exact path={`/permissions`} component={Permissions}/>
-            <Route exact path={`/settings`} component={Settings}/>
-            <Route component={Ni}/>
-          </Switch>
-        </BrowserRouter>
-
+    <BrowserRouter basename="/">
+      <Switch>
+        <Route exact path={`/`} component={Login} />
+        <Route exact path={`/dashboard`} component={Charts} />
+        <Route exact path={`/users`} component={Users} />
+        <Route exact path={`/doors`} component={Doors} />
+        <Route exact path={`/permissions`} component={Permissions} />
+        <Route exact path={`/settings`} component={Settings} />
+        <Route component={Ni} />
+      </Switch>
+    </BrowserRouter>
   );
 }
-
 
 /**
  * Get data from store
  * @param state
  */
-const mapStateToProps = state => ({
-    users: state.users,
-    logins: state.logins,
-    doors: state.doors,
-    permissions: state.permissions
+const mapStateToProps = (state) => ({
+  users: state.users,
+  logins: state.logins,
+  doors: state.doors,
+  permissions: state.permissions,
 });
 
 /**

@@ -1,83 +1,82 @@
 import React from "react";
 import { TextField, Typography, Button, makeStyles } from "@material-ui/core";
-import {connect} from "react-redux";
-import {withRouter, Link} from "react-router-dom";
-import { withStyles } from '@material-ui/styles';
+import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
+import { withStyles } from "@material-ui/styles";
 
+import models from "../../store";
 
-import models from '../../store';
-
-const styles = theme => ({
+const styles = (theme) => ({
   form: {
     display: "flex",
     flexDirection: "column",
     marginBottom: theme.spacing(3),
-    marginTop: theme.spacing(3)
-  }
+    marginTop: theme.spacing(3),
+  },
 });
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form : models.users.form,
-      form_errors: {}
-    }
+      form: models.users.form,
+      form_errors: {},
+    };
   }
 
-  setForm = props => {
-    const {form} = props;
-    if(Object.keys(form).length !== 0) {
-      this.setState({form});
+  setForm = (props) => {
+    const { form } = props;
+    if (Object.keys(form).length !== 0) {
+      this.setState({ form });
     }
-  }
+  };
   componentWillReceiveProps(nextProps, context) {
     this.setForm(nextProps);
-    console.log('componentWillReceiveProps')
+    console.log("componentWillReceiveProps");
   }
 
   componentDidMount() {
     this.setForm(this.props);
-    console.log('componentDidMount');
+    console.log("componentDidMount");
   }
 
   onCreate = (e) => {
     e.preventDefault();
     const model = models.users;
-    const {form} = this.state;
+    const { form } = this.state;
 
-    if(model && model.validate(form)) {
-      if(form.id) {
-        this.props.updateAction({...model.form});
+    if (model && model.validate(form)) {
+      if (form.id) {
+        this.props.updateAction({ ...model.form });
       } else {
-        this.props.createAction({...model.form});
+        this.props.createAction({ ...model.form });
       }
-      this.setState({form: model.resetForm(), form_errors: {}});
+      this.setState({ form: model.resetForm(), form_errors: {} });
     } else {
-      this.setState({form_errors: model.form_errors});
+      this.setState({ form_errors: model.form_errors });
     }
-  }
+  };
 
-  onDelete = e => {
-    const {form} = this.state;
-    this.props.deleteAction({...form});
-  }
+  onDelete = (e) => {
+    const { form } = this.state;
+    this.props.deleteAction({ ...form });
+  };
 
-  onChange = e => {
+  onChange = (e) => {
     e.preventDefault();
-    const {name, value} = e.target;
-    const {form} = this.state;
-    this.setState({form: {...form, [name]:value}});
-  }
+    const { name, value } = e.target;
+    const { form } = this.state;
+    this.setState({ form: { ...form, [name]: value } });
+  };
 
   display_error = (errors) => {
-    if(!errors) return null;
-    return errors.join(', ');
-  }
+    if (!errors) return null;
+    return errors.join(", ");
+  };
 
   render() {
-    const {classes} = this.props;
-    const {form} = this.state;
+    const { classes } = this.props;
+    const { form } = this.state;
 
     return (
       <form autoComplete="off" noValidate className={classes.form}>
@@ -100,6 +99,17 @@ class Form extends React.Component {
           error={this.state.form_errors.email ? true : false}
           onChange={this.onChange}
           value={form.email}
+          fullWidth
+        />
+        <TextField
+          margin="normal"
+          label="Password"
+          variant="outlined"
+          name="password"
+          helperText={this.display_error(this.state.form_errors.password)}
+          error={this.state.form_errors.password ? true : false}
+          onChange={this.onChange}
+          value={form.password}
           fullWidth
         />
         <TextField
@@ -139,13 +149,12 @@ class Form extends React.Component {
   }
 }
 
-
 /**
  * Get data from store
  * @param state
  */
-const mapStateToProps = state => ({
-    form: state.users.form
+const mapStateToProps = (state) => ({
+  form: state.users.form,
 });
 
 /**
@@ -153,10 +162,12 @@ const mapStateToProps = state => ({
  * @type {{readAction: UserReadAction}}
  */
 const mapActionsToProps = {
-    createAction: models.users.actions.create,
-    readAction: models.users.actions.read,
-    updateAction: models.users.actions.update,
-    deleteAction: models.users.actions.delete
+  createAction: models.users.actions.create,
+  readAction: models.users.actions.read,
+  updateAction: models.users.actions.update,
+  deleteAction: models.users.actions.delete,
 };
 
-export default withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(Form)));
+export default withStyles(styles)(
+  withRouter(connect(mapStateToProps, mapActionsToProps)(Form))
+);
