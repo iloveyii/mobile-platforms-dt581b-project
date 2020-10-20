@@ -42,6 +42,7 @@ class PermissionsList extends React.Component {
     console.log("opening Door ", row);
     const { updateAction } = this.props;
     updateAction({
+      id: row.id,
       building: row.building,
       room_number: row.room_number,
       status: "1",

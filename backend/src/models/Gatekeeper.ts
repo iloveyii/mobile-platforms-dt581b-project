@@ -1,6 +1,7 @@
 import Mongo from "./base/Mongo";
 import { Database } from "./base/Database";
 import { ConditionI } from "../interfaces";
+import axios from "axios";
 
 type PermissionT = {
   _id?: string;
@@ -26,6 +27,13 @@ class Gatekeeper extends Mongo {
     };
   }
 
+  makeApiRequestToDevice(model: any) {
+    const url = `http://localhost:7700/api/v1/gatekeepers/${this.permission?.command}`;
+    axios.get(url).then((res: any) => {
+      console.log("Received command on hardware behalf ", model);
+    });
+  }
+
   async update(condition?: ConditionI) {
     await this.read(condition);
 
@@ -33,6 +41,7 @@ class Gatekeeper extends Mongo {
       const model = this.response.data[0];
       // Opening gateway to open Gatekeeper with uri
       console.log("Gatekeeper opened door", model);
+      this.makeApiRequestToDevice(model);
       this.setResponse(true, [{ command: "success" }]);
     } else {
       console.log("Gatekeeper cannot open door", this.response);

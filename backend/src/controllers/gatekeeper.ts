@@ -22,3 +22,16 @@ export const updateGatekeeper = async (
   await model.update(condition);
   return res.status(200).send(model.response);
 };
+
+// @desc   Get a Model
+// @route  GET /api/v1/gatekeeprs/:id
+export const getGatekeeper = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log("Got command at controller ", req.params.id);
+  return res
+    .status(200)
+    .send({ success: true, data: [{ command: req.params.id }] });
+};
