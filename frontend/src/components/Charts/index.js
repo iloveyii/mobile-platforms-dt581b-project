@@ -1,5 +1,6 @@
 import React from "react";
 import Graph from "./Graph";
+import Stats from "./Stats";
 import { Header } from "../../Layouts";
 import { withStyles } from "@material-ui/styles";
 import { Container, Paper, Button } from "@material-ui/core";
@@ -31,6 +32,40 @@ class Charts extends React.Component {
         <Header />
 
         <Container maxWidth="lg">
+          <div className="row">
+            <Stats
+              type="warning"
+              icon="fa-cloud"
+              subicon="date_range"
+              title="Temperature"
+              subtitle="Heating system"
+              data={{ value: "53/100 ", unit: "GB" }}
+            />
+            <Stats
+              type="success"
+              icon="fa-picture-o"
+              subicon="warning"
+              title="CO2"
+              subtitle="Air freshness"
+              data={{ value: "53/100 ", unit: "GB" }}
+            />
+            <Stats
+              type="danger"
+              icon="fa-compass"
+              subicon="local_offer"
+              title="Humidity"
+              subtitle="Coolness & breeze"
+              data={{ value: "53/100 ", unit: "GB" }}
+            />
+            <Stats
+              type="info"
+              icon="fa-cc"
+              subicon="update"
+              title="Lights"
+              subtitle="Lumination"
+              data={{ value: "53/100 ", unit: "GB" }}
+            />
+          </div>
           <div className="row">
             <Graph title="Temperature" type="success" id="temperature" />
             <Graph title="Pressure" type="warning" id="pressure" />
