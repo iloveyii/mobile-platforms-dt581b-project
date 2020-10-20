@@ -8,14 +8,18 @@ export default function Table({ type, title }) {
           <h4 className="card-title">{title}</h4>
         </div>
         <div className="card-body table-responsive">
-          <tr>
-            <td>
-              <img id="live-image" src="" alt="Live video" />
-            </td>
-            <td>
-              <span id="live-image-status"></span>
-            </td>
-          </tr>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <img id="live-image" src="" alt="Live video" />
+                </td>
+                <td>
+                  <span id="live-image-status"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

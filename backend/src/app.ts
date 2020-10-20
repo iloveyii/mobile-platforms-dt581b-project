@@ -10,7 +10,6 @@ import morgan from "morgan";
 import helmet from "helmet";
 import * as path from "path";
 
-
 const fileUpload = require("express-fileupload");
 
 // ----------------------------------
@@ -25,6 +24,7 @@ import { notFound } from "./middlewares/not_found";
 import login from "./routes/login";
 import user from "./routes/user";
 import door from "./routes/door";
+import gatekeeper from "./routes/gatekeeper";
 import permission from "./routes/permission";
 import fault from "./routes/fault";
 
@@ -32,18 +32,20 @@ import fault from "./routes/fault";
 // Express configuration
 // ----------------------------------
 const app: any = express();
-app.use(express.json({limit: "50mb"}));
+app.use(express.json({ limit: "50mb" }));
 app.use(cors());
 app.use(compression());
-app.use(express.urlencoded({limit: "50mb", extended: true}));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true}));
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(cors({origin: "*", optionsSuccessStatus: 200}));
-app.use(fileUpload({
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(cors({ origin: "*", optionsSuccessStatus: 200 }));
+app.use(
+  fileUpload({
     createParentPath: true,
-    limits: {fileSize: 50 * 1024 * 1024},
-}));
+    limits: { fileSize: 50 * 1024 * 1024 },
+  })
+);
 
 // ----------------------------------
 // Security - header
@@ -67,6 +69,7 @@ app.set("view engine", "ejs");
 // ----------------------------------
 app.use("/api/v1/users", user);
 app.use("/api/v1/doors", door);
+app.use("/api/v1/gatekeepers", gatekeeper);
 app.use("/api/v1/permissions", permission);
 app.use("/api/v1/logins", login);
 app.use("/api/v1/faults", fault);

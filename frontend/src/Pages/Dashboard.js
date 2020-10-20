@@ -9,6 +9,7 @@ import { apiServer } from "../common/constants";
 import Users from "../components/Users";
 import Login from "../components/Login";
 import Doors from "../components/Doors";
+import Control from "../components/Control";
 import Permissions from "../components/Permissions";
 import Settings from "../components/Settings";
 import Charts from "../components/Charts";
@@ -113,6 +114,7 @@ function Dashboard(props) {
         <Route exact path={`/users`} component={Users} />
         <Route exact path={`/doors`} component={Doors} />
         <Route exact path={`/permissions`} component={Permissions} />
+        <Route exact path={`/control`} component={Control} />
         <Route exact path={`/settings`} component={Settings} />
         <Route component={Ni} />
       </Switch>

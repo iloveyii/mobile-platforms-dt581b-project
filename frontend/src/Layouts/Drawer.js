@@ -15,6 +15,7 @@ import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline";
 import SettingsApplicationsOutlinedIcon from "@material-ui/icons/SettingsApplicationsOutlined";
 import OfflinePinOutlinedIcon from "@material-ui/icons/OfflinePinOutlined";
 import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
+import SettingsRemoteOutlinedIcon from "@material-ui/icons/SettingsRemoteOutlined";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
 
@@ -144,6 +145,18 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
               <SettingsApplicationsOutlinedIcon />
             </ListItemIcon>
             <ListItemText className={classes.listItemText} primary="Settings" />
+          </ListItem>
+        </Link>
+
+        <Link className={classes.link} to="/control">
+          <ListItem button>
+            <ListItemIcon>
+              <SettingsRemoteOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText
+              className={classes.listItemText}
+              primary="Remote control"
+            />
           </ListItem>
         </Link>
 

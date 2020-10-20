@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Stats({ type, icon, title, data, subtitle, subicon }) {
   return (
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div className="col-lg-3 col-md-6 col-sm-6">
       <div className="card card-stats">
         <div className={"card-header card-header-icon card-header-" + type}>
           <div className="card-icon">
