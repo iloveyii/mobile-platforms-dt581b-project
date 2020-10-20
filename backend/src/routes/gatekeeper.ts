@@ -6,6 +6,9 @@ import { ws_update } from "../middlewares/ws_update";
 
 const router = express.Router();
 
-router.route("/:id").put(ws_update, updateGatekeeper).get(getGatekeeper);
+router
+  .route("/:id")
+  .put(ws_update, updateGatekeeper)
+  .get(ws_update, getGatekeeper);
 
 export default router;

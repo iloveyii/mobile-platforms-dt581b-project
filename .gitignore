@@ -6,3 +6,4 @@ react/dist/
 tmp
 **/node_modules/**
 frontend/public/images/Screenshot from 2020-10-11 23-54-04.png
+door/node_modules

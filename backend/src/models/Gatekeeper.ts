@@ -28,7 +28,13 @@ class Gatekeeper extends Mongo {
   }
 
   makeApiRequestToDevice(model: any) {
-    const url = `http://localhost:7700/api/v1/gatekeepers/${this.permission?.command}`;
+    var queryString = Object.keys(model)
+      .map((key) => {
+        return encodeURIComponent(key) + "=" + encodeURIComponent(model[key]);
+      })
+      .join("&");
+
+    const url = `http://localhost:7700/api/v1/gatekeepers/${this.permission?.command}&${queryString}`;
     axios.get(url).then((res: any) => {
       console.log("Received command on hardware behalf ", model);
     });
