@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { drawChart, data } from "./functions";
 
-export default function Graph({ id, type, title }) {
+export default function Graph({ id, type, title, average }) {
   useEffect(() => {
     drawChart(id, data, title);
   }, []);
@@ -17,7 +17,7 @@ export default function Graph({ id, type, title }) {
           <p className="card-category">
             <span className={"text-" + type} style={{ fontSize: "30px" }}>
               <i className="fa fa-thermometer-half" aria-hidden="true"></i>
-              <span id={id}></span>
+              <span id={id}>{average}</span>
             </span>
           </p>
         </div>

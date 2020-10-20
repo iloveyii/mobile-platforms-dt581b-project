@@ -1,6 +1,7 @@
 import React from "react";
 import Graph from "./Graph";
 import Stats from "./Stats";
+import Table from "./Table";
 import { Header } from "../../Layouts";
 import { withStyles } from "@material-ui/styles";
 import { Container, Paper, Button } from "@material-ui/core";
@@ -67,9 +68,29 @@ class Charts extends React.Component {
             />
           </div>
           <div className="row">
-            <Graph title="Temperature" type="success" id="temperature" />
-            <Graph title="Pressure" type="warning" id="pressure" />
-            <Graph title="Humidity" type="danger" id="humidity" />
+            <Graph
+              title="Temperature"
+              type="success"
+              id="temperature"
+              average=" 22.5"
+            />
+            <Graph
+              title="Pressure"
+              type="warning"
+              id="pressure"
+              average=" 23.4"
+            />
+            <Graph
+              title="Humidity"
+              type="danger"
+              id="humidity"
+              average=" 27.1"
+            />
+          </div>
+
+          <div className="row">
+            <Table type="success" title="Live stream" />
+            <Table type="info" title="Latest updates" />
           </div>
         </Container>
       </div>
