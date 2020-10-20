@@ -32,7 +32,7 @@ class Charts extends React.Component {
       <div className={classes.main}>
         <Header />
 
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" style={{ marginTop: 20 }}>
           <div className="row">
             <Stats
               type="warning"
