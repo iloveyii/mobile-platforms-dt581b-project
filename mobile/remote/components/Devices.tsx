@@ -34,37 +34,37 @@ export default class EditScreenInfo extends React.Component {
         <Text style={styles.text}>List</Text>
         {Object.keys(devices).length === 0 ? null : (
           <View>
-            {devices.map((device: any) => {
+            {devices.map((device: any, i: number) => {
               return (
                 <View key={device.id} style={styles.row}>
                   <View key={device.id} style={styles.subrow}>
                     <Text style={styles.td}>{device.building}</Text>
                     <Text style={styles.td}>{device.room_number}</Text>
                   </View>
-                  <View key={device.id} style={styles.subrow}>
+                  <View style={styles.subrow}>
                     <TouchableOpacity
-                      key={`door`}
+                      key={`door-${i}`}
                       onPress={() => this.onPress()}
                       style={styles.touch}
                     >
                       <Text style={styles.text}>Logga in</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      key={`stove`}
+                      key={`stove-${i}`}
                       onPress={() => this.onPress()}
                       style={styles.touch}
                     >
                       <Text style={styles.text}>Logga in</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      key={`television`}
+                      key={`television-${i}`}
                       onPress={() => this.onPress()}
                       style={styles.touch}
                     >
                       <Text style={styles.text}>Logga in</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      key={`light`}
+                      key={`light-${i}`}
                       onPress={() => this.onPress()}
                       style={styles.touch}
                     >
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.bluish.blue1,
     borderColor: theme.bluish.green1,
     borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 3,
     marginLeft: 2,
     marginRight: 2,
     flex: 1,
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 12,
     textAlign: "center",
+    justifyContent: "space-between",
   },
   row: {
     paddingTop: 10,
@@ -175,11 +177,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   subrow: {
+    marginBottom: 10,
+    marginTop: 10,
     display: "flex",
     backgroundColor: "#b3e5fc",
     flexDirection: "row",
   },
   td: {
-    flex: 2,
+    flex: 1,
+    textAlign: "center",
   },
 });
