@@ -1,89 +1,112 @@
-import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import * as WebBrowser from "expo-web-browser";
+import React from "react";
+import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { theme } from "../constants/index";
 
-import Colors from '../constants/Colors';
-import { MonoText } from './StyledText';
-import { Text, View } from './Themed';
+import Colors from "../constants/Colors";
+import { MonoText } from "./StyledText";
+import { Text, View } from "./Themed";
 
-export default function EditScreenInfo({ path }: { path: string }) {
-  return (
-    <View>
-      <View style={styles.getStartedContainer}>
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Open up the code for this screen:
-        </Text>
+export default class EditScreenInfo extends React.Component {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+    };
+  }
 
-        <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          darkColor="rgba(255,255,255,0.05)"
-          lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
-        </View>
+  onPress = (e: any) => {
+    console.log(e);
+  };
 
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)">
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
-      </View>
+  render() {
+    return (
+      <View style={styles.container}>
+        <TextInput
+          autoCapitalize="none"
+          style={{
+            height: 35,
+            borderColor: theme.colors.lightGrey,
+            borderWidth: StyleSheet.hairlineWidth,
+            color: "black",
+            paddingLeft: 5,
+            marginTop: 6,
+          }}
+          onChangeText={(email) => this.setState({ email })}
+          placeholder="Fill i din mail här"
+          placeholderTextColor={theme.colors.gray}
+        />
+        <TextInput
+          autoCapitalize="none"
+          style={{
+            height: 35,
+            width: 200,
+            borderColor: theme.colors.lightGrey,
+            borderWidth: StyleSheet.hairlineWidth,
+            color: "black",
+            paddingLeft: 5,
+            marginTop: 4,
+          }}
+          onChangeText={(email) => this.setState({ email })}
+          placeholder="Lösenord"
+          placeholderTextColor={theme.colors.gray}
+        />
 
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
+        <TouchableOpacity
+          key={`log-in`}
+          onPress={() => this.onPress()}
+          style={styles.touch}
+        >
+          <Text style={styles.text}>Logga in</Text>
         </TouchableOpacity>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    display: "flex",
+    backgroundColor: "#fff",
   },
   developmentModeText: {
     marginBottom: 20,
     fontSize: 14,
     lineHeight: 19,
-    textAlign: 'center',
+    textAlign: "center",
   },
   contentContainer: {
     paddingTop: 30,
   },
   welcomeContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
     marginBottom: 20,
   },
   welcomeImage: {
     width: 100,
     height: 80,
-    resizeMode: 'contain',
+    resizeMode: "contain",
     marginTop: 3,
     marginLeft: -10,
   },
   getStartedContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginHorizontal: 50,
   },
   homeScreenFilename: {
     marginVertical: 7,
   },
   codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
+    color: "rgba(96,100,109, 0.8)",
   },
   codeHighlightContainer: {
     borderRadius: 3,
@@ -92,17 +115,34 @@ const styles = StyleSheet.create({
   getStartedText: {
     fontSize: 17,
     lineHeight: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   helpContainer: {
     marginTop: 15,
     marginHorizontal: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   helpLink: {
     paddingVertical: 15,
   },
   helpLinkText: {
-    textAlign: 'center',
+    textAlign: "center",
+  },
+  inputText: {
+    textAlign: "left",
+    borderColor: "grey",
+  },
+  touch: {
+    padding: 15,
+    backgroundColor: theme.bluish.blue1,
+    marginTop: 20,
+    borderColor: theme.bluish.green1,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  text: {
+    color: theme.bluish.green3,
+    fontWeight: "bold",
+    fontSize: 12,
+    textAlign: "center",
   },
 });
