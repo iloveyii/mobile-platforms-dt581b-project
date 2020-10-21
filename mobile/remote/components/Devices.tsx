@@ -66,99 +66,102 @@ export default class EditScreenInfo extends React.Component {
     const { permissions } = this.props;
     return (
       <View style={styles.container}>
-        {Object.keys(permissions).length === 0 ? null : (
+        {permissions && Object.keys(permissions).length === 0 ? null : (
           <View>
-            {permissions.map((permission: any, i: number) => {
-              const style =
-                i === 0
-                  ? { borderTopLeftRadius: 0, borderTopRightRadius: 0 }
-                  : {};
-              return (
-                <View key={permission.id} style={{ ...styles.row, ...style }}>
-                  <View style={styles.subrow}>
-                    <Text style={styles.td}>{permission.building}</Text>
-                    <Text style={styles.td}>{permission.room_number}</Text>
-                  </View>
-                  <View style={styles.subrow}>
-                    <TouchableOpacity
-                      key={`door-${i}`}
-                      onPress={() => this.onPress(permission, "door")}
-                      style={styles.touch}
-                    >
-                      <Icon
-                        raised
-                        name="door-open"
-                        size={32}
-                        type="font-awesome-5"
-                        color={
-                          permission.devices.door === false ? colorOff : colorOn
-                        }
+            {permissions &&
+              permissions.map((permission: any, i: number) => {
+                const style =
+                  i === 0
+                    ? { borderTopLeftRadius: 0, borderTopRightRadius: 0 }
+                    : {};
+                return (
+                  <View key={permission.id} style={{ ...styles.row, ...style }}>
+                    <View style={styles.subrow}>
+                      <Text style={styles.td}>{permission.building}</Text>
+                      <Text style={styles.td}>{permission.room_number}</Text>
+                    </View>
+                    <View style={styles.subrow}>
+                      <TouchableOpacity
+                        key={`door-${i}`}
                         onPress={() => this.onPress(permission, "door")}
-                      />
-                      <Text style={styles.text}>Door</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      key={`stove-${i}`}
-                      onPress={() => this.onPress(permission, "stove")}
-                      style={styles.touch}
-                    >
-                      <Icon
-                        raised
-                        name="fire"
-                        size={32}
-                        type="font-awesome"
-                        color={
-                          permission.devices.stove === false
-                            ? colorOff
-                            : colorOn
-                        }
+                        style={styles.touch}
+                      >
+                        <Icon
+                          raised
+                          name="door-open"
+                          size={32}
+                          type="font-awesome-5"
+                          color={
+                            permission.devices.door === false
+                              ? colorOff
+                              : colorOn
+                          }
+                          onPress={() => this.onPress(permission, "door")}
+                        />
+                        <Text style={styles.text}>Door</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        key={`stove-${i}`}
                         onPress={() => this.onPress(permission, "stove")}
-                      />
-                      <Text style={styles.text}>Stove</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      key={`television-${i}`}
-                      onPress={() => this.onPress(permission, "television")}
-                      style={styles.touch}
-                    >
-                      <Icon
-                        raised
-                        name="television"
-                        size={32}
-                        type="font-awesome"
-                        color={
-                          permission.devices.television === false
-                            ? colorOff
-                            : colorOn
-                        }
+                        style={styles.touch}
+                      >
+                        <Icon
+                          raised
+                          name="fire"
+                          size={32}
+                          type="font-awesome"
+                          color={
+                            permission.devices.stove === false
+                              ? colorOff
+                              : colorOn
+                          }
+                          onPress={() => this.onPress(permission, "stove")}
+                        />
+                        <Text style={styles.text}>Stove</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        key={`television-${i}`}
                         onPress={() => this.onPress(permission, "television")}
-                      />
-                      <Text style={styles.text}>TV</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      key={`light-${i}`}
-                      onPress={() => this.onPress(permission, "light")}
-                      style={styles.touch}
-                    >
-                      <Icon
-                        raised
-                        name="lightbulb-o"
-                        size={32}
-                        type="font-awesome"
-                        color={
-                          permission.devices.light === false
-                            ? colorOff
-                            : colorOn
-                        }
+                        style={styles.touch}
+                      >
+                        <Icon
+                          raised
+                          name="television"
+                          size={32}
+                          type="font-awesome"
+                          color={
+                            permission.devices.television === false
+                              ? colorOff
+                              : colorOn
+                          }
+                          onPress={() => this.onPress(permission, "television")}
+                        />
+                        <Text style={styles.text}>TV</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        key={`light-${i}`}
                         onPress={() => this.onPress(permission, "light")}
-                      />
+                        style={styles.touch}
+                      >
+                        <Icon
+                          raised
+                          name="lightbulb-o"
+                          size={32}
+                          type="font-awesome"
+                          color={
+                            permission.devices.light === false
+                              ? colorOff
+                              : colorOn
+                          }
+                          onPress={() => this.onPress(permission, "light")}
+                        />
 
-                      <Text style={styles.text}>Light</Text>
-                    </TouchableOpacity>
+                        <Text style={styles.text}>Light</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              );
-            })}
+                );
+              })}
           </View>
         )}
       </View>

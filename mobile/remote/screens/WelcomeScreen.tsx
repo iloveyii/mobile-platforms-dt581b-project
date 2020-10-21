@@ -15,7 +15,7 @@ const devices = {
   light: false,
 };
 
-export default class TabOneScreen extends React.Component {
+export default class WelcomeScreen extends React.Component {
   constructor(props: any) {
     super(props);
     this.state = {
