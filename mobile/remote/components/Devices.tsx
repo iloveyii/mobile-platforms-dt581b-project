@@ -69,8 +69,12 @@ export default class EditScreenInfo extends React.Component {
         {Object.keys(permissions).length === 0 ? null : (
           <View>
             {permissions.map((permission: any, i: number) => {
+              const style =
+                i === 0
+                  ? { borderTopLeftRadius: 0, borderTopRightRadius: 0 }
+                  : {};
               return (
-                <View key={permission.id} style={styles.row}>
+                <View key={permission.id} style={{ ...styles.row, ...style }}>
                   <View style={styles.subrow}>
                     <Text style={styles.td}>{permission.building}</Text>
                     <Text style={styles.td}>{permission.room_number}</Text>

@@ -1,12 +1,21 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  KeyboardAvoidingView,
+  Dimensions,
+} from "react-native";
 import io from "socket.io-client";
 import { Icon } from "react-native-elements";
 
-const apiServer = "http://194.47.40.125:7700";
+import { apiServer } from "./constants";
 const colorOn = "#eeff41";
 const colorOff = "#f50";
+const { width } = Dimensions.get("window");
 
 export default class App extends React.Component {
   constructor() {
@@ -67,73 +76,110 @@ export default class App extends React.Component {
   render() {
     const { devices } = this.state;
     return (
-      <View style={styles.container}>
-        <View style={styles.iconWrapper}>
-          <View style={styles.iconContainer}>
-            <View style={styles.iconContainerLeft}>
-              <Text>Door</Text>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <View style={styles.container}>
+          <View style={styles.iconWrapper}>
+            <View style={styles.iconContainer}>
+              <View style={styles.iconContainerLeft}>
+                <Text>Door</Text>
+              </View>
+              <View style={styles.iconContainerRight}>
+                <Icon
+                  raised
+                  name="door-open"
+                  size={34}
+                  type="font-awesome-5"
+                  color={devices.door === false ? colorOff : colorOn}
+                  onPress={() => console.log("hello")}
+                />
+              </View>
             </View>
-            <View style={styles.iconContainerRight}>
-              <Icon
-                raised
-                name="door-open"
-                size={36}
-                type="font-awesome-5"
-                color={devices.door === false ? colorOff : colorOn}
-                onPress={() => console.log("hello")}
-              />
-            </View>
-          </View>
 
-          <View style={styles.iconContainer}>
-            <View style={styles.iconContainerLeft}>
-              <Text>Kitchen stove</Text>
+            <View style={styles.iconContainer}>
+              <View style={styles.iconContainerLeft}>
+                <Text>Kitchen stove</Text>
+              </View>
+              <View style={styles.iconContainerRight}>
+                <Icon
+                  raised
+                  name="fire"
+                  size={34}
+                  type="font-awesome"
+                  color={devices.stove === false ? colorOff : colorOn}
+                  onPress={() => console.log("hello")}
+                />
+              </View>
             </View>
-            <View style={styles.iconContainerRight}>
-              <Icon
-                raised
-                name="fire"
-                size={36}
-                type="font-awesome"
-                color={devices.stove === false ? colorOff : colorOn}
-                onPress={() => console.log("hello")}
-              />
-            </View>
-          </View>
 
-          <View style={styles.iconContainer}>
-            <View style={styles.iconContainerLeft}>
-              <Text>Television</Text>
+            <View style={styles.iconContainer}>
+              <View style={styles.iconContainerLeft}>
+                <Text>Television</Text>
+              </View>
+              <View style={styles.iconContainerRight}>
+                <Icon
+                  raised
+                  name="television"
+                  size={34}
+                  type="font-awesome"
+                  color={devices.television === false ? colorOff : colorOn}
+                  onPress={() => console.log("hello")}
+                />
+              </View>
             </View>
-            <View style={styles.iconContainerRight}>
-              <Icon
-                raised
-                name="television"
-                size={36}
-                type="font-awesome"
-                color={devices.television === false ? colorOff : colorOn}
-                onPress={() => console.log("hello")}
-              />
-            </View>
-          </View>
 
-          <View style={styles.iconContainer}>
-            <View style={styles.iconContainerLeft}>
-              <Text>Light</Text>
-            </View>
-            <View style={styles.iconContainerRight}>
-              <Icon
-                raised
-                name="lightbulb-o"
-                size={36}
-                type="font-awesome"
-                color={devices.light === false ? colorOff : colorOn}
-                onPress={() => console.log("hello")}
-              />
+            <View style={styles.iconContainer}>
+              <View style={styles.iconContainerLeft}>
+                <Text>Light</Text>
+              </View>
+              <View style={styles.iconContainerRight}>
+                <Icon
+                  raised
+                  name="lightbulb-o"
+                  size={34}
+                  type="font-awesome"
+                  color={devices.light === false ? colorOff : colorOn}
+                  onPress={() => console.log("hello")}
+                />
+              </View>
             </View>
           </View>
         </View>
-      </View>
+        <View style={styles.form}>
+          <TextInput
+            autoCapitalize="none"
+            style={{
+              height: 35,
+              flex: 3,
+              borderColor: "lightGrey",
+              borderWidth: StyleSheet.hairlineWidth,
+              color: "black",
+              paddingLeft: 5,
+              marginTop: 4,
+            }}
+            value={this.state.building}
+            onChangeText={(building) => this.setState({ building })}
+            placeholder="Building"
+            placeholderTextColor={"gray"}
+          />
+          <TextInput
+            autoCapitalize="none"
+            style={{
+              height: 35,
+              flex: 1,
+              borderColor: "lightGrey",
+              borderWidth: StyleSheet.hairlineWidth,
+              color: "black",
+              paddingLeft: 5,
+              marginTop: 4,
+            }}
+            keyboardType={"numeric"}
+            value={this.state.room_number}
+            onChangeText={(room_number) => this.setState({ room_number })}
+            placeholder="Room"
+            placeholderTextColor={"gray"}
+          />
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -145,11 +191,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F5FCFF",
   },
+  form: {
+    paddingLeft: 5,
+    paddingRight: 5,
+    display: "flex",
+    flexDirection: "row",
+    marginBottom: 20,
+  },
   iconWrapper: {
     display: "flex",
     flexDirection: "column",
     backgroundColor: "#b3e5fc",
-    width: "100%",
+    width: width - 10,
   },
   iconContainer: {
     display: "flex",
