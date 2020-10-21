@@ -6,13 +6,17 @@ import {
   TextInput,
   Dimensions,
 } from "react-native";
-import { theme } from "../constants/index";
+import { Icon } from "react-native-elements";
+
+import { theme, apiServer } from "../constants/index";
 
 import Colors from "../constants/Colors";
 import { MonoText } from "./StyledText";
 import { Text, View } from "./Themed";
 
 const { width } = Dimensions.get("window");
+const colorOn = "#eeff41";
+const colorOff = "#f50";
 
 export default class EditScreenInfo extends React.Component {
   constructor(props: any) {
@@ -23,52 +27,129 @@ export default class EditScreenInfo extends React.Component {
     };
   }
 
-  onPress = (e: any) => {
-    console.log(e);
+  onPress = (row: any, device: string) => {
+    const { permissions } = this.props;
+    permissions.map((permission: any) => {
+      if (permission.id === row.id) {
+        console.log("COMPARE", permission.id, row.id, permission.id === row.id);
+        permission.devices[device] = !permission.devices[device];
+      }
+    });
+    this.setState({ permissions });
+
+    this.updateAction({
+      id: row.id,
+      building: row.building,
+      room_number: row.room_number,
+      device: device,
+      status: "1",
+      command: row.devices[device] === true ? "open" : "close",
+    });
+  };
+
+  updateAction = (form: any) => {
+    fetch(apiServer + "/gatekeepers/" + form.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
   };
 
   render() {
-    const { devices } = this.props;
+    const { permissions } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>List</Text>
-        {Object.keys(devices).length === 0 ? null : (
+        {Object.keys(permissions).length === 0 ? null : (
           <View>
-            {devices.map((device: any, i: number) => {
+            {permissions.map((permission: any, i: number) => {
               return (
-                <View key={device.id} style={styles.row}>
-                  <View key={device.id} style={styles.subrow}>
-                    <Text style={styles.td}>{device.building}</Text>
-                    <Text style={styles.td}>{device.room_number}</Text>
+                <View key={permission.id} style={styles.row}>
+                  <View style={styles.subrow}>
+                    <Text style={styles.td}>{permission.building}</Text>
+                    <Text style={styles.td}>{permission.room_number}</Text>
                   </View>
                   <View style={styles.subrow}>
                     <TouchableOpacity
                       key={`door-${i}`}
-                      onPress={() => this.onPress()}
+                      onPress={() => this.onPress(permission, "door")}
                       style={styles.touch}
                     >
-                      <Text style={styles.text}>Logga in</Text>
+                      <Icon
+                        raised
+                        name="door-open"
+                        size={32}
+                        type="font-awesome-5"
+                        color={
+                          permission.devices.door === false ? colorOff : colorOn
+                        }
+                        onPress={() => this.onPress(permission, "door")}
+                      />
+                      <Text style={styles.text}>Door</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       key={`stove-${i}`}
-                      onPress={() => this.onPress()}
+                      onPress={() => this.onPress(permission, "stove")}
                       style={styles.touch}
                     >
-                      <Text style={styles.text}>Logga in</Text>
+                      <Icon
+                        raised
+                        name="fire"
+                        size={32}
+                        type="font-awesome"
+                        color={
+                          permission.devices.stove === false
+                            ? colorOff
+                            : colorOn
+                        }
+                        onPress={() => this.onPress(permission, "stove")}
+                      />
+                      <Text style={styles.text}>Stove</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       key={`television-${i}`}
-                      onPress={() => this.onPress()}
+                      onPress={() => this.onPress(permission, "television")}
                       style={styles.touch}
                     >
-                      <Text style={styles.text}>Logga in</Text>
+                      <Icon
+                        raised
+                        name="television"
+                        size={32}
+                        type="font-awesome"
+                        color={
+                          permission.devices.television === false
+                            ? colorOff
+                            : colorOn
+                        }
+                        onPress={() => this.onPress(permission, "television")}
+                      />
+                      <Text style={styles.text}>TV</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       key={`light-${i}`}
-                      onPress={() => this.onPress()}
+                      onPress={() => this.onPress(permission, "light")}
                       style={styles.touch}
                     >
-                      <Text style={styles.text}>Logga in</Text>
+                      <Icon
+                        raised
+                        name="lightbulb-o"
+                        size={32}
+                        type="font-awesome"
+                        color={
+                          permission.devices.light === false
+                            ? colorOff
+                            : colorOn
+                        }
+                        onPress={() => this.onPress(permission, "light")}
+                      />
+
+                      <Text style={styles.text}>Light</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -88,69 +169,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     width: width - 6,
     padding: 5,
-    borderRadius: 5,
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center",
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)",
-  },
-  codeHighlightContainer: {
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: "center",
-  },
-  helpContainer: {
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: "center",
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    textAlign: "center",
   },
   inputText: {
     textAlign: "left",
     borderColor: "grey",
   },
   touch: {
-    padding: 15,
-    backgroundColor: theme.bluish.blue1,
-    borderColor: theme.bluish.green1,
+    padding: 1,
+    backgroundColor: "#fff3e0",
+    borderColor: "#039be5",
     borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 3,
+    borderRadius: 2,
     marginLeft: 2,
     marginRight: 2,
     flex: 1,

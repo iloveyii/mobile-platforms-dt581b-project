@@ -1,17 +1,25 @@
 import * as React from "react";
 import { StyleSheet, Dimensions } from "react-native";
+import { Icon } from "react-native-elements";
+import { theme, apiServer } from "../constants/index";
 
 import Login from "../components/Login";
 import Devices from "../components/Devices";
 import { Text, View } from "../components/Themed";
 
 const { width } = Dimensions.get("window");
+const devices = {
+  door: false,
+  stove: false,
+  television: false,
+  light: false,
+};
 
 export default class TabOneScreen extends React.Component {
   constructor(props: any) {
     super(props);
     this.state = {
-      devices: [],
+      permissions: [],
       email: "",
       password: "",
     };
@@ -21,7 +29,7 @@ export default class TabOneScreen extends React.Component {
 
   handleLogin = (form: any) => {
     this.setState({ form });
-    fetch("http://10.3.141.219:7700/api/v1/logins", {
+    fetch(apiServer + "/logins", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,26 +37,37 @@ export default class TabOneScreen extends React.Component {
       body: JSON.stringify(form),
     })
       .then((response) => response.json())
-      .then((data) => this.setState({ devices: data.data[0].permissions }))
+      .then((data) => {
+        let permissions = data.data[0].permissions;
+        permissions = permissions.map((permission: any) => {
+          permission.devices = { ...devices };
+          return permission;
+        });
+
+        this.setState({ permissions });
+      })
       .catch((error) => console.log(error));
 
     console.log("form", form);
   };
 
   render() {
-    const { devices } = this.state;
+    const { permissions } = this.state;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Tab One</Text>
-        <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
+        <Icon
+          raised
+          name="wifi"
+          size={32}
+          type="font-awesome"
+          color={permissions.light === false ? "red" : "orange"}
+          onPress={() => this.setState({ devipermissions: [] })}
         />
-        {Object.keys(devices).length === 0 ? (
+
+        {Object.keys(permissions).length === 0 ? (
           <Login handleLogin={this.handleLogin} />
         ) : (
-          <Devices devices={devices} />
+          <Devices permissions={permissions} />
         )}
       </View>
     );
@@ -61,7 +80,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: width - 6,
-    backgroundColor: "red",
+    backgroundColor: "#b3e5fc",
   },
   title: {
     fontSize: 20,
