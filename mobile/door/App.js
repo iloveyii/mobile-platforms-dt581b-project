@@ -2,15 +2,24 @@ import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import io from "socket.io-client";
+import { Icon } from "react-native-elements";
+
+const colorOn = "#eeff41";
+const colorOff = "#f50";
 
 export default class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      open: false,
       building: "B 007",
       room_number: "0111",
+      devices: {
+        door: 0,
+        stove: 1,
+        television: 0,
+        light: 1,
+      },
     };
 
     console.log("constructor");
@@ -33,34 +42,96 @@ export default class App extends React.Component {
 
       if (obj.building === building && obj.room_number === room_number) {
         const open = data.url.includes("open");
-        this.setState({ open });
+        const { devices } = this.state;
+        switch (obj.device) {
+          case "door":
+            devices.door = open;
+            break;
+          case "stove":
+            devices.stove = open;
+            break;
+          case "television":
+            devices.television = open;
+            break;
+          case "ligt":
+            devices.light = open;
+            break;
+        }
+
+        this.setState({ devices });
       }
     });
   }
 
   render() {
-    const LED = {
-      backgroundColor: this.state.open ? "lightgreen" : "red",
-      height: 30,
-      position: "absolute",
-      flexDirection: "row",
-      bottom: 0,
-      width: 100,
-      height: 100,
-      top: 120,
-      borderRadius: 40,
-      justifyContent: "space-between",
-    };
-
+    const { devices } = this.state;
     return (
       <View style={styles.container}>
-        <Button
-          onPress={this.emit}
-          title={this.state.open ? "Turn off" : "Turn on"}
-          color="#21ba45"
-          accessibilityLabel="Learn more about this purple button"
-        />
-        <View style={LED}></View>
+        <View style={styles.iconWrapper}>
+          <View style={styles.iconContainer}>
+            <View style={styles.iconContainerLeft}>
+              <Text>Door</Text>
+            </View>
+            <View style={styles.iconContainerRight}>
+              <Icon
+                raised
+                name="door-open"
+                size={36}
+                type="font-awesome-5"
+                color={devices.door === 0 ? colorOff : colorOn}
+                onPress={() => console.log("hello")}
+              />
+            </View>
+          </View>
+
+          <View style={styles.iconContainer}>
+            <View style={styles.iconContainerLeft}>
+              <Text>Kitchen stove</Text>
+            </View>
+            <View style={styles.iconContainerRight}>
+              <Icon
+                raised
+                name="fire"
+                size={36}
+                type="font-awesome"
+                color={devices.stove === 0 ? colorOff : colorOn}
+                onPress={() => console.log("hello")}
+              />
+            </View>
+          </View>
+
+          <View style={styles.iconContainer}>
+            <View style={styles.iconContainerLeft}>
+              <Text>Television</Text>
+            </View>
+            <View style={styles.iconContainerRight}>
+              <Icon
+                raised
+                name="television"
+                size={36}
+                type="font-awesome"
+                color={devices.television === 0 ? colorOff : colorOn}
+                onPress={() => console.log("hello")}
+              />
+            </View>
+          </View>
+
+          <View style={styles.iconContainer}>
+            <View style={styles.iconContainerLeft}>
+              <Text>Light</Text>
+            </View>
+            <View style={styles.iconContainerRight}>
+              <Icon
+                raised
+                name="lightbulb-o"
+                size={36}
+                type="font-awesome"
+                color={devices.light === 0 ? colorOff : colorOn}
+                onPress={() => console.log("hello")}
+              />
+            </View>
+          </View>
+        </View>
       </View>
     );
   }
@@ -73,14 +144,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#F5FCFF",
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10,
+  iconWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#b3e5fc",
+    width: "100%",
   },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5,
+  iconContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconContainerLeft: {
+    flex: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconContainerRight: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
