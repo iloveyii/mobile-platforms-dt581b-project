@@ -1,24 +1,35 @@
 import * as WebBrowser from "expo-web-browser";
-import React from "react";
-import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import React, { Fragment } from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Dimensions,
+} from "react-native";
 import { theme } from "../constants/index";
 
 import Colors from "../constants/Colors";
 import { MonoText } from "./StyledText";
 import { Text, View } from "./Themed";
+const { width } = Dimensions.get("window");
 
-export default class EditScreenInfo extends React.Component {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-    };
-  }
+type FormT = {
+  email: string;
+  password: string;
+};
 
-  onPress = (e: any) => {
-    console.log(e);
+type Props = {
+  handleLogin: Function;
+};
+
+export default class Login extends React.Component {
+  state: FormT = {
+    email: "admin@admin.com",
+    password: "admin",
   };
+  constructor(props: Props) {
+    super(props);
+  }
 
   render() {
     return (
@@ -33,6 +44,7 @@ export default class EditScreenInfo extends React.Component {
             paddingLeft: 5,
             marginTop: 6,
           }}
+          value={this.state.email}
           onChangeText={(email) => this.setState({ email })}
           placeholder="Fill i din mail här"
           placeholderTextColor={theme.colors.gray}
@@ -48,14 +60,15 @@ export default class EditScreenInfo extends React.Component {
             paddingLeft: 5,
             marginTop: 4,
           }}
-          onChangeText={(email) => this.setState({ email })}
+          value={this.state.password}
+          onChangeText={(password) => this.setState({ password })}
           placeholder="Lösenord"
           placeholderTextColor={theme.colors.gray}
         />
 
         <TouchableOpacity
           key={`log-in`}
-          onPress={() => this.onPress()}
+          onPress={() => this.props.handleLogin(this.state)}
           style={styles.touch}
         >
           <Text style={styles.text}>Logga in</Text>
@@ -65,17 +78,13 @@ export default class EditScreenInfo extends React.Component {
   }
 }
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: "flex",
-    backgroundColor: "#fff",
+    backgroundColor: "blue",
+    width: width - 6,
+    padding: 20,
   },
   developmentModeText: {
     marginBottom: 20,
