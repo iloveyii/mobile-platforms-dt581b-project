@@ -30,7 +30,7 @@ export const getGatekeeper = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("Got command at controller ", req.params.id);
+  console.log("Got command at controller on hw behald ", req.params);
   return res
     .status(200)
     .send({ success: true, data: [{ command: req.params.id }] });

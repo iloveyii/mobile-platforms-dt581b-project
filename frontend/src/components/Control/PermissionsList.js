@@ -12,6 +12,10 @@ import { Paper, Button } from "@material-ui/core";
 import OfflinePinOutlinedIcon from "@material-ui/icons/OfflinePinOutlined";
 import CancelPresentationOutlinedIcon from "@material-ui/icons/CancelPresentationOutlined";
 import MeetingRoomOutlinedIcon from "@material-ui/icons/MeetingRoomOutlined";
+import WhatshotOutlinedIcon from "@material-ui/icons/WhatshotOutlined";
+import TvOutlinedIcon from "@material-ui/icons/TvOutlined";
+import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
+
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import { withStyles } from "@material-ui/styles";
@@ -28,6 +32,15 @@ const styles = (theme) => ({
   },
 });
 
+const colorOn = "#eeff41";
+const colorOff = "#f50";
+const devices = {
+  door: false,
+  stove: false,
+  television: false,
+  light: false,
+};
+
 class PermissionsList extends React.Component {
   constructor(props) {
     super(props);
@@ -35,23 +48,54 @@ class PermissionsList extends React.Component {
       openPopup: false,
       openConfirmDialog: false,
       currentUser: null,
+      devices: {
+        door: 1,
+        stove: 0,
+        television: 0,
+        light: 1,
+      },
+      permissions: [],
     };
   }
 
-  openDoor = (row) => {
+  openDevice = (row, device) => {
     console.log("opening Door ", row);
     const { updateAction } = this.props;
+    const { permissions } = this.state;
+    permissions.map((permission) => {
+      if (permission.id === row.id) {
+        console.log("COMPARE", permission.id, row.id, permission.id === row.id);
+        permission.devices[device] = !permission.devices[device];
+      }
+    });
+    this.setState({ permissions });
+
     updateAction({
       id: row.id,
       building: row.building,
       room_number: row.room_number,
+      device: device,
       status: "1",
-      command: "open",
+      command: row.devices[device] === true ? "open" : "close",
     });
   };
 
   componentWillReceiveProps(nextProps, context) {
     console.log("componentWillReceiveProps", nextProps);
+    this.setPermissions(nextProps);
+  }
+
+  componentDidMount() {
+    this.setPermissions(this.props);
+  }
+
+  setPermissions(props) {
+    let permissions = this.getPermissions(props.actions);
+    permissions = permissions.map((permission) => {
+      permission.devices = { ...devices };
+      return permission;
+    });
+    this.setState({ permissions });
   }
 
   getPermissions = (actions) => {
@@ -74,7 +118,8 @@ class PermissionsList extends React.Component {
 
   render() {
     const { classes, actions } = this.props;
-    const permissions = this.getPermissions(actions);
+    // const permissions = this.getPermissions(actions);
+    const { devices, permissions } = this.state;
     return (
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -128,16 +173,72 @@ class PermissionsList extends React.Component {
 
                 <TableCell align="right">
                   <Button
-                    style={{ float: "right" }}
+                    style={{ margin: "0 5px" }}
                     margin="normal"
                     size="large"
                     variant="contained"
                     color="primary"
                     onClick={(e) => {
-                      this.openDoor(row);
+                      this.openDevice(row, "door");
                     }}
                   >
-                    <MeetingRoomOutlinedIcon />
+                    <MeetingRoomOutlinedIcon
+                      style={{
+                        color: row.devices.door === false ? colorOff : colorOn,
+                      }}
+                    />
+                  </Button>
+
+                  <Button
+                    style={{ margin: "0 5px" }}
+                    margin="normal"
+                    size="large"
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => {
+                      this.openDevice(row, "stove");
+                    }}
+                  >
+                    <WhatshotOutlinedIcon
+                      style={{
+                        color: row.devices.stove === false ? colorOff : colorOn,
+                      }}
+                    />
+                  </Button>
+
+                  <Button
+                    style={{ margin: "0 5px" }}
+                    margin="normal"
+                    size="large"
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => {
+                      this.openDevice(row, "television");
+                    }}
+                  >
+                    <TvOutlinedIcon
+                      style={{
+                        color:
+                          row.devices.television === false ? colorOff : colorOn,
+                      }}
+                    />
+                  </Button>
+
+                  <Button
+                    style={{ margin: "0 5px" }}
+                    margin="normal"
+                    size="large"
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => {
+                      this.openDevice(row, "light");
+                    }}
+                  >
+                    <EmojiObjectsOutlinedIcon
+                      style={{
+                        color: row.devices.light === false ? colorOff : colorOn,
+                      }}
+                    />
                   </Button>
                 </TableCell>
               </TableRow>

@@ -9,6 +9,7 @@ type PermissionT = {
   room_number: string;
   status: string;
   command: string;
+  device?: string;
 };
 
 const COLLECTION = "permissions";
@@ -28,15 +29,29 @@ class Gatekeeper extends Mongo {
   }
 
   makeApiRequestToDevice(model: any) {
-    var queryString = Object.keys(model)
+    const permission: any = this.permission
+      ? this.permission
+      : {
+          _id: "",
+          building: "",
+          room_number: "",
+          status: "",
+          command: "open",
+          device: "",
+        };
+    console.log("Permission in Model", permission);
+
+    const queryString = Object.keys(permission)
       .map((key) => {
-        return encodeURIComponent(key) + "=" + encodeURIComponent(model[key]);
+        return (
+          encodeURIComponent(key) + "=" + encodeURIComponent(permission[key])
+        );
       })
       .join("&");
-
-    const url = `http://localhost:7700/api/v1/gatekeepers/${this.permission?.command}&${queryString}`;
+    console.log("queryString in Model", queryString);
+    const url = `http://localhost:7700/api/v1/gatekeepers/${permission.command}&${queryString}`;
     axios.get(url).then((res: any) => {
-      console.log("Received command on hardware behalf ", model);
+      console.log("Response from device ", res.data);
     });
   }
 
