@@ -61,7 +61,7 @@ export default class TabOneScreen extends React.Component {
           size={32}
           type="font-awesome"
           color={permissions.light === false ? "red" : "orange"}
-          onPress={() => this.setState({ devipermissions: [] })}
+          onPress={() => this.setState({ permissions: [] })}
         />
 
         {Object.keys(permissions).length === 0 ? (
