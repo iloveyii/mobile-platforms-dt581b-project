@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import io from "socket.io-client";
 import { Icon } from "react-native-elements";
 
+const apiServer = "http://194.47.40.125:7700";
 const colorOn = "#eeff41";
 const colorOff = "#f50";
 
@@ -15,10 +16,10 @@ export default class App extends React.Component {
       building: "B 007",
       room_number: "0111",
       devices: {
-        door: 0,
-        stove: 1,
-        television: 0,
-        light: 1,
+        door: false,
+        stove: false,
+        television: false,
+        light: false,
       },
     };
 
@@ -27,7 +28,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     console.log("componentDidMount");
-    const socket = io("http://10.3.141.219:7700", {
+    const socket = io(apiServer, {
       transports: ["websocket", "polling"],
     });
 
@@ -53,7 +54,7 @@ export default class App extends React.Component {
           case "television":
             devices.television = open;
             break;
-          case "ligt":
+          case "light":
             devices.light = open;
             break;
         }
@@ -78,7 +79,7 @@ export default class App extends React.Component {
                 name="door-open"
                 size={36}
                 type="font-awesome-5"
-                color={devices.door === 0 ? colorOff : colorOn}
+                color={devices.door === false ? colorOff : colorOn}
                 onPress={() => console.log("hello")}
               />
             </View>
@@ -94,7 +95,7 @@ export default class App extends React.Component {
                 name="fire"
                 size={36}
                 type="font-awesome"
-                color={devices.stove === 0 ? colorOff : colorOn}
+                color={devices.stove === false ? colorOff : colorOn}
                 onPress={() => console.log("hello")}
               />
             </View>
@@ -110,7 +111,7 @@ export default class App extends React.Component {
                 name="television"
                 size={36}
                 type="font-awesome"
-                color={devices.television === 0 ? colorOff : colorOn}
+                color={devices.television === false ? colorOff : colorOn}
                 onPress={() => console.log("hello")}
               />
             </View>
@@ -126,7 +127,7 @@ export default class App extends React.Component {
                 name="lightbulb-o"
                 size={36}
                 type="font-awesome"
-                color={devices.light === 0 ? colorOff : colorOn}
+                color={devices.light === false ? colorOff : colorOn}
                 onPress={() => console.log("hello")}
               />
             </View>
