@@ -100,7 +100,7 @@ Automated deployment using webhooks. just another test 7.
 
 ## RUN THE APP
 
-- REACT
+- FRONTEND
   - Clone the repo
     `git clone https://github.com/iloveyii/mobile-platforms-dt581b-lab2.git`
   - CD to directory
@@ -109,9 +109,18 @@ Automated deployment using webhooks. just another test 7.
     `npm run dev`
   - Run the app, this command will open a browser window. Open console in dev tools to see result.
     `npm start`
-- NODE
+- BACKEND
+
   - Clone the repo (if not done above)
     `git clone https://github.com/iloveyii/mobile-platforms-dt581b-lab2.git`
+
+- USE PM2 - process manager
+  - Dot (.) does not work in name
+  - Create and Start server `pm2 start 'npm start' --name project-server`
+  - Stop server `pm2 stop project-server`
+  - Start again `pm2 start project-server`
+  - Enable on startup `pm2 startup ubuntu`
+  - Copy and paste the generated command in terminal
 
 # TROUBLESHOOTING
 
