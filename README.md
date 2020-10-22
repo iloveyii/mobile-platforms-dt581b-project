@@ -101,6 +101,7 @@ Automated deployment using webhooks. just another test 7.
 ## RUN THE APP
 
 - FRONTEND
+
   - Clone the repo
     `git clone https://github.com/iloveyii/mobile-platforms-dt581b-lab2.git`
   - CD to directory
@@ -109,6 +110,7 @@ Automated deployment using webhooks. just another test 7.
     `npm run dev`
   - Run the app, this command will open a browser window. Open console in dev tools to see result.
     `npm start`
+
 - BACKEND
 
   - Clone the repo (if not done above)
