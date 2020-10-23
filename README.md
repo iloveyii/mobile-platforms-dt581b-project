@@ -86,7 +86,13 @@ Automated deployment using webhooks. just another test 24. this works
 - Install `dotenv express express-session`
 - Create tslint.json and tsconfig.json files
 
-## HOSTING - Firebase
+## HOSTING
+
+### Domain name
+
+- We a free service called noip.com which points to our IP address in AWS
+
+### Firebase
 
 - Install firebase package
   `npm i -g firebase-tools`
@@ -97,6 +103,12 @@ Automated deployment using webhooks. just another test 24. this works
 - Select `Create new project` and enter a name e.g `mobile-platforms-lab1`
 - Write `dist` as public directory.
 - Deploy by running `firebase deploy`, this will give you a URL, click it to see app online.
+
+### AWS
+
+- Sine the app uses mongodb, node server and build script it is really easy to host it on AWS ec2
+- This is a lot of time saving during development
+- But AWS is expensive for these small projects therefore other hosting services have been discussed also
 
 ## RUN THE APP
 
