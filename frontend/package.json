@@ -9,7 +9,7 @@
     "_build:prod": "webpack --mode production --progress",
     "build": "npm run _build:prod",
     "post_build:dev2": "cp public/manifest.json dist/ & cp public/images dist/ -Rf",
-    "post_build:prod": "cp public/images dist/ -Rf",
+    "post_build:prod": "cp public/images dist/ -Rf && cp public/css dist/ -Rf && cp public/js dist/ -Rf",
     "serve": "serve -s dist",
     "browserslist": "browserslist 'last 1 version, >1%' "
   },
