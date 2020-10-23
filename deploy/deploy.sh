@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPLOY_DIR=../deploy
+DEPLOY_DIR=../../../deploy
 command 2> $DEPLOY/errors.txt
 
 cd $DEPLOY_DIR
