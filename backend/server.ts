@@ -4,7 +4,6 @@ import chalk from "chalk";
 import socket from "socket.io";
 
 const session = require("express-session");
-import { exec } from "child_process";
 
 import app from "./src/app";
 import { Database } from "./src/models/base/Database";
@@ -75,20 +74,6 @@ const server = app.listen(API_PORT, () => {
 export const io = socket(server);
 io.on("connection", (client) => {
   console.log("Made socket connection with id ", client.id);
-});
-
-console.log(exec);
-
-exec("../deploy/deploy.sh", (error: any, stdout: any, stderr: any) => {
-  if (error) {
-    console.log(`error: ${error.message}`);
-    return;
-  }
-  if (stderr) {
-    console.log(`stderr: ${stderr}`);
-    return;
-  }
-  console.log(`stdout: ${stdout}`);
 });
 
 export default server;

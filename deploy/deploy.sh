@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DEPLOY_DIR=../deploy
-command 2> errors.txt
+command 2> $DEPLOY/errors.txt
 
 cd $DEPLOY_DIR
 git pull
