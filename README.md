@@ -30,7 +30,7 @@ We will use Ubuntu as operating system for all installations below.
 
 Automated deployment using webhooks. just another test 24. this works
 
-- DEPLOY URL : http://hkr-project.hopto.org:8080 - WEBHOOK - secret - 66629873f715d30d
+- DEPLOY URL : http://hkr-project.hopto.org:8080 , http://hkr-project.hopto.org:7700 - WEBHOOK - secret - 66629873f715d30d
 - SERVER URL : http://hkr-project.hopto.org:7700
 - FRONTEND URL : http://hkr-project.hopto.org:9000
 
