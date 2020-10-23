@@ -32,7 +32,7 @@ export const createDeploy = async (
         console.log(`stderr: ${stderr}`);
         return;
       }
-      console.log(`stdout: ${stdout}`); // test 3
+      console.log(`stdout: ${stdout}`); // test 4
     }
   );
 
