@@ -144,7 +144,7 @@ Automated deployment using webhooks. just another test 24. this works
 
 - Use proper login in system like jwt
 - Use node middleware to authenticate each secure route
-- Make sure to use middleware same_id middleware so a user can only edit his/her own record only
+- Make sure to use middleware same_id so a user can only edit his/her own record
 - Validate data both on frontend and backend
 - Keep log of all important processes / operations
 
