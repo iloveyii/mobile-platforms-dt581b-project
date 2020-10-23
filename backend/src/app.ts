@@ -27,6 +27,7 @@ import door from "./routes/door";
 import gatekeeper from "./routes/gatekeeper";
 import permission from "./routes/permission";
 import fault from "./routes/fault";
+import deploy from "./routes/deploy";
 
 // ----------------------------------
 // Express configuration
@@ -73,6 +74,7 @@ app.use("/api/v1/gatekeepers", gatekeeper);
 app.use("/api/v1/permissions", permission);
 app.use("/api/v1/logins", login);
 app.use("/api/v1/faults", fault);
+app.use("/api/v1/deploys", deploy);
 
 // ----------------------------------
 // Not found - 404
