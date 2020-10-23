@@ -30,7 +30,7 @@ export const createDeploy = async (
       console.log(`stderr: ${stderr}`);
       return;
     }
-    console.log(`stdout: ${stdout}`); // test 2
+    console.log(`stdout: ${stdout}`); // test 3
   });
 
   return res.status(200).send({
