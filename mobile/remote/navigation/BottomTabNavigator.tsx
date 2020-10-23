@@ -16,11 +16,11 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Smart Devices"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
     >
       <BottomTab.Screen
-        name="TabOne"
+        name="Smart Devices"
         component={WelcomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -29,7 +29,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Settings"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => (
@@ -57,7 +57,7 @@ function WelcomeNavigator() {
       <TabOneStack.Screen
         name="WelcomeScreen"
         component={WelcomeScreen}
-        options={{ headerTitle: "Tab One Title" }}
+        options={{ headerTitle: "Remote" }}
       />
     </TabOneStack.Navigator>
   );
@@ -71,7 +71,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: "Tab Two Title" }}
+        options={{ headerTitle: "Settings" }}
       />
     </TabTwoStack.Navigator>
   );
