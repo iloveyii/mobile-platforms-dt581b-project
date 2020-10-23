@@ -21,8 +21,9 @@ export const createDeploy = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("Deploy received :", req.body);
+  console.log("Deploy received  in controller:", req.body);
 
+  /*
   exec("../deploy/deploy.sh", (error: any, stdout: any, stderr: any) => {
     if (error) {
       console.log(`error: ${error.message}`);
@@ -33,5 +34,10 @@ export const createDeploy = async (
       return;
     }
     console.log(`stdout: ${stdout}`);
+  }); */
+
+  return res.status(200).send({
+    success: true,
+    msg: "You successfully accessed route - POST /api/v1/deploys",
   });
 };
