@@ -12,12 +12,6 @@
 |     ![bash](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/bash.jpg)     | ![material ui](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/material-ui.png) |      ![heroku](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/heroku2.jpeg)      |
 | ![firebase](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/firebase.png) |         ![aws](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/aws.png)         | ![react native](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/react-native.png) |
 
-|                                                      HKR                                                       |                                                  Mobile Platforms                                                  |
-| :------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
-|    ![hkr](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/hkr.png)    |   ![DT581B](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/dt581b.png)   |
-| ![mongo](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/mongodb.png) | ![express](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/expressjs.png) |
-| ![react](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/reactjs.png) |    ![node](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/nodejs.png)    |
-
 - [DEMO LAB 2 - Link 1](http://softhem.se:4000/)
 - [DEMO LAB 2 - Link 2](https://mobile-platforms-lab2.web.app/)
 
