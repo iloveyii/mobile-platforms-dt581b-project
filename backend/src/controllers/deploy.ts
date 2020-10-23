@@ -21,9 +21,9 @@ export const createDeploy = async (
   res: Response,
   next: NextFunction
 ) => {
-  const sp = spawn(
-    "sh /home/ubuntu/projects/dev/mobile-platforms-dt581b-project/deploy/deploy.sh"
-  );
+  const sp = spawn("sh", [
+    "/home/ubuntu/projects/dev/mobile-platforms-dt581b-project/deploy/deploy.sh",
+  ]);
   sp.stdout.on("data", (data: any) => console.log("DATA : ", data));
   sp.stderr.on("data", (data: any) => console.log("ERROR : ", data));
   sp.on("error", (error: any) => console.log("ERROR : ", error));
