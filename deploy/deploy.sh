@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPLOY_DIR=../../..
+DEPLOY_DIR=/home/ubuntu/projects/dev/mobile-platforms-dt581b-project/deploy
 command 2> $DEPLOY/error.log
 
 cd $DEPLOY_DIR

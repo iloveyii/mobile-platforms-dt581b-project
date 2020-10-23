@@ -22,7 +22,7 @@ export const createDeploy = async (
   next: NextFunction
 ) => {
   exec(
-    "sh ../../../deploy/deploy.sh",
+    "sh /home/ubuntu/projects/dev/mobile-platforms-dt581b-project/deploy/deploy.sh",
     (error: any, stdout: any, stderr: any) => {
       if (error) {
         console.log(`error: ${error.message}`);
