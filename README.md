@@ -117,12 +117,20 @@ Automated deployment using webhooks. just another test 24. this works
     `git clone https://github.com/iloveyii/mobile-platforms-dt581b-lab2.git`
 
 - USE PM2 - process manager
+
   - Dot (.) does not work in name
   - Create and Start server `pm2 start 'npm start' --name project-server`
   - Stop server `pm2 stop project-server`
   - Start again `pm2 start project-server`
   - Enable on startup `pm2 startup ubuntu`
   - Copy and paste the generated command in terminal
+
+- SERVE STATIC
+  - Node server serve static files which are actually the build package of frontend
+  - When we build frontend app, it creates a directory dist at frontend/dist
+  - Node server static feature points to frontend/dist folder to serve the frontend application
+  - So we don't need a separate (like apache, nginx) sever to serve frontend application
+  - Node server serves both frontend app and api calls.
 
 # TROUBLESHOOTING
 
