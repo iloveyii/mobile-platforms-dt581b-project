@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DEPLOY_DIR=/home/ubuntu/projects/dev/mobile-platforms-dt581b-project/deploy
-command 2> $DEPLOY/error.log
+command 2> $DEPLOY_DIR/error.log
 
 cd $DEPLOY_DIR
 git stash
