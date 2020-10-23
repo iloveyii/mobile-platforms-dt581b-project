@@ -150,7 +150,7 @@ export default class App extends React.Component {
             style={{
               height: 35,
               flex: 3,
-              borderColor: "lightGrey",
+              borderColor: "#bdbdbd",
               borderWidth: StyleSheet.hairlineWidth,
               color: "black",
               paddingLeft: 5,
@@ -166,7 +166,7 @@ export default class App extends React.Component {
             style={{
               height: 35,
               flex: 1,
-              borderColor: "lightGrey",
+              borderColor: "#bdbdbd",
               borderWidth: StyleSheet.hairlineWidth,
               color: "black",
               paddingLeft: 5,

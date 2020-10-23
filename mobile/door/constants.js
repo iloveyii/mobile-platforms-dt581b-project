@@ -1,2 +1,2 @@
-const apiServer = "http://10.3.141.219:7700";
+const apiServer = "http://hkr-project.hopto.org:7700";
 export { apiServer };
