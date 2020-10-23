@@ -40,6 +40,7 @@ export default class App extends React.Component {
     const socket = io(apiServer, {
       transports: ["websocket", "polling"],
     });
+    this.socket = socket;
 
     socket.on("update", (data) => {
       let obj = {};
@@ -71,6 +72,11 @@ export default class App extends React.Component {
         this.setState({ devices });
       }
     });
+  }
+
+  componentWillUnmount() {
+    // Should close it to avoid memory leak
+    this.socket.close();
   }
 
   render() {
