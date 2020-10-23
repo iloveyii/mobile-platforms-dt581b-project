@@ -21,8 +21,6 @@ export const createDeploy = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("Deploy received  in controller:", req.body);
-
   exec("../../../deploy/deploy.sh", (error: any, stdout: any, stderr: any) => {
     if (error) {
       console.log(`error: ${error.message}`);
