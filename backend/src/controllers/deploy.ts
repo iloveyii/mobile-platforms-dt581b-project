@@ -23,8 +23,7 @@ export const createDeploy = async (
 ) => {
   console.log("Deploy received  in controller:", req.body);
 
-  /*
-  exec("../deploy/deploy.sh", (error: any, stdout: any, stderr: any) => {
+  exec("../../../deploy/deploy.sh", (error: any, stdout: any, stderr: any) => {
     if (error) {
       console.log(`error: ${error.message}`);
       return;
@@ -33,8 +32,8 @@ export const createDeploy = async (
       console.log(`stderr: ${stderr}`);
       return;
     }
-    console.log(`stdout: ${stdout}`); // test
-  }); */
+    console.log(`stdout: ${stdout}`);
+  });
 
   return res.status(200).send({
     success: true,
