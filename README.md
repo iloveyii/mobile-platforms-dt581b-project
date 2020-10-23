@@ -5,6 +5,13 @@
 - Get a kick-start with some of the core components of the project: web server, database
 - Work with and learn some basic React.
 
+| **HKR** | ** Course** | ** Technologies** |
+| :-----: | :---------: | :---------------: |
+| hkrlogo | course logo |       tech1       |
+|  tech1  |    tech1    |       tech1       |
+|  tech1  |    tech1    |       tech1       |
+|  tech1  |    tech1    |       tech1       |
+
 |                                                      HKR                                                       |                                                  Mobile Platforms                                                  |
 | :------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
 |    ![hkr](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/hkr.png)    |   ![DT581B](https://github.com/iloveyii/mobile-platforms-dt581b-lab2/blob/master/react/public/images/dt581b.png)   |
