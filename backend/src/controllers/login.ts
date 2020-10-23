@@ -15,7 +15,7 @@ const getPermissions = async (user: any) => {
   const model = new Permission(undefined);
   await model.read(condition);
   console.log("Permissions list ", model.response.data);
-  return model.response.data;
+  return model.response.success ? model.response.data : [];
 };
 
 // @desc   Make a user log in
