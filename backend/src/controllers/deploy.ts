@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { exec } from "child_process";
+import { exec, spawn } from "child_process";
 
 // @desc   Get a Model
 // @route  GET /api/v1/deploys
@@ -21,19 +21,14 @@ export const createDeploy = async (
   res: Response,
   next: NextFunction
 ) => {
-  exec(
-    "sh /home/ubuntu/projects/dev/mobile-platforms-dt581b-project/deploy/deploy.sh",
-    (error: any, stdout: any, stderr: any) => {
-      if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-      }
-      console.log(`stdout: ${stdout}`); // test 4
-    }
+  const sp = spawn(
+    "sh /home/ubuntu/projects/dev/mobile-platforms-dt581b-project/deploy/deploy.sh"
+  );
+  sp.stdout.on("data", (data: any) => console.log("DATA : ", data));
+  sp.stderr.on("data", (data: any) => console.log("ERROR : ", data));
+  sp.on("error", (error: any) => console.log("ERROR : ", error));
+  sp.on("close", (code: any) =>
+    console.log(`child process exited with code ${code}`)
   );
 
   return res.status(200).send({
