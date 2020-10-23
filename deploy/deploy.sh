@@ -1,9 +1,10 @@
 #!/bin/bash
 
-DEPLOY_DIR=../../../
+DEPLOY_DIR=../../..
 command 2> $DEPLOY/error.log
 
 cd $DEPLOY_DIR
+git stash
 git pull
 
 timestamp=$(date +'%Y-%m-%d %X')

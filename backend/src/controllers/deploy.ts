@@ -21,17 +21,20 @@ export const createDeploy = async (
   res: Response,
   next: NextFunction
 ) => {
-  exec("../../../deploy/deploy.sh", (error: any, stdout: any, stderr: any) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      return;
+  exec(
+    "sh ../../../deploy/deploy.sh",
+    (error: any, stdout: any, stderr: any) => {
+      if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`); // test 3
     }
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`); // test 3
-  });
+  );
 
   return res.status(200).send({
     success: true,
