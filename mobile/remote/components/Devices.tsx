@@ -8,7 +8,8 @@ import {
 } from "react-native";
 import { Icon } from "react-native-elements";
 
-import { theme, apiServer } from "../constants/index";
+import { theme } from "../constants/index";
+import { apiServer } from "../settings";
 
 import Colors from "../constants/Colors";
 import { MonoText } from "./StyledText";
@@ -48,7 +49,7 @@ export default class EditScreenInfo extends React.Component {
   };
 
   updateAction = (form: any) => {
-    fetch(apiServer + "/gatekeepers/" + form.id, {
+    fetch(apiServer + "/api/v1/gatekeepers/" + form.id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

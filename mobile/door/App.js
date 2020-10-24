@@ -22,6 +22,7 @@ export default class App extends React.Component {
     super();
 
     this.state = {
+      apiServer: apiServer + "0",
       building: "B 007",
       room_number: "0111",
       devices: {
@@ -35,25 +36,28 @@ export default class App extends React.Component {
     console.log("constructor");
   }
 
-  componentDidMount() {
-    console.log("componentDidMount");
-    const socket = io(apiServer, {
+  onChange = (apiServer) => {
+    this.setState({ apiServer });
+    this.connectSocket(apiServer);
+    console.log("onChange", apiServer);
+  };
+
+  connectSocket = (apiServer) => {
+    const { building, room_number, devices } = this.state;
+
+    this.socket = io(apiServer, {
       transports: ["websocket", "polling"],
     });
-    this.socket = socket;
 
-    socket.on("update", (data) => {
+    this.socket.on("update", (data) => {
       let obj = {};
       data.url.split("&").map((part) => {
         const [key, value] = part.split("=");
         obj[key] = decodeURIComponent(value);
       });
 
-      const { building, room_number } = this.state;
-
       if (obj.building === building && obj.room_number === room_number) {
         const open = data.url.includes("open");
-        const { devices } = this.state;
         switch (obj.device) {
           case "door":
             devices.door = open;
@@ -72,6 +76,11 @@ export default class App extends React.Component {
         this.setState({ devices });
       }
     });
+  };
+
+  componentDidMount() {
+    console.log("componentDidMount");
+    this.connectSocket();
   }
 
   componentWillUnmount() {
@@ -182,6 +191,24 @@ export default class App extends React.Component {
             value={this.state.room_number}
             onChangeText={(room_number) => this.setState({ room_number })}
             placeholder="Room"
+            placeholderTextColor={"gray"}
+          />
+        </View>
+        <View style={styles.form}>
+          <TextInput
+            autoCapitalize="none"
+            style={{
+              height: 35,
+              flex: 3,
+              borderColor: "#bdbdbd",
+              borderWidth: StyleSheet.hairlineWidth,
+              color: "black",
+              paddingLeft: 5,
+              marginTop: 4,
+            }}
+            value={this.state.apiServer}
+            onChangeText={(apiServer) => this.onChange(apiServer)}
+            placeholder="apiServer"
             placeholderTextColor={"gray"}
           />
         </View>
