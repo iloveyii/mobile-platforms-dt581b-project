@@ -12,7 +12,7 @@ import {
 import io from "socket.io-client";
 import { Icon } from "react-native-elements";
 
-import { apiServer } from "./constants";
+import { apiServer } from "./settings";
 const colorOn = "#eeff41";
 const colorOff = "#f50";
 const { width } = Dimensions.get("window");

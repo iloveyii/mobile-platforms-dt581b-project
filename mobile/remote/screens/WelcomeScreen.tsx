@@ -1,7 +1,8 @@
 import * as React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { Icon } from "react-native-elements";
-import { theme, apiServer } from "../constants/index";
+import { apiServer } from "../settings";
+import { theme } from "../constants";
 
 import Login from "../components/Login";
 import Devices from "../components/Devices";
@@ -29,7 +30,8 @@ export default class WelcomeScreen extends React.Component {
 
   handleLogin = (form: any) => {
     this.setState({ form });
-    fetch(apiServer + "/logins", {
+    console.log("apiServer : ", apiServer);
+    fetch(apiServer + "/api/v1/logins", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
