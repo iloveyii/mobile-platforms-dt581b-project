@@ -14,7 +14,7 @@ const router = express.Router();
 
 router
   .route("/:id")
-  .get([authenticate_user, same_user_id], getSensorData)
+  .get(getSensorData)
   .delete(ws_update, deleteSensorData) // should admin delete
   .put(ws_update, updateSensorData);
 

@@ -15,7 +15,7 @@ class Mongo implements ModelI {
   };
   public database: any;
 
-  constructor(private readonly collection: string, public data: any) {
+  constructor(protected readonly collection: string, public data: any) {
     // console.log("Mongo Collection : ", collection, data);
     this.database = Database.database;
   }

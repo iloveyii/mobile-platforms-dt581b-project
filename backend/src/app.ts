@@ -28,6 +28,7 @@ import gatekeeper from "./routes/gatekeeper";
 import permission from "./routes/permission";
 import fault from "./routes/fault";
 import deploy from "./routes/deploy";
+import sensor_data from "./routes/sensor_data";
 
 // ----------------------------------
 // Express configuration
@@ -75,6 +76,7 @@ app.use("/api/v1/permissions", permission);
 app.use("/api/v1/logins", login);
 app.use("/api/v1/faults", fault);
 app.use("/api/v1/deploys", deploy);
+app.use("/api/v1/sensor_datas", sensor_data);
 
 // ----------------------------------
 // Not found - 404

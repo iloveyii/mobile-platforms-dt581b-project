@@ -1,14 +1,13 @@
 import Mongo from "./base/Mongo";
 import { Database } from "./base/Database";
 import { ConditionI } from "../interfaces";
+import { ObjectId } from "mongodb";
 
 type SensorDataT = {
   _id?: string;
   user_id: string;
-  type: string;
-  value: string;
-  unit: string;
-  timestamp?: string;
+  data: any;
+  timestamp?: number;
 };
 
 const COLLECTION = "sensor_data";
@@ -21,10 +20,17 @@ class SensorData extends Mongo {
   rules() {
     return {
       user_id: "required",
-      type: "required",
-      value: "required",
-      unit: "required",
+      data: "required",
+      timestamp: "required",
     };
+  }
+
+  async createIfNotExist(condition: ConditionI): Promise<any> {
+    await this.read(condition);
+    if (!this.response.success) {
+      await this.create();
+    }
+    return this;
   }
 }
 
