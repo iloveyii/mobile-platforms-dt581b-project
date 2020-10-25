@@ -7,7 +7,7 @@ type SensorDataT = {
   _id?: string;
   user_id: string;
   data: any;
-  timestamp?: number;
+  timestamp?: any;
 };
 
 const COLLECTION = "sensor_data";

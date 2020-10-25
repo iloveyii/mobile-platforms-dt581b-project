@@ -127,8 +127,8 @@ class Charts extends React.Component {
           </div>
 
           <div className="row">
-            <Table type="success" title="Live stream" />
-            <Table type="info" title="Latest updates" />
+            <Table id="multilineChart" type="success" title="Live stream" />
+            <Table id="barChart" type="info" title="Consumption" />
           </div>
         </Container>
       </div>

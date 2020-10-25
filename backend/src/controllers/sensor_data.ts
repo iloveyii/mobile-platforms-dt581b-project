@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { ObjectId } from "mongodb";
 import Condition from "../models/base/Condition";
 import SensorData from "../models/SensorData";
 import sensor_data, {
@@ -33,6 +34,32 @@ export const getSensorData = async (
   });
   const model = new SensorData({ user_id: req.params.id, data, timestamp });
   await model.createIfNotExist(condition);
+  return res.status(200).send(model.response);
+};
+
+// @desc   Get a Model
+// @route  GET /api/v1/sensor_data/:id/:range
+export const getSensorDataRange = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // Here user want to get sensor data for current timestamp, and not a specific row with id
+  const [startTimeStamp, endTimeStamp] = req.params.range.split("-");
+  console.log(startTimeStamp, endTimeStamp, req.params);
+  const data = createRandomSensorData();
+  const timestamp = roundTimestamp(1000 * 60); // 1 min
+  const condition = new Condition({
+    where: {
+      user_id: new ObjectId(req.params.id),
+      timestamp: {
+        $gte: parseInt(startTimeStamp),
+        $lte: parseInt(endTimeStamp),
+      },
+    },
+  });
+  const model = new SensorData({ user_id: req.params.id, data, timestamp });
+  await model.read(condition);
   return res.status(200).send(model.response);
 };
 

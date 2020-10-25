@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { drawChart, data, chartMultiLine, chartBar } from "./functions";
 
-export default function Table({ type, title }) {
+export default function Table({ id, type, title }) {
+  useEffect(() => {
+    switch (id) {
+      case "barChart":
+        chartBar("barChart", undefined);
+        break;
+      case "multilineChart":
+        chartMultiLine("multilineChart", undefined);
+        break;
+    }
+  }, []);
   return (
     <div className="col-lg-6 col-md-6">
       <div className="card">
@@ -8,18 +19,7 @@ export default function Table({ type, title }) {
           <h4 className="card-title">{title}</h4>
         </div>
         <div className="card-body table-responsive">
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <img id="live-image" src="" alt="Live video" />
-                </td>
-                <td>
-                  <span id="live-image-status"></span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div id={id}></div>
         </div>
       </div>
     </div>

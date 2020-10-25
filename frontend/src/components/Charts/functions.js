@@ -82,3 +82,118 @@ export const data = [
     temperature: 1100,
   },
 ];
+
+export function chartMultiLine(elementId, data) {
+  var chart = new Chartist.Line(
+    "#" + elementId,
+    {
+      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      series: [
+        [1, 5, 2, 5, 4, 3],
+        [2, 3, 4, 8, 1, 2],
+        [5, 4, 3, 2, 1, 0.5],
+      ],
+    },
+    {
+      low: 0,
+      showArea: true,
+      showPoint: false,
+      fullWidth: true,
+      plugins: [
+        Chartist.plugins.legend({
+          legendNames: ["Temperature", "Pressure", "Humidity"],
+        }),
+      ],
+    }
+  );
+
+  chart.on("draw", function (data) {
+    if (data.type === "line" || data.type === "area") {
+      data.element.animate({
+        d: {
+          begin: 2000 * data.index,
+          dur: 2000,
+          from: data.path
+            .clone()
+            .scale(1, 0)
+            .translate(0, data.chartRect.height())
+            .stringify(),
+          to: data.path.clone().stringify(),
+          easing: Chartist.Svg.Easing.easeOutQuint,
+        },
+      });
+    }
+  });
+}
+
+export function chartBar(elementId, data) {
+  new Chartist.Bar(
+    "#" + elementId,
+    {
+      labels: ["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"],
+      series: [
+        [5, 4, 3, 7],
+        [3, 2, 9, 5],
+        [1, 5, 8, 4],
+        [2, 3, 4, 6],
+        [4, 1, 2, 1],
+      ],
+    },
+    {
+      // Default mobile configuration
+      fullWidth: true,
+      plugins: [
+        Chartist.plugins.legend({
+          legendNames: ["Temperature", "Pressure", "Humidity"],
+        }),
+      ],
+      stackBars: true,
+      axisX: {
+        labelInterpolationFnc: function (value) {
+          return value
+            .split(/\s+/)
+            .map(function (word) {
+              return word[0];
+            })
+            .join("");
+        },
+      },
+      axisY: {
+        offset: 20,
+      },
+    },
+    [
+      // Options override for media > 400px
+      [
+        "screen and (min-width: 400px)",
+        {
+          reverseData: true,
+          horizontalBars: true,
+          axisX: {
+            labelInterpolationFnc: Chartist.noop,
+          },
+          axisY: {
+            offset: 60,
+          },
+        },
+      ],
+      // Options override for media > 800px
+      [
+        "screen and (min-width: 800px)",
+        {
+          stackBars: false,
+          seriesBarDistance: 10,
+        },
+      ],
+      // Options override for media > 1000px
+      [
+        "screen and (min-width: 1000px)",
+        {
+          reverseData: false,
+          horizontalBars: false,
+          seriesBarDistance: 15,
+        },
+      ],
+    ]
+  );
+}

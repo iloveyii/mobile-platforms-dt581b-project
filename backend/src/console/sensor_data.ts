@@ -1,4 +1,5 @@
 import SensorData from "../models/SensorData";
+import Condition from "../models/base/Condition";
 import Users from "../models/User";
 import moment from "moment";
 
@@ -55,9 +56,12 @@ const createSensorData = async (db: any, users: any) => {
   const timestamp = roundTimestamp(1000 * 60); // 1 min
   // Create model
   users.forEach((user: any) => {
+    const condition = new Condition({
+      where: { user_id: user._id, timestamp },
+    });
     const data = createRandomSensorData();
     const sensorData = new SensorData({ user_id: user.id, data, timestamp });
-    sensorData.create();
+    sensorData.createIfNotExist(condition);
   });
 };
 

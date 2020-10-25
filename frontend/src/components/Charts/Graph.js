@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { drawChart, data } from "./functions";
+import { drawChart, data, chartMultiLine } from "./functions";
 
 export default function Graph({ id, type, title, average }) {
   useEffect(() => {
