@@ -106,7 +106,7 @@ export default class WelcomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 4,
     alignItems: "center",
     justifyContent: "center",
     width: width - 6,

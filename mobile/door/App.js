@@ -22,7 +22,7 @@ export default class App extends React.Component {
     super();
 
     this.state = {
-      apiServer: apiServer + "0",
+      apiServer: apiServer,
       building: "B 007",
       room_number: "0111",
       devices: {
@@ -80,7 +80,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     console.log("componentDidMount");
-    this.connectSocket();
+    this.connectSocket(apiServer);
   }
 
   componentWillUnmount() {
@@ -93,6 +93,7 @@ export default class App extends React.Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <View style={styles.container}>
+          <Text style={{ fontSize: 18, padding: 4 }}>Simulator</Text>
           <View style={styles.iconWrapper}>
             <View style={styles.iconContainer}>
               <View style={styles.iconContainerLeft}>

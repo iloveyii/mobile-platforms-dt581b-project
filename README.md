@@ -2,8 +2,8 @@
 
 ## THE PURPOSE OF THIS PROJECT
 
-- Get a kick-start with some of the core components of the project: web server, database
-- Work with and learn some basic React.
+- Develope an application that is accessible on mobile platforms
+- Contribute to the sustainable development goals from environmental perspective
 
 |                                                         **HKR**                                                          |                                                          ** Course**                                                           |                                                        ** Technologies**                                                         |
 | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: |
