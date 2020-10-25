@@ -1,12 +1,12 @@
-import '@babel/polyfill';
-import React from 'react';
-import {render} from 'react-dom';
-import App from './components/App';
+import "@babel/polyfill";
+import React from "react";
+import { render } from "react-dom";
+import App from "./components/App";
 
 // Redux
-import {applyMiddleware, compose, combineReducers, createStore} from 'redux';
-import {Provider} from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
+import { applyMiddleware, compose, combineReducers, createStore } from "redux";
+import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga";
 
 // import(/* webpackChunkName : 'app' */ './Components/App')
 //     .then(({default: App}) =>
@@ -14,8 +14,8 @@ import createSagaMiddleware from 'redux-saga';
 //     );
 
 const ENVIRONMENT = {
-  DEV: true
-}
+  DEV: true,
+};
 
 // # 01
 /**
@@ -26,17 +26,16 @@ const ENVIRONMENT = {
  * @param action
  * @returns {Array} - every return value is assigned to the corresponding key in allReducers
  */
-import rootSaga from './sagas/rootSaga';
-import models from './store';
+import rootSaga from "./sagas/rootSaga";
+import models from "./store";
 
 let reds = {};
 for (let i = 0; i < Object.keys(models).length; i++) {
-    const model = models[Object.keys(models)[i]];
-    reds[model.name] = model.reducers
+  const model = models[Object.keys(models)[i]];
+  reds[model.name] = model.reducers;
 }
 
 const allReducers = combineReducers(Object.assign({}, {}, reds));
-
 
 // # 02
 /**
@@ -52,11 +51,11 @@ const sagaMiddleware = createSagaMiddleware();
 // Only chrome can handle the redux dev tool
 // Redux compose cannot handle a null or undefined middleware
 const allStoreEnhancers = ENVIRONMENT.DEV
-    ? compose(
-        applyMiddleware(sagaMiddleware),
-        window.devToolsExtension && window.devToolsExtension()
+  ? compose(
+      applyMiddleware(sagaMiddleware)
+      // window.devToolsExtension && window.devToolsExtension()
     )
-    : applyMiddleware(sagaMiddleware);
+  : applyMiddleware(sagaMiddleware);
 
 // # 04
 /**
@@ -65,18 +64,14 @@ const allStoreEnhancers = ENVIRONMENT.DEV
  * Last param is for redux debug in chrome extension
  * @type {Store<S&StateExt>&Ext}
  */
-const store = createStore(
-    allReducers,
-    {},
-    allStoreEnhancers
-);
+const store = createStore(allReducers, {}, allStoreEnhancers);
 sagaMiddleware.run(rootSaga);
 
 // # 05
 /**
  * You can see the status of store - but only data and not reducers
  */
-console.log('Store state :', store.getState());
+console.log("Store state :", store.getState());
 
 // # 06
 /**
@@ -96,54 +91,54 @@ localStorage.setItem('statsUpdate', statsUpdate);
 
 // Read news
 if (true || ENVIRONMENT.DEV) {
-    // store.dispatch(userReadAction());
-    // store.dispatch(user.actions.read({}));
-    /*store.dispatch(show.actions.read_success({
+  // store.dispatch(userReadAction());
+  // store.dispatch(user.actions.read({}));
+  /*store.dispatch(show.actions.read_success({
         a: 5455,
         b: 9909
     }));*/
 
-    for (let i = 0; i < Object.keys(models).length; i++) {
-        const model = models[Object.keys(models)[i]];
-        store.dispatch(model.actions.read({}));
-    }
+  for (let i = 0; i < Object.keys(models).length; i++) {
+    const model = models[Object.keys(models)[i]];
+    store.dispatch(model.actions.read({}));
+  }
 }
 
-console.log('Before subscribe in index');
+console.log("Before subscribe in index");
 /**
  * Avoid setting up multiple interval objects in background
  * @type {string | null}
  */
 if (ENVIRONMENT.DEV) {
-    store.subscribe(() => {
-        console.log('subscribed store in index', store.getState());
-    });
+  store.subscribe(() => {
+    console.log("subscribed store in index", store.getState());
+  });
 }
 
-
 Date.prototype.format = function () {
-    const year = this.getFullYear();
-    let month = this.getMonth() + 1;
-    month = month < 10 ? '0' + month : month;
-    const day = this.getDate() < 10 ? '0' + this.getDate() : this.getDate();
+  const year = this.getFullYear();
+  let month = this.getMonth() + 1;
+  month = month < 10 ? "0" + month : month;
+  const day = this.getDate() < 10 ? "0" + this.getDate() : this.getDate();
 
-    return year + '-' + month + '-' + day;
+  return year + "-" + month + "-" + day;
 };
 
 Date.prototype.timeFormat = function () {
-    const hour = this.getHours() < 10 ? '0' + this.getHours() : this.getHours();
-    const min = this.getMinutes() < 10 ? '0' + this.getMinutes() : this.getMinutes();
+  const hour = this.getHours() < 10 ? "0" + this.getHours() : this.getHours();
+  const min =
+    this.getMinutes() < 10 ? "0" + this.getMinutes() : this.getMinutes();
 
-    return hour + ':' + min;
+  return hour + ":" + min;
 };
-
 
 /**
  * Render the main App Component
  */
 
-render((
+render(
   <Provider store={store}>
-    <App/>
-  </Provider>
-), document.getElementById('root'))
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
