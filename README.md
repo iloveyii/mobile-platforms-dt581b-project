@@ -21,11 +21,11 @@ Kristianstad City provides accommodation facilities to many inhabitants includin
 Accommodating various cultures also brings poor energy awareness and law and order problems in that area. Therefore it is very important to provide good and secure services to all inhabitants and bring peace of mind.
 In this project we are building a smart IoT based solution for not only energy conservation but also smart locking systems for better living experience. It will not only improve energy conservation but also reduce expenses for locking systems.
 
-| iOS                                                 | Android                                             |
-| --------------------------------------------------- | --------------------------------------------------- |
-| ![ios]()                                            | ![android]()                                        |
-| [Remote](https://expo.io/@softhem/projects/remote)  | [Remote](https://expo.io/@softhem/projects/remote)  |
-| [Simulator](https://expo.io/@softhem/projects/door) | [Simulator](https://expo.io/@softhem/projects/door) |
+| iOS                                                                                                   | Android                                                                                                       |
+| ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| ![ios](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/documentation/ios.jpg) | ![android](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/documentation/android.jpg) |
+| [Remote](https://expo.io/@softhem/projects/remote)                                                    | [Remote](https://expo.io/@softhem/projects/remote)                                                            |
+| [Simulator](https://expo.io/@softhem/projects/door)                                                   | [Simulator](https://expo.io/@softhem/projects/door)                                                           |
 
 # INSTALLATION
 
