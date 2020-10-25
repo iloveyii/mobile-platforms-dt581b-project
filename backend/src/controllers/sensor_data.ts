@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ObjectId } from "mongodb";
+import moment from "moment";
 import Condition from "../models/base/Condition";
 import SensorData from "../models/SensorData";
 import sensor_data, {
@@ -68,20 +69,24 @@ export const getSensorDataRange = async (
     humidity: 0,
     pressure: 0,
   };
+  const weeks: any = {};
   if (model.response.success) {
     model.response.data.forEach((sensor_data: any) => {
-      const { data } = sensor_data;
+      const { data, timestamp } = sensor_data;
+      const weekNumber = moment(timestamp).week();
+      console.log(weekNumber);
       average["temperature"] += data.temperature.value;
       average["co2"] += data.co2.value;
       average["humidity"] += data.humidity.value;
       average["pressure"] += data.pressure.value;
+      weeks[weekNumber] = average;
     });
     average.temperature = average.temperature / model.response.data.length;
     average.co2 = average.co2 / model.response.data.length;
     average.humidity = average.humidity / model.response.data.length;
     average.pressure = average.pressure / model.response.data.length;
   }
-  return res.status(200).send(average);
+  return res.status(200).send({ average, weeks });
 };
 
 // @desc   Register/Create a Model - using bcrypt hashed passwords

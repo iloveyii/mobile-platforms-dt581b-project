@@ -18,11 +18,9 @@
 
 # PROJECT PROPOSAL - INTRUDER DETECTION SYSTEM
 
-Kristianstad City provides accommodation facilities to many inhabitants including students in various universities and schools.
-Accommodating various cultures also brings law and order problems in that area, e.g theft, drugs, professional and presonal jealousies, character assasination etc. Therefore it is very important to provide good and secure services to all inhabitants.
-In this project we are building a smart IoT based solution for detection and prevention of intruders in personal properties.
-
-This provides peace of mind and good health to all residents in the area.
+Kristianstad City provides accommodation facilities to many inhabitants including students, families and workers in the area.
+Accommodating various cultures also brings poor energy awareness and law and order problems in that area. Therefore it is very important to provide good and secure services to all inhabitants and bring peace of mind.
+In this project we are building a smart IoT based solution for not only energy conservation but also smart locking systems for better living experience. It will not only improve energy conservation but also reduce expenses for locking systems.
 
 # INSTALLATION
 
@@ -30,9 +28,9 @@ We will use Ubuntu as operating system for all installations below.
 
 ## CONFIGURATION
 
-Automated deployment using webhooks. just another test 24. this works
+Automated deployment using webhooks.
 
-- DEPLOY URL : http://hkr-project.hopto.org:8080 , http://hkr-project.hopto.org:7700 - WEBHOOK - secret - 66629873f715d30d
+- DEPLOY URL : http://hkr-project.hopto.org:7700
 - SERVER URL : http://hkr-project.hopto.org:7700
 - FRONTEND URL : http://hkr-project.hopto.org:9000
 
@@ -48,19 +46,17 @@ Automated deployment using webhooks. just another test 24. this works
 - If you want to use latest npm `npm install npm@latest -g`
 - Install git `sudo apt install git`
 
-![SDG](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/images/good-health-and-well-being-sdg.jpg)
-
 ## INITIALIZE
 
-- Create a project/root directory e.g lab2.
+- Create a project/root directory e.g project.
 - Initialize a git repo `git init .` and create .gitignore file
-- Create a directory structure e.g lab2/react, and lab2/node
-- Make it an npm repo `npm init -y`, run this inside both directories ie react, node.
+- Create a directory structure e.g project/frontend, project/backend, project/mobile/simulator, project/remote
+- Make it an npm repo `npm init -y`, run this inside all directories above
 - Create a README.md file at root directory.
 
 ## REACT
 
-- CD to react
+- CD to frontend
 - Install react `npm i --save react react-dom`
 - Install webpack `npm i --save-dev webpack webpack-cli webpack-dev-server`
 - Install babel `npm i --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react html-webpack-plugin`
@@ -84,7 +80,7 @@ Automated deployment using webhooks. just another test 24. this works
 
 ## NODE
 
-- CD to node `cd node`
+- CD to node `cd backend`
 - Install `dotenv express express-session`
 - Create tslint.json and tsconfig.json files
 
@@ -92,7 +88,7 @@ Automated deployment using webhooks. just another test 24. this works
 
 ### Domain name
 
-- We a free service called noip.com which points to our IP address in AWS
+- We used a free service called noip.com which points to our IP address in AWS
 
 ### Firebase
 
@@ -110,7 +106,15 @@ Automated deployment using webhooks. just another test 24. this works
 
 - Sine the app uses mongodb, node server and build script it is really easy to host it on AWS ec2
 - This is a lot of time saving during development
-- But AWS is expensive for these small projects therefore other hosting services have been discussed also
+- But AWS is expensive for these small projects therefore other hosting services have been discussed also.
+
+### HEROKU
+
+- Install Heroku CLI
+- Update sudo apt update
+- Install snap sudo apt install snapd
+- Install sudo snap install heroku --classic
+- Follow ![Hosting](https://github.com/iloveyii/hosting) for details
 
 ## RUN THE APP
 
@@ -120,31 +124,41 @@ Automated deployment using webhooks. just another test 24. this works
     `git clone https://github.com/iloveyii/mobile-platforms-dt581b-lab2.git`
   - CD to directory
     `cd mobile-platforms-dt581b-lab2`
-  - Compile using webpack and babel
-    `npm run dev`
-  - Run the app, this command will open a browser window. Open console in dev tools to see result.
+  - Configure `.env ` variable for settings, copy .env.example
+  - Install dependencies
+    `npm install`
+  - Run the app, this command will open a browser window.
     `npm start`
 
 - BACKEND
 
   - Clone the repo (if not done above)
     `git clone https://github.com/iloveyii/mobile-platforms-dt581b-lab2.git`
+  - Configure `.env ` variable for mongodb and other settings, copy .env.example
+  - Follow ![Hosting](https://github.com/iloveyii/hosting) for details of monogodb setup.
+  - Install dependencies
+    `npm install`
+  - Run the backend server.
+    `npm start`
+  - Run the backend console command for sensor device simulations
+    `npm run start_sensors`
 
-- USE PM2 - process manager
+-- USE PM2 - process manager
 
-  - Dot (.) does not work in name
-  - Create and Start server `pm2 start 'npm start' --name project-server`
-  - Stop server `pm2 stop project-server`
-  - Start again `pm2 start project-server`
-  - Enable on startup `pm2 startup ubuntu`
-  - Copy and paste the generated command in terminal
+- Dot (.) does not work in name (ie --name)
+- Create and Start server `pm2 start 'npm start' --name project-server`
+- Stop server `pm2 stop project-server`
+- Start again `pm2 start project-server`
+- Enable on startup `pm2 startup ubuntu`
+- Copy and paste the generated command in terminal
 
-- SERVE STATIC
-  - Node server serve static files which are actually the build package of frontend
-  - When we build frontend app, it creates a directory dist at frontend/dist
-  - Node server static feature points to frontend/dist folder to serve the frontend application
-  - So we don't need a separate (like apache, nginx) sever to serve frontend application
-  - Node server serves both frontend app and api calls.
+-- SERVE STATIC
+
+- Node server serve static files which are actually the build package of frontend
+- When we build frontend app, it creates a directory dist at frontend/dist
+- Node server static feature points to frontend/dist folder to serve the frontend application
+- So we don't need a separate (like apache, nginx) sever to serve frontend application
+- Node server serves both frontend app and api calls.
 
 # SECURTY
 
