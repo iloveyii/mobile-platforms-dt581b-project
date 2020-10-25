@@ -6,6 +6,7 @@ import sensor_data, {
   roundTimestamp,
   createRandomSensorData,
 } from "../console/sensor_data";
+import { totalmem } from "os";
 
 // @desc   Get all from Model
 // @route  GET /api/v1/sensor_datas
@@ -60,7 +61,27 @@ export const getSensorDataRange = async (
   });
   const model = new SensorData({ user_id: req.params.id, data, timestamp });
   await model.read(condition);
-  return res.status(200).send(model.response);
+  // Average data
+  const average = {
+    temperature: 0,
+    co2: 0,
+    humidity: 0,
+    pressure: 0,
+  };
+  if (model.response.success) {
+    model.response.data.forEach((sensor_data: any) => {
+      const { data } = sensor_data;
+      average["temperature"] += data.temperature.value;
+      average["co2"] += data.co2.value;
+      average["humidity"] += data.humidity.value;
+      average["pressure"] += data.pressure.value;
+    });
+    average.temperature = average.temperature / model.response.data.length;
+    average.co2 = average.co2 / model.response.data.length;
+    average.humidity = average.humidity / model.response.data.length;
+    average.pressure = average.pressure / model.response.data.length;
+  }
+  return res.status(200).send(average);
 };
 
 // @desc   Register/Create a Model - using bcrypt hashed passwords
