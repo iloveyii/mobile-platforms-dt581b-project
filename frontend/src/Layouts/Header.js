@@ -7,7 +7,8 @@ import {
   IconButton,
   Badge,
   makeStyles,
-  Hidden
+  Hidden,
+  Link,
 } from "@material-ui/core";
 import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
@@ -17,21 +18,21 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "./Drawer";
 
 const drawerWidth = 250;
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     transform: "translateZ(0)",
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+      marginLeft: drawerWidth,
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   searchInput: {
     padding: theme.spacing(2),
@@ -39,24 +40,24 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(1),
       opacity: 0.6,
       "&:hover": {
-        backgroundColor: "#f1f1f1"
-      }
-    }
+        backgroundColor: "#f1f1f1",
+      },
+    },
   },
   item: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 }));
 
 export default function Header() {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    open: false
+    open: false,
   });
 
-  const toggleDrawer = open => event => {
+  const toggleDrawer = (open) => (event) => {
     console.log("toggleDrawer ", open);
     if (
       event &&
@@ -102,7 +103,9 @@ export default function Header() {
                   </Badge>
                 </IconButton>
                 <IconButton>
-                  <ExitToAppIcon />
+                  <a style={{ color: "grey" }} href="/">
+                    <ExitToAppIcon />
+                  </a>
                 </IconButton>
               </Grid>
             </Hidden>

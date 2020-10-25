@@ -160,7 +160,7 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
           </ListItem>
         </Link>
 
-        <Link to="/">
+        <Link to="/dashboard">
           <ListItem button key="key-settings">
             <ListItemIcon>
               <DashboardOutlinedIcon />
