@@ -31,7 +31,7 @@ export const createRandomSensorData = () => {
   const sensorData = {
     temperature: { value: getRandomNumber(1, 40), unit: "°C" },
     co2: { value: getRandomNumber(300, 1500), unit: "mol" },
-    humidity: { value: getRandomNumber(20, 40), unit: "g.m-3" },
+    humidity: { value: getRandomNumber(20, 40), unit: "gm³" },
     pressure: { value: getRandomNumber(500, 1500), unit: "pas" },
   };
 

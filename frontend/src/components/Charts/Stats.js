@@ -11,7 +11,7 @@ export default function Stats({ type, icon, title, data, subtitle, subicon }) {
           <p className="card-category">{title}</p>
           <h3 className="card-title" id={title}>
             {data.value}
-            <small>{data.unit}</small>
+            <small>{" " + data.unit}</small>
           </h3>
         </div>
         <div className="card-footer">
