@@ -35,9 +35,9 @@ We will use Ubuntu as operating system for all installations below.
 
 Automated deployment using webhooks.
 
-- DEPLOY URL : http://hkr-project.hopto.org:7700
-- SERVER URL : http://hkr-project.hopto.org:7700
-- FRONTEND URL : http://hkr-project.hopto.org:9000
+- DEPLOY URL : http://hkr-project.hopto.org:7700/api/v1/deploy
+- SERVER URL : http://hkr-project.hopto.org:7700/api/v1
+- FRONTEND URL : http://hkr-project.hopto.org:7700
 
 ## NODE
 
