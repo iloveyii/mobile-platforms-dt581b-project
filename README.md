@@ -13,14 +13,19 @@
 | ![firebase](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/firebase.png) |         ![aws](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/aws.png)         | ![react native](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/react-native.png) |
 |    ![redux](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/redux.png)    |  ![typescript](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/typescript.jpg)  |       ![owasp](https://github.com/iloveyii/mobile-platforms-dt581b-project/blob/master/frontend/public/images/owasp.jpeg)        |
 
-- [DEMO LAB 2 - Link 1](http://softhem.se:4000/)
-- [DEMO LAB 2 - Link 2](https://mobile-platforms-lab2.web.app/)
+- [DEMO PROJECT - Link 1](http://hkr-project.hopto.org:7700)
 
 # PROJECT PROPOSAL - INTRUDER DETECTION SYSTEM
 
 Kristianstad City provides accommodation facilities to many inhabitants including students, families and workers in the area.
 Accommodating various cultures also brings poor energy awareness and law and order problems in that area. Therefore it is very important to provide good and secure services to all inhabitants and bring peace of mind.
 In this project we are building a smart IoT based solution for not only energy conservation but also smart locking systems for better living experience. It will not only improve energy conservation but also reduce expenses for locking systems.
+
+| iOS                                                 | Android                                             |
+| --------------------------------------------------- | --------------------------------------------------- |
+| ![ios]()                                            | ![android]()                                        |
+| [Remote](https://expo.io/@softhem/projects/remote)  | [Remote](https://expo.io/@softhem/projects/remote)  |
+| [Simulator](https://expo.io/@softhem/projects/door) | [Simulator](https://expo.io/@softhem/projects/door) |
 
 # INSTALLATION
 
