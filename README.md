@@ -114,7 +114,7 @@ Automated deployment using webhooks.
 - Update sudo apt update
 - Install snap sudo apt install snapd
 - Install sudo snap install heroku --classic
-- Follow ![Hosting](https://github.com/iloveyii/hosting) for details
+- Follow [Hosting](https://github.com/iloveyii/hosting) for details
 
 ## RUN THE APP
 
@@ -135,7 +135,7 @@ Automated deployment using webhooks.
   - Clone the repo (if not done above)
     `git clone https://github.com/iloveyii/mobile-platforms-dt581b-lab2.git`
   - Configure `.env ` variable for mongodb and other settings, copy .env.example
-  - Follow ![Hosting](https://github.com/iloveyii/hosting) for details of monogodb setup.
+  - Follow [Hosting](https://github.com/iloveyii/hosting) for details of monogodb setup.
   - Install dependencies
     `npm install`
   - Run the backend server.
@@ -145,28 +145,28 @@ Automated deployment using webhooks.
 
 - USE PM2 - process manager
 
-- Dot (.) does not work in name (ie --name)
-- Create and Start server `pm2 start 'npm start' --name project-server`
-- Stop server `pm2 stop project-server`
-- Start again `pm2 start project-server`
-- Enable on startup `pm2 startup ubuntu`
-- Copy and paste the generated command in terminal
+  - Dot (.) does not work in name (ie --name)
+  - Create and Start server `pm2 start 'npm start' --name project-server`
+  - Stop server `pm2 stop project-server`
+  - Start again `pm2 start project-server`
+  - Enable on startup `pm2 startup ubuntu`
+  - Copy and paste the generated command in terminal
 
 - SERVE STATIC
 
-- Node server serve static files which are actually the build package of frontend
-- When we build frontend app, it creates a directory dist at frontend/dist
-- Node server static feature points to frontend/dist folder to serve the frontend application
-- So we don't need a separate (like apache, nginx) sever to serve frontend application
-- Node server serves both frontend app and api calls.
+  - Node server serve static files which are actually the build package of frontend
+  - When we build frontend app, it creates a directory dist at frontend/dist
+  - Node server static feature points to frontend/dist folder to serve the frontend application
+  - So we don't need a separate (like apache, nginx) sever to serve frontend application
+  - Node server serves both frontend app and api calls.
 
 - RUN MOBILE APP
-- CD to directory `mobile/simulator` for simulation or `mobile/remote` for remote control, run the following in both directories
-- You may need to install expo globally `npm i -g expo-cli`
-- Start App `expo start`
-- The above command will open a browser window and show you the QR code
-- You must have expo install on your mobile as well (both android, and ios have apps available)
-- Scan the QR code shown in the window with your camera (ios/apple phones), for android first open expo app and click scan QR code
+  - CD to directory `mobile/simulator` for simulation or `mobile/remote` for remote control, run the following in both directories
+  - You may need to install expo globally `npm i -g expo-cli`
+  - Start App `expo start`
+  - The above command will open a browser window and show you the QR code
+  - You must have expo install on your mobile as well (both android, and ios have apps available)
+  - Scan the QR code shown in the window with your camera (ios/apple phones), for android first open expo app and click scan QR code
 
 # SECURTY
 
