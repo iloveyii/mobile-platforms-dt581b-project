@@ -15,7 +15,7 @@
 
 - [DEMO PROJECT - Link 1](http://hkr-project.hopto.org:7700)
 
-# PROJECT PROPOSAL - INTRUDER DETECTION SYSTEM
+# PROJECT PROPOSAL - SMART HOME
 
 Kristianstad City provides accommodation facilities to many inhabitants including students, families and workers in the area.
 Accommodating various cultures also brings poor energy awareness and law and order problems in that area. Therefore it is very important to provide good and secure services to all inhabitants and bring peace of mind.
