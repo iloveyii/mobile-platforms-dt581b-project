@@ -88,7 +88,8 @@
     "nodemon": "^2.0.4",
     "sequelize-cli": "^5.5.1",
     "supertest": "^4.0.2",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "bl": ">=2.2.1"
   },
   "_moduleAliases": {
     "@sequelize": "sequelize/src"
