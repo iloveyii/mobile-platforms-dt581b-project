@@ -8,6 +8,7 @@ import sensor_data, {
   createRandomSensorData,
 } from "../console/sensor_data";
 import { totalmem } from "os";
+import { statsForUserWithInterval, getInteval } from "./functions";
 
 // @desc   Get all from Model
 // @route  GET /api/v1/sensor_datas
@@ -21,7 +22,7 @@ export const getSensorDatas = async (
   return res.status(200).send(model.response);
 };
 
-// @desc   Get a Model
+// @desc   Get a Model - Get current sensor data ie for the last minute
 // @route  GET /api/v1/sensor_data/:id
 export const getSensorData = async (
   req: Request,
@@ -39,54 +40,23 @@ export const getSensorData = async (
   return res.status(200).send(model.response);
 };
 
-// @desc   Get a Model
+// @desc   Get a Model - for the user with id, and timestamp range
 // @route  GET /api/v1/sensor_data/:id/:range
 export const getSensorDataRange = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  // Here user want to get sensor data for current timestamp, and not a specific row with id
+  // Here user want to get sensor data for current timestamp, and not a specific row with id ie id means use id
   const [startTimeStamp, endTimeStamp] = req.params.range.split("-");
+  // const { startTimeStamp, endTimeStamp } = getInteval("month");
   console.log(startTimeStamp, endTimeStamp, req.params);
-  const data = createRandomSensorData();
-  const timestamp = roundTimestamp(1000 * 60); // 1 min
-  const condition = new Condition({
-    where: {
-      user_id: new ObjectId(req.params.id),
-      timestamp: {
-        $gte: parseInt(startTimeStamp),
-        $lte: parseInt(endTimeStamp),
-      },
-    },
-  });
-  const model = new SensorData({ user_id: req.params.id, data, timestamp });
-  await model.read(condition);
-  // Average data
-  const average = {
-    temperature: 0,
-    co2: 0,
-    humidity: 0,
-    pressure: 0,
-  };
-  const weeks: any = {};
-  if (model.response.success) {
-    model.response.data.forEach((sensor_data: any) => {
-      const { data, timestamp } = sensor_data;
-      const weekNumber = moment(timestamp).week();
-      console.log(weekNumber);
-      average["temperature"] += data.temperature.value;
-      average["co2"] += data.co2.value;
-      average["humidity"] += data.humidity.value;
-      average["pressure"] += data.pressure.value;
-      weeks[weekNumber] = average;
-    });
-    average.temperature = average.temperature / model.response.data.length;
-    average.co2 = average.co2 / model.response.data.length;
-    average.humidity = average.humidity / model.response.data.length;
-    average.pressure = average.pressure / model.response.data.length;
-  }
-  return res.status(200).send({ average, weeks });
+  const stats = await statsForUserWithInterval(
+    req.params.id,
+    startTimeStamp,
+    endTimeStamp
+  );
+  return res.status(200).send({ stats });
 };
 
 // @desc   Register/Create a Model - using bcrypt hashed passwords

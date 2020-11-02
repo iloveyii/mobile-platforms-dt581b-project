@@ -36,7 +36,6 @@ class Mongo implements ModelI {
   async read(condition?: ConditionI) {
     const db = await this.database.db();
     const collection = await db.collection(this.collection);
-    console.log("reading door with c ", condition);
     const model = await collection.find(condition?.where);
     const arr = await model.toArray();
     if (arr.length > 0) {

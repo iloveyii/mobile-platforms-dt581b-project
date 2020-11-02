@@ -32,4 +32,4 @@ console.log("DB DB_NAME, DB_USER, DB_PASS", DB_NAME, DB_USER, DB_PASS);
 // ----------------------------------
 setTimeout(() => {
   runCommand(Database.database, 5000);
-}, 3000);
+}, 1000 * 120);
