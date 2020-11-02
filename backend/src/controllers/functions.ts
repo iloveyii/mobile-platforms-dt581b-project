@@ -57,15 +57,23 @@ export async function statsForUserWithInterval(
   };
   // Weekly, daily averages, consupmtion number of hours on per day, week, month
   const weeks: any = {};
+  const days: any = {};
   if (model.response.success) {
     model.response.data.forEach((sensor_data: any) => {
       const { data, timestamp } = sensor_data;
       const weekNumber = moment(timestamp).week();
-      console.log(weekNumber);
+      const dayNumber = moment(timestamp).date();
+      console.log(weekNumber, dayNumber);
       average["temperature"] += data.temperature.value;
       average["co2"] += data.co2.value;
       average["humidity"] += data.humidity.value;
       average["pressure"] += data.pressure.value;
+      if (days[dayNumber]) {
+        days[dayNumber].push(data);
+      } else {
+        days[dayNumber] = [data];
+      }
+
       if (weeks[weekNumber]) {
         weeks[weekNumber].push(data);
       } else {
@@ -81,9 +89,14 @@ export async function statsForUserWithInterval(
       const average = findAverage(weeks[weekNumber]);
       weeks[weekNumber] = { average };
     });
+
+    Object.keys(days).forEach((dayNumber: any) => {
+      const average = findAverage(days[dayNumber]);
+      days[dayNumber] = { average };
+    });
   }
 
-  const stats = { average, weeks };
+  const stats = { average, weeks, days };
   return stats;
 }
 
@@ -121,3 +134,6 @@ export function getInteval(duration: string) {
 }
 
 getInteval("month");
+
+// Weekly average -done
+// Daily
