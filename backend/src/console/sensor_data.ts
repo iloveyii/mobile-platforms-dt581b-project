@@ -43,10 +43,11 @@ export const roundTimestamp = (seconds: number) => {
   const timestamp = Date.now();
   const remainder = timestamp % seconds;
   const rounded = timestamp - remainder;
-  //   console.log(
-  //     moment(timestamp).format("YYYY-MM-DD h:mm:ss a"),
-  //     moment(rounded).format("YYYY-MM-DD h:mm:ss a")
-  //   );
+  console.log(
+    "ROUNDED ",
+    moment(timestamp).format("YYYY-MM-DD h:mm:ss a"),
+    moment(rounded).format("YYYY-MM-DD h:mm:ss a")
+  );
   return rounded;
 };
 

@@ -463,17 +463,18 @@ class Model {
   // API
   get api() {
     return {
-      read: (payload) =>
-        console.log("API read", payload) ||
-        axios
-          .get(
-            payload.form.id ? this.server + `/${payload.form.id}` : this.server
-          )
+      read: (payload) => {
+        console.log("API read", payload);
+        let suffix = payload.form.id ? `/${payload.form.id}` : "";
+        suffix = payload.form.suffix ? payload.form.suffix : suffix;
+        return axios
+          .get(this.server + suffix)
           .then((res) => res.data)
           .catch((error) => {
             console.dir(error);
             throw new Error(error);
-          }),
+          });
+      },
       create: (payload) => {
         const config = {
           onUploadProgress: function (progressEvent) {

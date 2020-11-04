@@ -83,16 +83,33 @@ export const data = [
   },
 ];
 
+function formatData(data) {
+  const keys7 = Object.keys(data.days).slice(0, 6);
+  const temperatures = [];
+  const co2 = [];
+  const humidity = [];
+  const pressure = [];
+
+  keys7.forEach((k) => {
+    temperatures.push(data.days[k]["average"]["temperature"]);
+    co2.push(data.days[k]["average"]["co2"]);
+    humidity.push(data.days[k]["average"]["humidity"]);
+    pressure.push(data.days[k]["average"]["pressure"]);
+  });
+  const series = [temperatures, co2, humidity, pressure];
+  console.log("formatData : ", series);
+  return series;
+}
+
 export function chartMultiLine(elementId, data) {
+  const series = formatData(data);
+  let labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  labels = labels.slice(0, series[0].length);
   var chart = new Chartist.Line(
     "#" + elementId,
     {
-      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      series: [
-        [1, 5, 2, 5, 4, 3],
-        [2, 3, 4, 8, 1, 2],
-        [5, 4, 3, 2, 1, 0.5],
-      ],
+      labels: labels,
+      series: series,
     },
     {
       low: 0,
@@ -101,7 +118,7 @@ export function chartMultiLine(elementId, data) {
       fullWidth: true,
       plugins: [
         Chartist.plugins.legend({
-          legendNames: ["Temperature", "Pressure", "Humidity"],
+          legendNames: ["Temperature", "CO2", "Humidity", "Pressure"],
         }),
       ],
     }

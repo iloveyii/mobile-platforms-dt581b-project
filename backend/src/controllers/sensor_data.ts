@@ -41,22 +41,15 @@ export const getSensorData = async (
 };
 
 // @desc   Get a Model - for the user with id, and timestamp range
-// @route  GET /api/v1/sensor_data/:id/:range
-export const getSensorDataRange = async (
+// @route  GET /api/v1/sensor_data/:id/stats
+export const getSensorDataStats = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   // Here user want to get sensor data for current timestamp, and not a specific row with id ie id means use id
-  const [startTimeStamp, endTimeStamp] = req.params.range.split("-");
-  // const { startTimeStamp, endTimeStamp } = getInterval("month");
-  console.log(startTimeStamp, endTimeStamp, req.params);
-  const stats = await statsForUserWithInterval(
-    req.params.id,
-    startTimeStamp,
-    endTimeStamp
-  );
-  return res.status(200).send({ stats });
+  const stats = await statsForUserWithInterval(req.params.id);
+  return res.status(200).send({ success: true, data: stats });
 };
 
 // @desc   Register/Create a Model - using bcrypt hashed passwords

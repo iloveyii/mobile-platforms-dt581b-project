@@ -10,6 +10,10 @@ import DeviceLog from "../models/DeviceLog";
 import moment from "moment";
 import { response } from "express";
 
+/**
+ * Find average of different attribtutes from rows
+ * @param rows of data
+ */
 function findAverage(rows: any) {
   // Average data
   const average = {
@@ -25,27 +29,30 @@ function findAverage(rows: any) {
     average["pressure"] += row.pressure.value;
   });
 
-  average.temperature = average.temperature / rows.length;
-  average.co2 = average.co2 / rows.length;
-  average.humidity = average.humidity / rows.length;
-  average.pressure = average.pressure / rows.length;
+  average.temperature = Math.round(average.temperature / rows.length);
+  average.co2 = Math.round(average.co2 / rows.length);
+  average.humidity = Math.round(average.humidity / rows.length);
+  average.pressure = Math.round(average.pressure / rows.length);
   return average;
 }
 
-export async function statsForUserWithInterval(
-  user_id: string,
-  startTimeStamp: any,
-  endTimeStamp: any
-) {
+/**
+ * Stats for day, week, month intervals
+ * @param user_id
+ * @param startTimeStamp
+ * @param endTimeStamp
+ */
+export async function statsForUserWithInterval(user_id: string) {
   const data = createRandomSensorData();
   const timestamp = roundTimestamp(1000 * 60); // 1 min
   const condition = new Condition({
     where: {
       user_id: new ObjectId(user_id),
+      /**
       timestamp: {
         $gte: parseInt(startTimeStamp),
         $lte: parseInt(endTimeStamp),
-      },
+      },  */
     },
   });
   const model = new SensorData({ user_id, data, timestamp });
@@ -65,6 +72,7 @@ export async function statsForUserWithInterval(
       const { data, timestamp } = sensor_data;
       const weekNumber = moment(timestamp).week();
       const dayNumber = moment(timestamp).date();
+      console.log("dayNumber", dayNumber);
       average["temperature"] += data.temperature.value;
       average["co2"] += data.co2.value;
       average["humidity"] += data.humidity.value;
@@ -96,11 +104,14 @@ export async function statsForUserWithInterval(
       days[dayNumber] = { average };
     });
   }
-  const deviceLog = await getDeviceLog();
-  const stats = { average, weeks, days, deviceLog };
+  const usage = await getDeviceLog();
+  const stats = { average, weeks, days, usage }; // average for all data set, average for all weeks, average for days of month, deviceLog is Usage
   return stats;
 }
 
+/**
+ * Find the usage / consumption from device_logs colelction
+ */
 export async function getDeviceLog() {
   const average = {
     door: { closeTime: 0, openTime: 0, onTime: 0 },
@@ -209,7 +220,7 @@ export function getInterval(duration: string) {
   return { startTimeStamp, endTimeStamp };
 }
 
-getInterval("month");
+// getInterval("month");
 
 // Weekly average -done
 // Daily

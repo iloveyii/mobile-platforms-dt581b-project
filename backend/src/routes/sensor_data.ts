@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getSensorData,
-  getSensorDataRange,
+  getSensorDataStats,
   getSensorDatas,
   createSensorData,
   updateSensorData,
@@ -19,7 +19,7 @@ router
   .delete(ws_update, deleteSensorData) // should admin delete
   .put(ws_update, updateSensorData);
 
-router.route("/:id/:range").get(getSensorDataRange);
+router.route("/:id/stats").get(getSensorDataStats);
 router.route("/").get(getSensorDatas).post(ws_update, createSensorData);
 
 export default router;

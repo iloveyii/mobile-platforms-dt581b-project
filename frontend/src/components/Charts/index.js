@@ -11,6 +11,35 @@ import { withRouter, Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
+const data = {
+  days: {
+    1: {
+      average: {
+        temperature: 22,
+        co2: 688,
+        humidity: 27,
+        pressure: 1001,
+      },
+    },
+    2: {
+      average: {
+        temperature: 28,
+        co2: 935,
+        humidity: 31,
+        pressure: 1040,
+      },
+    },
+    25: {
+      average: {
+        temperature: 21,
+        co2: 837,
+        humidity: 29,
+        pressure: 1010,
+      },
+    },
+  },
+};
+
 const styles = (theme) => ({
   main: {
     [theme.breakpoints.up("sm")]: {
@@ -45,12 +74,14 @@ class Charts extends React.Component {
   }
 
   componentDidMount() {
-    const { user, readAction } = this.props;
-    if (user) {
+    const { login, users, readAction } = this.props;
+    if (login) {
+      const user = users.find((u) => u.email === login.email);
+      readAction({ suffix: "/" + user.id + "/stats" });
       this.intID = setInterval(() => {
         console.log("READ Sensor data");
-        readAction({ id: user.id });
-      }, 1000 * 120);
+        readAction({ suffix: "/" + user.id + "/stats" });
+      }, 1000 * 30);
     }
     this.setForm(this.props);
   }
@@ -127,8 +158,13 @@ class Charts extends React.Component {
           </div>
 
           <div className="row">
-            <Table id="multilineChart" type="success" title="Live stream" />
-            <Table id="barChart" type="info" title="Consumption" />
+            <Table
+              id="multilineChart"
+              type="success"
+              title="Live stream"
+              data={data}
+            />
+            <Table id="barChart" type="info" title="Consumption" data={data} />
           </div>
         </Container>
       </div>
@@ -154,7 +190,8 @@ const mapStateToProps = (state) => ({
     state.sensor_datas.list.length > 0
       ? state.sensor_datas.list[0].data
       : undefined,
-  user: state.logins.list.length > 0 ? state.logins.list[0] : undefined,
+  login: state.logins.list.length > 0 ? state.logins.list[0] : undefined,
+  users: state.users.list.length > 0 ? state.users.list : [],
 });
 
 /**
