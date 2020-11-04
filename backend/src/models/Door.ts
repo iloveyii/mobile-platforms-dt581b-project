@@ -4,6 +4,7 @@ import { ConditionI } from "../interfaces";
 
 type DoorT = {
   _id?: string;
+  name?: string;
   building: string;
   room_number: string;
 };

@@ -15,7 +15,7 @@ export const updateGatekeeper = async (
     where: {
       building: req.body.building,
       room_number: req.body.room_number,
-      status: "1",
+      status: "1", // enabled ?
     },
   });
   const model = new Gatekeeper(req.body);

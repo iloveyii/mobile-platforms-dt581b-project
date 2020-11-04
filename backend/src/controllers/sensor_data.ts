@@ -8,7 +8,7 @@ import sensor_data, {
   createRandomSensorData,
 } from "../console/sensor_data";
 import { totalmem } from "os";
-import { statsForUserWithInterval, getInteval } from "./functions";
+import { statsForUserWithInterval, getInterval } from "./functions";
 
 // @desc   Get all from Model
 // @route  GET /api/v1/sensor_datas
@@ -49,7 +49,7 @@ export const getSensorDataRange = async (
 ) => {
   // Here user want to get sensor data for current timestamp, and not a specific row with id ie id means use id
   const [startTimeStamp, endTimeStamp] = req.params.range.split("-");
-  // const { startTimeStamp, endTimeStamp } = getInteval("month");
+  // const { startTimeStamp, endTimeStamp } = getInterval("month");
   console.log(startTimeStamp, endTimeStamp, req.params);
   const stats = await statsForUserWithInterval(
     req.params.id,

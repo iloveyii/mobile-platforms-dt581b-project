@@ -1,6 +1,7 @@
 import Mongo from "./base/Mongo";
 import { Database } from "./base/Database";
 import { ConditionI } from "../interfaces";
+import DeviceLog from "./DeviceLog";
 import axios from "axios";
 
 type PermissionT = {
@@ -50,8 +51,20 @@ class Gatekeeper extends Mongo {
       .join("&");
     console.log("queryString in Model", queryString);
     const url = `http://localhost:7700/api/v1/gatekeepers/${permission.command}&${queryString}`;
-    axios.get(url).then((res: any) => {
+    axios.get(url).then(async (res: any) => {
       console.log("Response from device ", res.data);
+      if (true || res.data.cmdStatus === true) {
+        const fields = {
+          building: permission.building,
+          room_number: permission.room_number,
+          command: permission.command,
+          device: permission.device,
+          timestamp: Date.now(),
+        };
+        const deviceLog = new DeviceLog(fields);
+        await deviceLog.create();
+        console.log("DeviceLog", deviceLog.response);
+      }
     });
   }
 

@@ -33,10 +33,15 @@ class Mongo implements ModelI {
     return this;
   }
 
-  async read(condition?: ConditionI) {
+  async read(condition?: ConditionI, sort?: any) {
     const db = await this.database.db();
     const collection = await db.collection(this.collection);
-    const model = await collection.find(condition?.where);
+    let model;
+    if (sort && Object.keys(sort).length > 0) {
+      model = await collection.find(condition?.where).sort(sort);
+    } else {
+      model = await collection.find(condition?.where);
+    }
     const arr = await model.toArray();
     if (arr.length > 0) {
       this.setResponse(true, arr);

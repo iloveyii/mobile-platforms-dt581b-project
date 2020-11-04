@@ -5,7 +5,10 @@ import sensor_data, {
 import Condition from "../models/base/Condition";
 import { ObjectId } from "mongodb";
 import SensorData from "../models/SensorData";
+import DeviceLog from "../models/DeviceLog";
+
 import moment from "moment";
+import { response } from "express";
 
 function findAverage(rows: any) {
   // Average data
@@ -47,7 +50,6 @@ export async function statsForUserWithInterval(
   });
   const model = new SensorData({ user_id, data, timestamp });
   await model.read(condition);
-  console.log("RESPONSE:", model.response, condition);
   // Average data
   const average = {
     temperature: 0,
@@ -63,7 +65,6 @@ export async function statsForUserWithInterval(
       const { data, timestamp } = sensor_data;
       const weekNumber = moment(timestamp).week();
       const dayNumber = moment(timestamp).date();
-      console.log(weekNumber, dayNumber);
       average["temperature"] += data.temperature.value;
       average["co2"] += data.co2.value;
       average["humidity"] += data.humidity.value;
@@ -95,12 +96,86 @@ export async function statsForUserWithInterval(
       days[dayNumber] = { average };
     });
   }
-
-  const stats = { average, weeks, days };
+  const deviceLog = await getDeviceLog();
+  const stats = { average, weeks, days, deviceLog };
   return stats;
 }
 
-export function getInteval(duration: string) {
+export async function getDeviceLog() {
+  const average = {
+    door: { closeTime: 0, openTime: 0, onTime: 0 },
+    stove: { closeTime: 0, openTime: 0, onTime: 0 },
+    television: { closeTime: 0, openTime: 0, onTime: 0 },
+    light: { closeTime: 0, openTime: 0, onTime: 0 },
+  };
+  const deviceLog = new DeviceLog(undefined);
+  await deviceLog.read(undefined, { timestamp: -1 });
+  console.log("LIGHT data len", deviceLog.response.data.length);
+
+  if (deviceLog.response.success) {
+    // iterate over array and calcaulate diff between n-1 close and n open as ON_TIME
+    let offTime, onTime;
+    const datas: any = deviceLog.response.data;
+    for (let i = 0; i < datas.length; i++) {
+      const data: any = datas[i];
+      /**
+       * find closeTime of device first and note it
+       * then find openTime of that device and do : closeTime - openTime = +ON_TIME
+       * make closeTime = 0
+       */
+      switch (data.device) {
+        case "door":
+          if (data.command === "close") {
+            average.door.closeTime = 1; // On_Time does not make sense here, therefore count number of times
+          }
+          if (data.command === "open" && average.door.closeTime !== 0) {
+            average.door.onTime = average.door.onTime + average.door.closeTime;
+            average.door.closeTime = 0; // reset it
+          }
+          break;
+        case "stove":
+          if (data.command === "close") {
+            average.stove.closeTime = data.timestamp;
+          }
+          if (data.command === "open" && average.stove.closeTime !== 0) {
+            average.stove.onTime =
+              average.stove.onTime + (average.stove.closeTime - data.timestamp);
+            average.stove.closeTime = 0; // reset it
+          }
+          break;
+        case "television":
+          if (data.command === "close") {
+            average.television.closeTime = data.timestamp;
+            console.log("TV Close", data, average);
+          }
+          if (data.command === "open" && average.television.closeTime !== 0) {
+            average.television.onTime =
+              average.television.onTime +
+              (Number(average.television.closeTime) - Number(data.timestamp));
+            average.television.closeTime = 0; // reset it
+            console.log("TV Open", data, average);
+          }
+          break;
+        case "light":
+          if (data.command === "close") {
+            average.light.closeTime = data.timestamp;
+          }
+          if (data.command === "open" && average.light.closeTime !== 0) {
+            average.light.onTime =
+              average.light.onTime +
+              (Number(average.light.closeTime) - Number(data.timestamp));
+            average.light.closeTime = 0; // reset it
+          }
+          break;
+      }
+    }
+  }
+
+  // return deviceLog.response;
+  return average;
+}
+
+export function getInterval(duration: string) {
   let startTimeStamp, endTimeStamp;
   let from_date: any, to_date: any;
   const today = moment();
@@ -123,17 +198,18 @@ export function getInteval(duration: string) {
   startTimeStamp = from_date.unix() * 1000;
   endTimeStamp = to_date.unix() * 1000;
 
+  /**
   console.log({
     startTimeStamp,
     endTimeStamp,
     start: from_date.toString(),
     end: to_date.toString(),
-  });
+  }); */
 
   return { startTimeStamp, endTimeStamp };
 }
 
-getInteval("month");
+getInterval("month");
 
 // Weekly average -done
 // Daily
