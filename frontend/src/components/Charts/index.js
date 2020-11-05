@@ -140,11 +140,13 @@ class Charts extends React.Component {
     const { login, users, readAction } = this.props;
     if (login) {
       const user = users.find((u) => u.email === login.email);
-      readAction({ suffix: "/" + user.id + "/stats" });
-      this.intID = setInterval(() => {
-        console.log("READ Sensor data");
+      if (user && user.id) {
         readAction({ suffix: "/" + user.id + "/stats" });
-      }, 1000 * 30);
+        this.intID = setInterval(() => {
+          console.log("READ Sensor data");
+          readAction({ suffix: "/" + user.id + "/stats" });
+        }, 1000 * 30);
+      }
     }
     this.setForm(this.props);
   }
