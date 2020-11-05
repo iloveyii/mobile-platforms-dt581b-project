@@ -70,7 +70,7 @@
       body {
         display: flex !important;
         flex-direction: column !important;
-        background-color: red;
+        background-color: transparent;
       }
       .content {
         flex: 1 0 auto !important;
@@ -78,11 +78,11 @@
       }
       .footer {
         flex-shrink: 0 !important;
-        background-color: #444;
+        color: rgb(236, 222, 222);
+        text-align: right;
       }
       .footer p {
-        text-align: right;
-        margin-right: 2em;
+        margin: 0 auto;
       }
       .top {
         background: url("/images/bg.png") repeat-x top center;
@@ -109,7 +109,7 @@
     <div class="content" id="root"></div>
 
     <footer class="footer" style="background-color: transparent">
-      <p>This website uses cookies</p>
+      <p class="p-2">This website does not use cookies</p>
     </footer>
 
     <script src="/js/chartist.min.js"></script>
