@@ -82,6 +82,49 @@ class Charts extends React.Component {
             },
           },
         },
+
+        weeks: {
+          41: {
+            average: {
+              temperature: 40,
+              co2: 960,
+              humidity: 25,
+              pressure: 589,
+            },
+          },
+          42: {
+            average: {
+              temperature: 27,
+              co2: 700,
+              humidity: 34,
+              pressure: 1083,
+            },
+          },
+          43: {
+            average: {
+              temperature: 22,
+              co2: 598,
+              humidity: 29,
+              pressure: 1019,
+            },
+          },
+          44: {
+            average: {
+              temperature: 18,
+              co2: 1019,
+              humidity: 32,
+              pressure: 1050,
+            },
+          },
+          45: {
+            average: {
+              temperature: 20,
+              co2: 892,
+              humidity: 30,
+              pressure: 1046,
+            },
+          },
+        },
       },
     };
   }
@@ -181,10 +224,15 @@ class Charts extends React.Component {
             <Table
               id="multilineChart"
               type="success"
-              title="Live stream"
+              title="Daily"
               data={{ days: this.state.stats.days }}
             />
-            <Table id="barChart" type="info" title="Consumption" data={data} />
+            <Table
+              id="barChart"
+              type="info"
+              title="Weekly"
+              data={{ weeks: this.state.stats.weeks }}
+            />
           </div>
         </Container>
       </div>

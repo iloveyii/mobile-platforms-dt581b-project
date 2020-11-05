@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { drawChart, data, chartMultiLine, chartBar } from "./functions";
 
-export default function Table({ id, type, title, data, dataLength }) {
+export default function Table({ id, type, title, data }) {
   useEffect(() => {
     switch (id) {
       case "barChart":
+        console.log("formatData", data);
         chartBar("barChart", data);
         break;
       case "multilineChart":
-        console.log("formatData", data, dataLength);
         chartMultiLine("multilineChart", data);
         break;
     }

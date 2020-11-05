@@ -83,27 +83,35 @@ export const data = [
   },
 ];
 
-function formatData(data) {
-  const keys7 = data && data.days ? Object.keys(data.days).slice(0, 7) : [];
+/**
+ * Format data to series, numeric array of arrays
+ * @param {*} data array of sensor data - days | weeks
+ */
+function formatData(data, length = 4) {
+  const keys7 = data ? Object.keys(data).slice(0, 7) : [];
   const temperatures = [];
   const co2 = [];
   const humidity = [];
   const pressure = [];
 
   keys7.forEach((k) => {
-    temperatures.push(data.days[k]["average"]["temperature"]);
-    co2.push(data.days[k]["average"]["co2"]);
-    humidity.push(data.days[k]["average"]["humidity"]);
-    pressure.push(data.days[k]["average"]["pressure"]);
+    temperatures.push(data[k]["average"]["temperature"]);
+    co2.push(data[k]["average"]["co2"]);
+    humidity.push(data[k]["average"]["humidity"]);
+    pressure.push(data[k]["average"]["pressure"]);
   });
-  const series = [temperatures, co2, humidity, pressure];
-  console.log("formatData : ", series, data.days, data);
+  const series = [
+    temperatures.slice(0, length),
+    co2.slice(0, length),
+    humidity.slice(0, length),
+    pressure.slice(0, length),
+  ];
+  console.log("formatData : ", series, data);
   return series;
 }
 
 export function chartMultiLine(elementId, data) {
-  const series = formatData(data);
-  console.log("formatData : ", data);
+  const series = formatData(data.days);
 
   let labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   labels = labels.slice(0, series[0].length);
@@ -146,24 +154,27 @@ export function chartMultiLine(elementId, data) {
 }
 
 export function chartBar(elementId, data) {
+  const LENGHT = 4;
+  let labels = ["Week 1", "Week 2", "Week 3", "Week 4"];
+  if (data && data.weeks) {
+    labels = Object.keys(data.weeks).map((weekNumber) => "Week " + weekNumber);
+  }
+  labels = labels.slice(0, LENGHT);
+  const series = formatData(data.weeks, labels.length);
+  console.log("formatData series: ", data, series);
+
   new Chartist.Bar(
     "#" + elementId,
     {
-      labels: ["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"],
-      series: [
-        [5, 4, 3, 7],
-        [3, 2, 9, 5],
-        [1, 5, 8, 4],
-        [2, 3, 4, 6],
-        [4, 1, 2, 1],
-      ],
+      labels: labels,
+      series: series,
     },
     {
       // Default mobile configuration
       fullWidth: true,
       plugins: [
         Chartist.plugins.legend({
-          legendNames: ["Temperature", "Pressure", "Humidity"],
+          legendNames: ["Temperature", "CO2", "Humidity", "Pressure"],
         }),
       ],
       stackBars: true,
