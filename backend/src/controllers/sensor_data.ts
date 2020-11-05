@@ -49,7 +49,7 @@ export const getSensorDataStats = async (
 ) => {
   // Here user want to get sensor data for current timestamp, and not a specific row with id ie id means use id
   const stats = await statsForUserWithInterval(req.params.id);
-  return res.status(200).send({ success: true, data: stats });
+  return res.status(200).send({ success: true, data: [stats] });
 };
 
 // @desc   Register/Create a Model - using bcrypt hashed passwords

@@ -84,7 +84,7 @@ export const data = [
 ];
 
 function formatData(data) {
-  const keys7 = Object.keys(data.days).slice(0, 6);
+  const keys7 = data && data.days ? Object.keys(data.days).slice(0, 7) : [];
   const temperatures = [];
   const co2 = [];
   const humidity = [];
@@ -97,12 +97,14 @@ function formatData(data) {
     pressure.push(data.days[k]["average"]["pressure"]);
   });
   const series = [temperatures, co2, humidity, pressure];
-  console.log("formatData : ", series);
+  console.log("formatData : ", series, data.days, data);
   return series;
 }
 
 export function chartMultiLine(elementId, data) {
   const series = formatData(data);
+  console.log("formatData : ", data);
+
   let labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   labels = labels.slice(0, series[0].length);
   var chart = new Chartist.Line(

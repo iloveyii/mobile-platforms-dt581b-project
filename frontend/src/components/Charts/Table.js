@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { drawChart, data, chartMultiLine, chartBar } from "./functions";
 
-export default function Table({ id, type, title, data }) {
+export default function Table({ id, type, title, data, dataLength }) {
   useEffect(() => {
     switch (id) {
       case "barChart":
         chartBar("barChart", data);
         break;
       case "multilineChart":
+        console.log("formatData", data, dataLength);
         chartMultiLine("multilineChart", data);
         break;
     }
-  }, []);
+  }, [data]);
   return (
     <div className="col-lg-6 col-md-6">
       <div className="card">

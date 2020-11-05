@@ -63,13 +63,33 @@ class Charts extends React.Component {
         humidity: { value: 26, unit: "g.m-3" },
         pressure: { value: 840, unit: "pas" },
       },
+      stats: {
+        days: {
+          1: {
+            average: {
+              temperature: 26,
+              co2: 1208,
+              humidity: 24,
+              pressure: 1202,
+            },
+          },
+          2: {
+            average: {
+              temperature: 1,
+              co2: 1453,
+              humidity: 39,
+              pressure: 1320,
+            },
+          },
+        },
+      },
     };
   }
 
   setForm(props) {
-    const { sensor_data } = this.props;
-    if (sensor_data) {
-      this.setState({ sensor_data });
+    const { stats } = props;
+    if (stats) {
+      this.setState({ stats });
     }
   }
 
@@ -162,7 +182,7 @@ class Charts extends React.Component {
               id="multilineChart"
               type="success"
               title="Live stream"
-              data={data}
+              data={{ days: this.state.stats.days }}
             />
             <Table id="barChart" type="info" title="Consumption" data={data} />
           </div>
@@ -186,10 +206,8 @@ Charts.defaultProps = {
  * @param state
  */
 const mapStateToProps = (state) => ({
-  sensor_data:
-    state.sensor_datas.list.length > 0
-      ? state.sensor_datas.list[0].data
-      : undefined,
+  stats:
+    state.sensor_datas.list.length > 0 ? state.sensor_datas.list[0] : undefined,
   login: state.logins.list.length > 0 ? state.logins.list[0] : undefined,
   users: state.users.list.length > 0 ? state.users.list : [],
 });
