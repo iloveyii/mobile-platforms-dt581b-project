@@ -145,7 +145,7 @@ class Charts extends React.Component {
         this.intID = setInterval(() => {
           console.log("READ Sensor data");
           readAction({ suffix: "/" + user.id + "/stats" });
-        }, 1000 * 30);
+        }, 1000 * 60 * 10);
       }
     }
     this.setForm(this.props);
