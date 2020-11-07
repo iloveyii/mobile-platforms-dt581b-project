@@ -6,6 +6,7 @@ import {
   CardMedia,
   Typography,
   Button,
+  CircularProgress,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { withStyles } from "@material-ui/styles";
@@ -18,6 +19,7 @@ import EmailOutlinedIcon from "@material-ui/icons/EmailOutlined";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { ObjectID } from "bson";
+import ColoredLinearProgress from "../LineProgress";
 
 import models from "../../store";
 
@@ -62,6 +64,7 @@ class Login extends React.Component {
     this.state = {
       form: models.logins.form,
       form_errors: {},
+      start_login: false,
     };
   }
 
@@ -77,7 +80,7 @@ class Login extends React.Component {
     const { createAction } = this.props;
     const { email, password } = this.state.form;
     const id = new ObjectID().toString();
-    this.setState({ form: { id, email, password } });
+    this.setState({ form: { id, email, password }, start_login: true });
 
     console.log({ id, email, password });
     setTimeout(() => {
@@ -93,6 +96,8 @@ class Login extends React.Component {
     const { actions } = nextProps;
     console.log("componentWillReceiveProps", actions);
     const { id } = this.state.form;
+    this.setState({ start_login: false });
+
     if (this.authenticated(id, actions) === true) {
       this.props.history.push("/dashboard");
     }
@@ -135,10 +140,12 @@ class Login extends React.Component {
     const imageUrl = "/images/lock.png";
     const title = "Login";
     const subtitle = "Sign up";
-    const { email, password } = this.state.form;
+    const { form, start_login } = this.state;
+    const { email, password } = form;
 
     return (
       <>
+        {start_login && <ColoredLinearProgress />}
         <div className="top">
           <div className="login-container">
             <div className="login-header">
@@ -191,6 +198,7 @@ class Login extends React.Component {
                         color="primary"
                         fullWidth={true}
                         onClick={this.handleLogin}
+                        disabled={start_login}
                       >
                         Login
                       </Button>

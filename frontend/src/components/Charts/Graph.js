@@ -17,7 +17,9 @@ export default function Graph({ id, type, title, average }) {
           <p className="card-category">
             <span className={"text-" + type} style={{ fontSize: "30px" }}>
               <i className="fa fa-thermometer-half" aria-hidden="true"></i>
-              <span id={id}>{average}</span>
+              <span className="ml-2" id={id}>
+                {average.value + " " + average.unit}
+              </span>
             </span>
           </p>
         </div>

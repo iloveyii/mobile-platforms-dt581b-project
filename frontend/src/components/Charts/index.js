@@ -57,13 +57,19 @@ class Charts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sensor_data: {
-        temperature: { value: 32, unit: "°C" },
-        co2: { value: 954, unit: "mol" },
-        humidity: { value: 26, unit: "g.m-3" },
-        pressure: { value: 840, unit: "pas" },
-      },
       stats: {
+        usage: {
+          door: { onTime: 0 },
+          stove: { onTime: 0 },
+          television: { onTime: 0 },
+          light: { onTime: 0 },
+        },
+        average: {
+          temperature: { value: 32, unit: "°C" },
+          co2: { value: 954, unit: "mol" },
+          humidity: { value: 26, unit: "g.m-3" },
+          pressure: { value: 840, unit: "pas" },
+        },
         days: {
           1: {
             average: {
@@ -131,7 +137,7 @@ class Charts extends React.Component {
 
   setForm(props) {
     const { stats } = props;
-    if (stats) {
+    if (stats && stats.days && stats.weeks && stats.average) {
       this.setState({ stats });
     }
   }
@@ -142,10 +148,12 @@ class Charts extends React.Component {
       const user = users.find((u) => u.email === login.email);
       if (user && user.id) {
         readAction({ suffix: "/" + user.id + "/stats" });
+        // const interval = 1000 * 60 * 10; // 10 min
+        const interval = 1000 * 7;
         this.intID = setInterval(() => {
           console.log("READ Sensor data");
           readAction({ suffix: "/" + user.id + "/stats" });
-        }, 1000 * 60 * 10);
+        }, interval);
       }
     }
     this.setForm(this.props);
@@ -161,7 +169,9 @@ class Charts extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { temperature, co2, humidity, pressure } = this.state.sensor_data;
+    const { average, usage } = this.state.stats;
+    const { temperature, co2, humidity, pressure } = average;
+    const { door, stove, television, light } = usage;
     return (
       <div className={classes.main}>
         <Header />
@@ -170,35 +180,35 @@ class Charts extends React.Component {
           <div className="row">
             <Stats
               type="warning"
-              icon="fa-cloud"
+              icon="fa-windows"
               subicon="date_range"
-              title="Temperature"
+              title="Door"
               subtitle="Heating system"
-              data={temperature}
+              data={door}
             />
             <Stats
               type="success"
-              icon="fa-picture-o"
+              icon="fa-fire"
               subicon="warning"
-              title="CO2"
+              title="Stove"
               subtitle="Air freshness"
-              data={co2}
+              data={stove}
             />
             <Stats
               type="danger"
-              icon="fa-compass"
+              icon="fa-television"
               subicon="local_offer"
-              title="Humidity"
+              title="TV"
               subtitle="Coolness & breeze"
-              data={humidity}
+              data={television}
             />
             <Stats
               type="info"
-              icon="fa-cc"
+              icon="fa-lightbulb-o"
               subicon="update"
-              title="Pressure"
+              title="Light"
               subtitle="Air pressure"
-              data={pressure}
+              data={light}
             />
           </div>
           <div className="row">
@@ -206,19 +216,19 @@ class Charts extends React.Component {
               title="Temperature"
               type="success"
               id="temperature"
-              average=" 22.5"
+              average={temperature}
             />
             <Graph
               title="Pressure"
               type="warning"
               id="pressure"
-              average=" 23.4"
+              average={pressure}
             />
             <Graph
               title="Humidity"
               type="danger"
               id="humidity"
-              average=" 27.1"
+              average={humidity}
             />
           </div>
 
@@ -243,7 +253,7 @@ class Charts extends React.Component {
 }
 
 Charts.defaultProps = {
-  sensor_data: {
+  average: {
     temperature: { value: 32, unit: "°C" },
     co2: { value: 954, unit: "mol" },
     humidity: { value: 26, unit: "g.m-3" },

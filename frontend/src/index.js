@@ -14,7 +14,7 @@ import createSagaMiddleware from "redux-saga";
 //     );
 
 const ENVIRONMENT = {
-  DEV: true,
+  DEV: process.env.ENV === "development",
 };
 
 // # 01
@@ -52,8 +52,8 @@ const sagaMiddleware = createSagaMiddleware();
 // Redux compose cannot handle a null or undefined middleware
 const allStoreEnhancers = ENVIRONMENT.DEV
   ? compose(
-      applyMiddleware(sagaMiddleware)
-      // window.devToolsExtension && window.devToolsExtension()
+      applyMiddleware(sagaMiddleware),
+      window.devToolsExtension && window.devToolsExtension()
     )
   : applyMiddleware(sagaMiddleware);
 

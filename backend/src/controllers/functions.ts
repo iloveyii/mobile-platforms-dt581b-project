@@ -58,6 +58,12 @@ export async function statsForUserWithInterval(user_id: string) {
   const model = new SensorData({ user_id, data, timestamp });
   await model.read(condition);
   // Average data
+  const average2 = {
+    temperature: { value: 0, unit: "°C" },
+    co2: { value: 0, unit: "mol" },
+    humidity: { value: 0, unit: "gm3" },
+    pressure: { value: 0, unit: "pas" },
+  };
   const average = {
     temperature: 0,
     co2: 0,
@@ -89,10 +95,16 @@ export async function statsForUserWithInterval(user_id: string) {
         weeks[weekNumber] = [data];
       }
     });
-    average.temperature = average.temperature / model.response.data.length;
-    average.co2 = average.co2 / model.response.data.length;
-    average.humidity = average.humidity / model.response.data.length;
-    average.pressure = average.pressure / model.response.data.length;
+    average2.temperature.value = Math.round(
+      average.temperature / model.response.data.length
+    );
+    average2.co2.value = Math.round(average.co2 / model.response.data.length);
+    average2.humidity.value = Math.round(
+      average.humidity / model.response.data.length
+    );
+    average2.pressure.value = Math.round(
+      average.pressure / model.response.data.length
+    );
 
     Object.keys(weeks).forEach((weekNumber: any) => {
       const average = findAverage(weeks[weekNumber]);
@@ -105,7 +117,7 @@ export async function statsForUserWithInterval(user_id: string) {
     });
   }
   const usage = await getDeviceLog();
-  const stats = { average, weeks, days, usage }; // average for all data set, average for all weeks, average for days of month, deviceLog is Usage
+  const stats = { average: average2, weeks, days, usage }; // average for all data set, average for all weeks, average for days of month, deviceLog is Usage
   return stats;
 }
 
