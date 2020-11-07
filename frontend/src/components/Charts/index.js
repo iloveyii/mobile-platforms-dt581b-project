@@ -171,7 +171,20 @@ class Charts extends React.Component {
     const { classes } = this.props;
     const { average, usage } = this.state.stats;
     const { temperature, co2, humidity, pressure } = average;
-    const { door, stove, television, light } = usage;
+    let { door, stove, television, light } = usage;
+    door = door && door.onTime ? door.onTime : 0;
+    stove =
+      stove && stove.onTime
+        ? new Date(stove.onTime * 1000).toISOString().substr(11, 8)
+        : "";
+    television =
+      television && television.onTime
+        ? new Date(television.onTime * 1000).toISOString().substr(11, 8)
+        : "";
+    light =
+      light && light.onTime
+        ? new Date(light.onTime * 1000).toISOString().substr(11, 8)
+        : "";
     return (
       <div className={classes.main}>
         <Header />
@@ -183,7 +196,7 @@ class Charts extends React.Component {
               icon="fa-windows"
               subicon="date_range"
               title="Door"
-              subtitle="Heating system"
+              subtitle="Door open frequency"
               data={door}
             />
             <Stats
@@ -191,7 +204,7 @@ class Charts extends React.Component {
               icon="fa-fire"
               subicon="warning"
               title="Stove"
-              subtitle="Air freshness"
+              subtitle="Kitchen usage"
               data={stove}
             />
             <Stats
@@ -199,7 +212,7 @@ class Charts extends React.Component {
               icon="fa-television"
               subicon="local_offer"
               title="TV"
-              subtitle="Coolness & breeze"
+              subtitle="TV on time"
               data={television}
             />
             <Stats
@@ -207,7 +220,7 @@ class Charts extends React.Component {
               icon="fa-lightbulb-o"
               subicon="update"
               title="Light"
-              subtitle="Air pressure"
+              subtitle="Light on off"
               data={light}
             />
           </div>

@@ -10,12 +10,7 @@ export default function Stats({ type, icon, title, data, subtitle, subicon }) {
           </div>
           <p className="card-category">{title}</p>
           <h3 className="card-title" id={title}>
-            <small>
-              {" " +
-                (data && data.onTime
-                  ? new Date(data.onTime * 1000).toISOString().substr(11, 8)
-                  : "")}
-            </small>
+            <small>{" " + (data ? data : "")}</small>
           </h3>
         </div>
         <div className="card-footer">
