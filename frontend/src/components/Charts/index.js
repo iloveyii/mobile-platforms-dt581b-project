@@ -149,7 +149,7 @@ class Charts extends React.Component {
       if (user && user.id) {
         readAction({ suffix: "/" + user.id + "/stats" });
         // const interval = 1000 * 60 * 10; // 10 min
-        const interval = 1000 * 7;
+        const interval = 1000 * 300;
         this.intID = setInterval(() => {
           console.log("READ Sensor data");
           readAction({ suffix: "/" + user.id + "/stats" });
