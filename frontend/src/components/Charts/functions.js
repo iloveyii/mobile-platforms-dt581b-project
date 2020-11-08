@@ -88,7 +88,7 @@ export const data = [
  * @param {*} data array of sensor data - days | weeks
  */
 function formatData(data, length = 4) {
-  const keys7 = data ? Object.keys(data).slice(0, 7) : [];
+  const keys7 = data ? Object.keys(data).slice(0, length) : [];
   const temperatures = [];
   const co2 = [];
   const humidity = [];
@@ -111,7 +111,7 @@ function formatData(data, length = 4) {
 }
 
 export function chartMultiLine(elementId, data) {
-  const series = formatData(data.days);
+  const series = formatData(data.days, 7);
 
   let labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   labels = labels.slice(0, series[0].length);

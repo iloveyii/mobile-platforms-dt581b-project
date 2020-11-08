@@ -230,18 +230,21 @@ class Charts extends React.Component {
               type="success"
               id="temperature"
               average={temperature}
+              icon="fa-thermometer-half"
             />
             <Graph
               title="Pressure"
               type="warning"
               id="pressure"
               average={pressure}
+              icon="fa-flag"
             />
             <Graph
               title="Humidity"
               type="danger"
               id="humidity"
               average={humidity}
+              icon="fa-tint"
             />
           </div>
 

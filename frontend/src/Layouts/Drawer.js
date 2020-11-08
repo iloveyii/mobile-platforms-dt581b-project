@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  Box,
 } from "@material-ui/core";
 import { MoveToInbox, Mail } from "@material-ui/icons";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
@@ -18,6 +19,7 @@ import DashboardOutlinedIcon from "@material-ui/icons/DashboardOutlined";
 import SettingsRemoteOutlinedIcon from "@material-ui/icons/SettingsRemoteOutlined";
 import Hidden from "@material-ui/core/Hidden";
 import { Link } from "react-router-dom";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const drawerWidth = 240;
 
@@ -171,6 +173,20 @@ export default function SwipeableTemporaryDrawer({ state, toggleDrawer }) {
             />
           </ListItem>
         </Link>
+
+        <Box
+          component="a"
+          href="/"
+          className={classes.link}
+          display={{ xs: "block", sm: "none" }}
+        >
+          <ListItem button>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.listItemText} primary="Logout" />
+          </ListItem>
+        </Box>
       </List>
     </div>
   );

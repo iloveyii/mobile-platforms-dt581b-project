@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { drawChart, data, chartMultiLine } from "./functions";
 
-export default function Graph({ id, type, title, average }) {
+export default function Graph({ id, type, title, average, icon }) {
   useEffect(() => {
     drawChart(id, data, title);
   }, []);
@@ -16,10 +16,11 @@ export default function Graph({ id, type, title, average }) {
           <h4 className="card-title">{title}</h4>
           <p className="card-category">
             <span className={"text-" + type} style={{ fontSize: "30px" }}>
-              <i className="fa fa-thermometer-half" aria-hidden="true"></i>
+              <i className={"fa " + icon} aria-hidden="true"></i>
               <span className="ml-2" id={id}>
-                {average.value + " " + average.unit}
+                {average.value}
               </span>
+              <small>{" " + average.unit}</small>
             </span>
           </p>
         </div>

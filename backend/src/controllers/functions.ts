@@ -61,7 +61,7 @@ export async function statsForUserWithInterval(user_id: string) {
   const average2 = {
     temperature: { value: 0, unit: "°C" },
     co2: { value: 0, unit: "mol" },
-    humidity: { value: 0, unit: "gm3" },
+    humidity: { value: 0, unit: "gm³" },
     pressure: { value: 0, unit: "pas" },
   };
   const average = {
